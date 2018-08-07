@@ -1,5 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import LoginPage from './LoginPage'
 
 // eslint-disable-next-line
 String.prototype.isValidEmail = function() {
@@ -19,8 +20,8 @@ export default class App extends React.Component {
 		return (
 			<Router>
 				<Switch>
-					{/* <Route exact path="/" component={HomePage} />
-					<Route component={LostPage} /> */}
+					<Route exact path="/" component={LoginPage} />
+					{/* <Route component={LostPage} /> */}
 				</Switch>
 			</Router>
 		)
