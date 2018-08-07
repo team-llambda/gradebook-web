@@ -1,3 +1,8 @@
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 @font-face {
   font-family: Sofia-Pro;
   src: url(assets/sofia_pro_regular.otf);
@@ -23,7 +28,7 @@ body .fullsize {
   height: 100%;
 }
 body .cover {
-  background-image: url("./assets/cover.png");
+  background-image: url("./assets/cover.svg");
   background-size: 110%;
   background-position: center;
 }
@@ -144,6 +149,9 @@ input:focus ~ .floating-label, input:not(:focus):valid ~ .floating-label {
 input:focus ~ .blocker, input:not(:focus):valid ~ .blocker {
   transition: width 0.3s;
   border: 2px solid white;
+}
+input:required {
+  box-shadow: none;
 }
 
 .blocker {

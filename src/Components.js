@@ -9,7 +9,7 @@ export class LoadingSpinner extends Component {
 
 export class Logo extends Component {
 	render() {
-		return <img className="logo" src="../assets/logo.png" />
+		return <img className="logo" src="../assets/logo.svg" />
 	}
 }
 

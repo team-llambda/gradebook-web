@@ -7,9 +7,9 @@ export default class LoginPage extends Component {
 			<div className="cover fullsize allcenter">
 				<img
 					style={{ height: '4em', marginBottom: '1em' }}
-					src="../assets/logo.png"
+					src="../assets/logo.svg"
 				/>
-				<Textbox hint="email" />
+				<Textbox hint="username" />
 				<Textbox hint="password" type="password" />
 				<Button text="login" triggerLoadOnClick={true} />
 				<Logo />
