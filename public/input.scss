@@ -99,6 +99,11 @@ body {
 	opacity: 0;
 	transition: opacity 0.3s;
 
+	// these supposedly get rid of weird aliasing effects
+	transform: translateZ(0);
+	-webkit-transform: translateZ(0);
+	-webkit-backface-visibility: hidden;
+
 	&.on {
 		opacity: 1;
 		transition: opacity 0.3s;
@@ -124,4 +129,83 @@ body {
 			transform: rotate(360deg);
 		}
 	}
+}
+
+img {
+	&.logo {
+		height: 1em;
+		position: absolute;
+		bottom: 2em;
+	}
+}
+
+.textbox {
+	position: relative;
+}
+
+input {
+	border: 3px solid $unselected;
+	border-radius: 2em;
+	outline: none;
+	font-family: 'Sofia-Pro';
+	transition: 0.3s;
+	&:focus,
+	&:not(:focus):valid {
+		transition: 0.3s;
+		border: 3px solid $highlight;
+	}
+
+	&:focus ~ .floating-label,
+	&:not(:focus):valid ~ .floating-label {
+		color: $highlight;
+		top: -18px;
+		height: 1em;
+		left: 20px;
+		font-size: 14px;
+		//background: white;
+		margin-bottom: 0.5em;
+		padding-top: 0.5em;
+		margin-left: 0.5em;
+		padding-left: 1em;
+		padding-right: 1em;
+		opacity: 1;
+		z-index: 1;
+	}
+
+	&:focus ~ .blocker,
+	&:not(:focus):valid ~ .blocker {
+		transition: width 0.3s;
+		border: 2px solid white;
+	}
+}
+
+.blocker {
+	position: absolute;
+	height: 0;
+	width: 0;
+	transition: 0.3s;
+	top: 0;
+	left: 2em;
+	border: 0px solid white;
+}
+
+.inputText {
+	outline: none;
+	font-size: 16px;
+	width: 24em;
+	padding: 0;
+	padding-left: 1.5em;
+	padding-right: 1.5em;
+	height: calc(3em - 8px);
+}
+
+.floating-label {
+	color: $placeholder;
+	font-size: 16px;
+	position: absolute;
+	pointer-events: none;
+	left: 1.5em;
+	top: 0.6em;
+	transition: 0.2s ease all;
+	z-index: 1;
 }
