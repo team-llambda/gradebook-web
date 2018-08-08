@@ -189,6 +189,7 @@ input {
 	&:not(:focus):valid ~ .floating-label {
 		color: $highlight;
 		top: -18px;
+		transform: none;
 		height: 1em;
 		left: 20px;
 		font-size: 14px;
@@ -235,11 +236,13 @@ input {
 
 .floating-label {
 	color: $placeholder;
-	font-size: 20px;
+	font-size: 1.2em;
+
 	position: absolute;
 	pointer-events: none;
 	left: 1.5em;
-	top: 0.4em;
+	top: 50%;
+	transform: translateY(-50%);
 	transition: 0.2s ease all;
 	z-index: 1;
 }

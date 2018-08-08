@@ -485,7 +485,7 @@ export class AssignmentsPane extends Component {
 				<Textbox
 					inputStyle={{ width: '19.4em' }}
 					style={{ marginBottom: '1em' }}
-					hint="filter"
+					hint="Filter"
 					onTextChange={this.handleFilterChange}
 				/>
 				{/* TODO: INSERT ASSIGNMENT CREATION MEME */}
