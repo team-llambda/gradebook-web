@@ -130,3 +130,45 @@ export class Textbox extends Component {
 		)
 	}
 }
+
+const MenuItems = [
+	{ text: 'Grades', href: '/classes' },
+	{ text: 'Chat', href: '/chat' },
+	{ text: 'Settings', href: '/settings' },
+	{ text: 'Logout', href: '/logout' }
+]
+
+export default class Menu extends Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			open: false
+		}
+	}
+	render() {
+		const links = MenuItems.map((item, index) => {
+			return (
+				<a
+					href={item.href}
+					className={this.props.currentItemIndex === index ? 'highlight' : ''}>
+					<h2>{item.text}</h2>
+				</a>
+			)
+		})
+		return (
+			<div className={'sidebar' + (this.state.open ? ' open' : '')}>
+				<div className={'menu-content' + (this.state.open ? ' open' : '')}>
+					<h1>Menu</h1>
+					{links}
+				</div>
+				<i
+					className="material-icons menu"
+					onClick={() => {
+						this.setState({ open: !this.state.open })
+					}}>
+					menu
+				</i>
+			</div>
+		)
+	}
+}

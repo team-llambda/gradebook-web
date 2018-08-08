@@ -5,9 +5,25 @@
 
 @font-face {
   font-family: Sofia-Pro;
+  src: url(assets/sofia_pro_bold.otf);
+  font-weight: 700;
+}
+@font-face {
+  font-family: Sofia-Pro;
   src: url(assets/sofia_pro_regular.otf);
   font-weight: 400;
 }
+a {
+  text-decoration: none;
+  color: #000;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 html {
   margin: 0 !important;
   padding: 0 !important;
@@ -15,6 +31,7 @@ html {
   width: 100%;
   font-size: 16px;
   height: 100%;
+  overflow: hidden;
 }
 
 body {
@@ -26,6 +43,9 @@ body {
 }
 body .fullsize {
   height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
 }
 body .cover {
   background-image: url("./assets/cover.svg");
@@ -183,6 +203,84 @@ input:required {
   top: 0.6em;
   transition: 0.2s ease all;
   z-index: 1;
+}
+
+h1 {
+  font-size: 4em;
+  font-weight: bold;
+}
+
+h2 {
+  font-size: 3em;
+  font-weight: bold;
+}
+
+i {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.sidebar {
+  display: inline-block;
+  width: 12em;
+  height: calc(100% - 4em);
+  position: relative;
+  padding-top: 4.3em;
+  transition: 0.5s ease all;
+}
+.sidebar .menu {
+  font-size: 2em;
+  cursor: pointer;
+  position: absolute;
+  right: 1em;
+  top: 3em;
+}
+.sidebar.open {
+  width: 40em;
+  transition: 0.5s ease all;
+}
+.sidebar .menu-content {
+  position: absolute;
+  left: -16em;
+  transition: 0.5s ease all;
+}
+.sidebar .menu-content a {
+  cursor: pointer;
+}
+.sidebar .menu-content a.highlight {
+  color: #527aff;
+}
+.sidebar .menu-content h1 {
+  margin: 0;
+  margin-bottom: 1em;
+}
+.sidebar .menu-content h2 {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+  margin-left: 0em;
+  transition: 0.3s ease margin-left;
+}
+.sidebar .menu-content h2:hover {
+  margin-left: 0.5em;
+  transition: 0.3s ease margin-left;
+}
+.sidebar .menu-content.open {
+  left: 6em;
+}
+
+.content {
+  font-size: 16px;
+  display: inline-block;
+  width: calc(100% - 12em);
+  height: 100%;
+  padding-top: 4.3em;
+}
+.content h1 {
+  margin: 0;
 }
 
 /*# sourceMappingURL=styles.css.map */

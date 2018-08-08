@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import LoginPage from './LoginPage'
+import ClassesPage from './Grades/ClassesPage'
 
 // eslint-disable-next-line
 String.prototype.isValidEmail = function() {
@@ -21,6 +22,7 @@ export default class App extends React.Component {
 			<Router>
 				<Switch>
 					<Route exact path="/" component={LoginPage} />
+					<Route exact path="/classes" component={ClassesPage} />
 					{/* <Route component={LostPage} /> */}
 				</Switch>
 			</Router>
