@@ -267,7 +267,7 @@ i {
 	width: 12em;
 	height: calc(100% - 4em);
 	position: relative;
-	padding-top: 4.3em;
+	padding-top: 4em;
 
 	.menu {
 		font-size: 2em;
@@ -325,7 +325,7 @@ i {
 	display: inline-block;
 	width: calc(100% - 12em);
 	height: 100%;
-	padding-top: 4.3em;
+	padding-top: 4em;
 	padding-right: 6em;
 
 	h1 {
@@ -347,8 +347,11 @@ table {
 		tr {
 			th {
 				cursor: pointer;
+				color: black;
+				transition: 0.2s ease all;
 				&:hover {
 					color: $highlight;
+					transition: 0.2s ease all;
 				}
 			}
 		}
@@ -378,11 +381,36 @@ table {
 	tbody {
 		tr {
 			font-size: 0.75em;
+			transition: 0.2s ease all;
+
 			&:hover {
 				color: $highlight;
+				transition: 0.2s ease all;
 			}
 			cursor: pointer;
 		}
 		// overflow-y: scroll;
+	}
+}
+
+.quarter-selector {
+	h1 {
+		margin: 0;
+	}
+	position: absolute;
+	top: 4em;
+	right: 6em;
+
+	a {
+		color: $unselected;
+		cursor: pointer;
+		font-size: 3.5em;
+		font-weight: bold;
+		margin-left: 0.5em;
+
+		&:hover,
+		&.highlight {
+			color: $highlight;
+		}
 	}
 }

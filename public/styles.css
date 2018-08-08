@@ -229,7 +229,7 @@ i {
   width: 12em;
   height: calc(100% - 4em);
   position: relative;
-  padding-top: 4.3em;
+  padding-top: 4em;
   transition: 0.5s ease all;
 }
 .sidebar .menu {
@@ -277,7 +277,7 @@ i {
   display: inline-block;
   width: calc(100% - 12em);
   height: 100%;
-  padding-top: 4.3em;
+  padding-top: 4em;
   padding-right: 6em;
 }
 .content h1 {
@@ -299,9 +299,12 @@ table thead {
 }
 table thead tr th {
   cursor: pointer;
+  color: black;
+  transition: 0.2s ease all;
 }
 table thead tr th:hover {
   color: #527aff;
+  transition: 0.2s ease all;
 }
 table tr th {
   font-size: 2em;
@@ -325,9 +328,30 @@ table tr th {
 }
 table tbody tr {
   font-size: 0.75em;
+  transition: 0.2s ease all;
   cursor: pointer;
 }
 table tbody tr:hover {
+  color: #527aff;
+  transition: 0.2s ease all;
+}
+
+.quarter-selector {
+  position: absolute;
+  top: 4em;
+  right: 6em;
+}
+.quarter-selector h1 {
+  margin: 0;
+}
+.quarter-selector a {
+  color: #bdbdbd;
+  cursor: pointer;
+  font-size: 3.5em;
+  font-weight: bold;
+  margin-left: 0.5em;
+}
+.quarter-selector a:hover, .quarter-selector a.highlight {
   color: #527aff;
 }
 

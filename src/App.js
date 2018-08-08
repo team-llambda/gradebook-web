@@ -6,6 +6,7 @@ import ChatPage from './ChatPage'
 import SettingsPage from './SettingsPage'
 import LogoutPage from './LogoutPage'
 import LostPage from './LostPage'
+import SingleClassPage from './Grades/SingleClassPage'
 
 // eslint-disable-next-line
 String.prototype.isValidEmail = function() {
@@ -27,6 +28,7 @@ export default class App extends React.Component {
 				<Switch>
 					<Route exact path="/" component={LoginPage} />
 					<Route exact path="/classes" component={ClassesPage} />
+					<Route exact path="/classes/:period" component={SingleClassPage} />
 					<Route exact path="/chat" component={ChatPage} />
 					<Route exact path="/settings" component={SettingsPage} />
 					<Route exact path="/logout" component={LogoutPage} />

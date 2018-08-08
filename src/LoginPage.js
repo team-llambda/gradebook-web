@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Logo, Textbox } from './Components'
+import { Button, Logo, Textbox, QuarterSelector } from './Components'
 
 export default class LoginPage extends Component {
 	render() {

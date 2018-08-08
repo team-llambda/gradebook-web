@@ -218,7 +218,7 @@ export class Table extends Component {
 						this.state.sortDirection === 1 && (
 							<i
 								className="material-icons"
-								style={{ color: '#000', position: 'absolute', top: '30%' }}>
+								style={{ color: '#000', position: 'absolute', top: '37%' }}>
 								arrow_drop_down
 							</i>
 						)}
@@ -226,7 +226,7 @@ export class Table extends Component {
 						this.state.sortDirection === -1 && (
 							<i
 								className="material-icons"
-								style={{ color: '#000', position: 'absolute', top: '30%' }}>
+								style={{ color: '#000', position: 'absolute', top: '37%' }}>
 								arrow_drop_up
 							</i>
 						)}
@@ -270,7 +270,7 @@ export class Table extends Component {
 							<tr
 								key={row._id}
 								onClick={() => {
-									this.props.onItemClick(row._id)
+									if (this.props.onItemClick) this.props.onItemClick(row._id)
 								}}>
 								{row.fields.map((item, index) => {
 									return <td hey={index}>{item}</td>
@@ -308,7 +308,7 @@ export class Table extends Component {
 					<tr
 						key={row._id}
 						onClick={() => {
-							this.props.onItemClick(row._id)
+							if (this.props.onItemClick) this.props.onItemClick(row._id)
 						}}>
 						{row.fields.map((item, index) => {
 							return <td key={index}>{item}</td>
@@ -325,6 +325,64 @@ export class Table extends Component {
 				</thead>
 				<tbody>{rows}</tbody>
 			</table>
+		)
+	}
+}
+
+export class QuarterSelector extends Component {
+	constructor(props) {
+		super(props)
+
+		this.state = {
+			quarter: this.props.quarter || 1
+		}
+	}
+
+	componentWillReceiveProps(newProps) {
+		this.setState({ quarter: this.props.quarter || 1 })
+	}
+
+	handleQuarterChange = quarter => {
+		if (quarter === this.state.quarter) return
+
+		this.setState({ quarter: quarter })
+
+		this.props.handleQuarterChange()
+	}
+
+	render() {
+		return (
+			<div className="quarter-selector">
+				<h1 style={{ display: 'inline-block' }}>Quarter</h1>
+				<a
+					onClick={() => {
+						this.handleQuarterChange(1)
+					}}
+					className={this.state.quarter === 1 ? 'highlight' : ''}>
+					1
+				</a>
+				<a
+					onClick={() => {
+						this.handleQuarterChange(2)
+					}}
+					className={this.state.quarter === 2 ? 'highlight' : ''}>
+					2
+				</a>
+				<a
+					onClick={() => {
+						this.handleQuarterChange(3)
+					}}
+					className={this.state.quarter === 3 ? 'highlight' : ''}>
+					3
+				</a>
+				<a
+					onClick={() => {
+						this.handleQuarterChange(4)
+					}}
+					className={this.state.quarter === 4 ? 'highlight' : ''}>
+					4
+				</a>
+			</div>
 		)
 	}
 }
