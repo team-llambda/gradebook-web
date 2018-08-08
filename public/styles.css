@@ -133,8 +133,8 @@ body .allcenter {
 
 img.logo {
   height: 1em;
-  position: absolute;
-  bottom: 2em;
+  position: relative;
+  left: -50%;
 }
 
 .textbox {
@@ -278,9 +278,57 @@ i {
   width: calc(100% - 12em);
   height: 100%;
   padding-top: 4.3em;
+  padding-right: 6em;
 }
 .content h1 {
   margin: 0;
+}
+
+table {
+  text-align: left;
+  width: 100%;
+  margin-top: 1em;
+}
+table thead {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+table thead tr th {
+  cursor: pointer;
+}
+table thead tr th:hover {
+  color: #527aff;
+}
+table tr th {
+  font-size: 2em;
+  position: relative;
+}
+table tr td {
+  font-size: 2em;
+}
+table tr td:last-of-type,
+table tr th:last-of-type {
+  text-align: right;
+  width: 8em;
+}
+table tr td:first-of-type,
+table tr th:first-of-type {
+  width: 6em;
+}
+table tr td,
+table tr th {
+  height: 2em;
+}
+table tbody tr {
+  font-size: 0.75em;
+  cursor: pointer;
+}
+table tbody tr:hover {
+  color: #527aff;
 }
 
 /*# sourceMappingURL=styles.css.map */

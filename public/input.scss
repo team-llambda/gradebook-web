@@ -162,8 +162,8 @@ body {
 img {
 	&.logo {
 		height: 1em;
-		position: absolute;
-		bottom: 2em;
+		position: relative;
+		left: -50%;
 	}
 }
 
@@ -326,8 +326,63 @@ i {
 	width: calc(100% - 12em);
 	height: 100%;
 	padding-top: 4.3em;
+	padding-right: 6em;
 
 	h1 {
 		margin: 0;
+	}
+}
+
+table {
+	text-align: left;
+	width: 100%;
+	margin-top: 1em;
+	thead {
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+		tr {
+			th {
+				cursor: pointer;
+				&:hover {
+					color: $highlight;
+				}
+			}
+		}
+	}
+	tr {
+		th {
+			font-size: 2em;
+			position: relative;
+		}
+		td {
+			font-size: 2em;
+		}
+		td:last-of-type,
+		th:last-of-type {
+			text-align: right;
+			width: 8em;
+		}
+		td:first-of-type,
+		th:first-of-type {
+			width: 6em;
+		}
+		td,
+		th {
+			height: 2em;
+		}
+	}
+	tbody {
+		tr {
+			font-size: 0.75em;
+			&:hover {
+				color: $highlight;
+			}
+			cursor: pointer;
+		}
+		// overflow-y: scroll;
 	}
 }
