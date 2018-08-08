@@ -462,20 +462,34 @@ export class AssignmentsPane extends Component {
 		this.setState({ assignments: newProps.assignments })
 	}
 
-	handleFilterChange = text => {}
+	handleFilterChange = text => {
+		console.log('filter change')
+		this.setState({ filter: text })
+	}
 
 	render() {
-		console.log(this.state.assignments)
+		var filter = this.state.filter
+		var shownAssignments = this.state.assignments.slice().filter(
+			a =>
+				a.name.toLowerCase().includes(filter.toLowerCase()) ||
+				a.grade
+					.toString()
+					.toLowerCase()
+					.includes(filter.toLowerCase()) ||
+				a.comments.toLowerCase().includes(filter.toLowerCase()) ||
+				a.category.toLowerCase().includes(filter.toLowerCase()) ||
+				a.date.toLowerCase().includes(filter.toLowerCase())
+		)
 		return (
 			<div>
 				<Textbox
 					inputStyle={{ width: '19.4em' }}
 					style={{ marginBottom: '1em' }}
 					hint="filter"
-					onChange={this.handleFilterChange}
+					onTextChange={this.handleFilterChange}
 				/>
 				{/* TODO: INSERT ASSIGNMENT CREATION MEME */}
-				{this.state.assignments.map(assignment => {
+				{shownAssignments.map(assignment => {
 					console.log(assignment)
 					return (
 						<Assignment
