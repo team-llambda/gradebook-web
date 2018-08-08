@@ -164,18 +164,16 @@ export class Menu extends Component {
 		return (
 			<div className={'sidebar' + (this.state.open ? ' open' : '')}>
 				<div className={'menu-content' + (this.state.open ? ' open' : '')}>
+					<h1>Menu</h1>
 					{links}
 				</div>
-				<div className={'menu-header' + (this.state.open ? ' open' : '')}>
-					<h1>Menu</h1>
-					<i
-						className="material-icons menu"
-						onClick={() => {
-							this.setState({ open: !this.state.open })
-						}}>
-						menu
-					</i>
-				</div>
+				<i
+					className="material-icons menu"
+					onClick={() => {
+						this.setState({ open: !this.state.open })
+					}}>
+					menu
+				</i>
 			</div>
 		)
 	}
