@@ -99,10 +99,10 @@ export class Textbox extends Component {
 		const width = ReactDOM.findDOMNode(this.refs.label).getBoundingClientRect()
 			.width
 		if (this.state.text.length > 0)
-			this.blocker.current.style.width = 'calc(' + width + 'px - 0.7em)'
+			this.blocker.current.style.width = 'calc(' + width + 'px - 0.8em)'
 		else
 			this.blocker.current.style.width =
-				'calc(' + (width * 14) / 16 + 'px + 1em)'
+				'calc(' + (width * 14) / 20 + 'px + 0.95em)'
 	}
 
 	handleBlur = () => {
@@ -110,6 +110,7 @@ export class Textbox extends Component {
 	}
 
 	handleChange = e => {
+		if (this.props.onTextChange) this.props.onTextChange(e.target.value)
 		this.setState({ text: e.target.value })
 	}
 
@@ -119,6 +120,7 @@ export class Textbox extends Component {
 		return (
 			<div style={style} className="textbox">
 				<input
+					style={this.props.inputStyle}
 					onFocus={this.handleFocus}
 					onBlur={this.handleBlur}
 					type={this.props.type || 'text'}
@@ -386,3 +388,157 @@ export class QuarterSelector extends Component {
 		)
 	}
 }
+
+export class CourseInfoPane extends Component {
+	constructor(props) {
+		super(props)
+
+		this.state = {
+			page: 'assignments'
+		}
+	}
+
+	render() {
+		return (
+			<div className="course-info-pane">
+				<div
+					style={{
+						display: 'flex',
+						flexDirection: 'row',
+						justifyContent: 'space-between'
+					}}>
+					<h3 className={this.state.page === 'assignments' ? 'highlight' : ''}>
+						Assignments
+					</h3>
+					<h3 className={this.state.page === 'categories' ? 'highlight' : ''}>
+						Categories
+					</h3>
+				</div>
+
+				{this.state.page === 'assignments' && (
+					<AssignmentsPane assignments={this.props.assignments} />
+				)}
+
+				{this.state.page === 'categories' && (
+					<CategoriesPane categories={this.props.categories} />
+				)}
+
+				<FinalGrades />
+			</div>
+		)
+	}
+}
+export class FinalGrades extends Component {
+	render() {
+		return (
+			<div
+				style={{
+					position: 'absolute',
+					bottom: '4em',
+					right: '0',
+					textAlign: 'right'
+				}}>
+				<h1>99.9</h1>
+				<h4 style={{ color: '#527aff', fontWeight: 'bold' }}>-6.6</h4>
+				<h4 style={{ color: '#527aff', fontWeight: 'bold' }}>
+					<k style={{ color: '#cccccc' }}>projected:</k> 93.3
+				</h4>
+			</div>
+		)
+	}
+}
+
+export class AssignmentsPane extends Component {
+	constructor(props) {
+		super(props)
+
+		this.state = {
+			filter: '',
+			assignments: this.props.assignments || []
+		}
+	}
+
+	componentWillReceiveProps(newProps) {
+		this.setState({ assignments: newProps.assignments })
+	}
+
+	handleFilterChange = text => {}
+
+	render() {
+		console.log(this.state.assignments)
+		return (
+			<div>
+				<Textbox
+					inputStyle={{ width: '19.4em' }}
+					style={{ marginBottom: '1em' }}
+					hint="filter"
+					onChange={this.handleFilterChange}
+				/>
+				{/* TODO: INSERT ASSIGNMENT CREATION MEME */}
+				{this.state.assignments.map(assignment => {
+					console.log(assignment)
+					return (
+						<Assignment
+							date={assignment.date}
+							name={assignment.name}
+							grade={assignment.grade}
+							category={assignment.category}
+							comments={assignment.comments}
+						/>
+					)
+				})}
+			</div>
+		)
+	}
+}
+
+export class Assignment extends Component {
+	render() {
+		return (
+			<div
+				style={{
+					display: 'flex',
+					flexDirection: 'row',
+					justifyContent: 'space-between',
+					alignItems: 'top'
+				}}>
+				<h5
+					style={{
+						display: 'inline-block',
+						paddingTop: '0.2em',
+						width: '4em'
+					}}>
+					{this.props.date}
+				</h5>
+				<svg height="12" width="12" style={{ paddingTop: '0.6em' }}>
+					<circle cx="6" cy="6" r="6" fill="#12EB9D" />
+				</svg>
+				<div style={{ display: 'inline-block' }}>
+					<div
+						style={{
+							display: 'flex',
+							flexDirection: 'row',
+							justifyContent: 'space-between',
+							width: '22em'
+						}}>
+						<h4 style={{ display: 'block', paddingRight: '0.5em' }}>
+							{this.props.name}
+						</h4>
+						<h4 style={{ display: 'block' }}>{this.props.grade.toFixed(1)}</h4>
+					</div>
+					<div
+						style={{
+							display: 'flex',
+							flexDirection: 'row',
+							justifyContent: 'space-between',
+							width: '20em'
+						}}>
+						<h5 style={{ display: 'block' }}>{this.props.category}</h5>
+					</div>
+				</div>
+			</div>
+		)
+	}
+}
+
+export class CategoriesPane extends Component {}

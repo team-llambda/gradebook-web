@@ -24,6 +24,8 @@ $grayDark: #888;
 $grayLight: #c4c4c4;
 $error: #f05056;
 
+$a: #12eb9d;
+
 a {
 	text-decoration: none;
 	color: #000;
@@ -223,21 +225,21 @@ input {
 
 .inputText {
 	outline: none;
-	font-size: 16px;
-	width: 24em;
+	font-size: 20px;
+	width: 16em;
 	padding: 0;
 	padding-left: 1.5em;
 	padding-right: 1.5em;
-	height: calc(3em - 8px);
+	height: calc(2.5em - 8px);
 }
 
 .floating-label {
 	color: $placeholder;
-	font-size: 16px;
+	font-size: 20px;
 	position: absolute;
 	pointer-events: none;
 	left: 1.5em;
-	top: 0.6em;
+	top: 0.4em;
 	transition: 0.2s ease all;
 	z-index: 1;
 }
@@ -245,11 +247,26 @@ input {
 h1 {
 	font-size: 4em;
 	font-weight: bold;
+	margin: 0;
 }
 
 h2 {
 	font-size: 3em;
 	font-weight: bold;
+	margin: 0;
+}
+
+h4 {
+	font-weight: 400;
+	font-size: 1.5em;
+	margin: 0;
+}
+
+h5 {
+	font-weight: 400;
+	font-size: 1em;
+	margin: 0;
+	color: $subtext;
 }
 
 i {
@@ -324,7 +341,7 @@ i {
 	font-size: 16px;
 	display: inline-block;
 	width: calc(100% - 12em);
-	height: 100%;
+	height: calc(100%-4em);
 	padding-top: 4em;
 	padding-right: 6em;
 
@@ -412,5 +429,33 @@ table {
 		&.highlight {
 			color: $highlight;
 		}
+	}
+}
+
+.course-info-pane {
+	width: 28em;
+	padding-top: 2em;
+	position: relative;
+	height: calc(100% - 8em);
+	h3 {
+		// disable text highlighting in button
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+
+		cursor: pointer;
+		color: $unselected;
+		transition: 0.2s ease all;
+		&:hover,
+		&.highlight {
+			color: $highlight;
+			transition: 0.2s ease all;
+		}
+
+		font-size: 2em;
+		margin: 0;
 	}
 }
