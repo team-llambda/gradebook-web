@@ -5,14 +5,20 @@
 
 @font-face {
 	font-family: Sofia-Pro;
-	src: url(assets/sofia_pro_bold.otf);
+	src: url(assets/sofia_pro_bold-webfont.woff2);
 	font-weight: 700;
 }
 
 @font-face {
 	font-family: Sofia-Pro;
-	src: url(assets/sofia_pro_regular.otf);
+	src: url(assets/sofia_pro_regular-webfont.woff2);
 	font-weight: 400;
+}
+
+@font-face {
+	font-family: Sofia-Pro;
+	src: url(assets/sofia_pro_medium-webfont.woff2);
+	font-weight: 500;
 }
 
 $highlight: #527aff;
@@ -257,13 +263,13 @@ h2 {
 }
 
 h4 {
-	font-weight: 400;
+	font-weight: 500;
 	font-size: 1.5em;
 	margin: 0;
 }
 
 h5 {
-	font-weight: 400;
+	font-weight: 500;
 	font-size: 1em;
 	margin: 0;
 	color: $subtext;
