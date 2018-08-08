@@ -252,17 +252,32 @@ i {
 .sidebar .menu {
   font-size: 2em;
   cursor: pointer;
-  position: absolute;
-  right: 1em;
-  top: 3em;
+  margin-right: 1em;
 }
 .sidebar.open {
   width: 40em;
   transition: 0.5s ease all;
 }
+.sidebar .menu-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  left: -16em;
+  width: 26em;
+  transition: 0.5s ease all;
+}
+.sidebar .menu-header.open {
+  left: 2em;
+}
+.sidebar .menu-header h1 {
+  margin-left: 1em;
+}
 .sidebar .menu-content {
   position: absolute;
   left: -16em;
+  top: 16em;
   transition: 0.5s ease all;
 }
 .sidebar .menu-content a {
@@ -270,10 +285,6 @@ i {
 }
 .sidebar .menu-content a.highlight {
   color: #527aff;
-}
-.sidebar .menu-content h1 {
-  margin: 0;
-  margin-bottom: 1em;
 }
 .sidebar .menu-content h2 {
   margin-top: 0.1em;

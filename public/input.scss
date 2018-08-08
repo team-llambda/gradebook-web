@@ -292,9 +292,7 @@ i {
 	.menu {
 		font-size: 2em;
 		cursor: pointer;
-		position: absolute;
-		right: 1em;
-		top: 3em;
+		margin-right: 1em;
 	}
 
 	&.open {
@@ -303,6 +301,26 @@ i {
 	}
 
 	transition: 0.5s ease all;
+
+	.menu-header {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+
+		position: absolute;
+		left: -16em;
+		width: 26em;
+		transition: 0.5s ease all;
+
+		&.open {
+			left: 2em;
+		}
+
+		h1 {
+			margin-left: 1em;
+		}
+	}
 
 	.menu-content {
 		position: absolute;
@@ -313,11 +331,6 @@ i {
 			&.highlight {
 				color: $highlight;
 			}
-		}
-
-		h1 {
-			margin: 0;
-			margin-bottom: 1em;
 		}
 
 		h2 {
@@ -333,6 +346,7 @@ i {
 		}
 
 		left: -16em;
+		top: 16em;
 		&.open {
 			left: 6em;
 		}
