@@ -20,7 +20,8 @@ export default class SingleClassPage extends Component {
 				date: '05/20/18',
 				name: 'Homework 11',
 				grade: 92.0,
-				comments: 'Keep up the great work!',
+				comments:
+					'Keep up the great work! Lorem ipsum jk im too lazy to copy the lorem ipsum here we go memememememmememememmememememe',
 				category: 'Homework'
 			},
 			{

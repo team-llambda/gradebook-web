@@ -496,9 +496,19 @@ export class Assignment extends Component {
 		this.state = {
 			expanded: false
 		}
+
+		this.commentsDiv = React.createRef()
 	}
 
 	handleClick = () => {
+		if (!this.state.expanded) {
+			const height = ReactDOM.findDOMNode(
+				this.refs.comments
+			).getBoundingClientRect().height
+			this.commentsDiv.current.style.height = 'calc(' + height + 'px + 2.5em)'
+		} else {
+			this.commentsDiv.current.style.height = '0'
+		}
 		this.setState({ expanded: !this.state.expanded })
 	}
 
@@ -522,11 +532,16 @@ export class Assignment extends Component {
 						</div>
 					</div>
 				</div>
-				{this.state.expanded && (
-					<div>
-						<h4>Comments</h4>
-					</div>
-				)}
+				<div
+					ref={this.commentsDiv}
+					className={
+						'assignment-comments' + (this.state.expanded ? ' expanded' : '')
+					}>
+					<h4 className={this.state.expanded ? 'expanded' : ''}>Comments</h4>
+					<p className={this.state.expanded ? 'expanded' : ''} ref="comments">
+						{this.props.comments}
+					</p>
+				</div>
 			</div>
 		)
 	}
