@@ -97,6 +97,10 @@ $buttonMargin: 0.5em;
 $buttonHeight: 1.7em;
 $buttonPadding: 2em;
 
+.highlight {
+	color: $highlight;
+}
+
 .button {
 	@include noselect();
 	cursor: pointer;
@@ -168,11 +172,17 @@ $buttonPadding: 2em;
 	}
 }
 
-img {
-	&.logo {
-		height: 1em;
-		position: relative;
-		left: -50%;
+.logowrapper {
+	position: absolute;
+	left: 50%;
+	bottom: 2em;
+
+	img {
+		&.logo {
+			height: 1em;
+			position: relative;
+			left: -50%;
+		}
 	}
 }
 
@@ -289,6 +299,13 @@ h5 {
 
 i {
 	@include noselect();
+	color: black;
+	position: absolute;
+
+	&.tablesort {
+		top: 50%;
+		transform: translateY(-50%);
+	}
 }
 
 .sidebar {
@@ -404,11 +421,80 @@ table {
 		}
 		transition: 0.3s;
 	}
+
+	h1 {
+		display: inline-block;
+	}
 }
 
 .course-info-pane {
+	.type-selector {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+
+		h3 {
+			display: inline-block;
+		}
+	}
 	position: relative;
 	height: calc(100% - 8em);
 	width: 28em;
 	padding-top: 2em;
+}
+
+.final-grades {
+	position: absolute;
+	bottom: 4em;
+	right: 0;
+	text-align: right;
+
+	.unselected {
+		color: #ccc;
+	}
+}
+
+.assignment {
+	.assignment-main {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: top;
+
+		.assignment-date {
+			display: inline-block;
+			padding-top: 0.2em;
+			width: 4em;
+		}
+
+		.assignment-info {
+			display: inline-block;
+
+			.assignment-name-grade {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+				width: 22em;
+
+				.assignment-name {
+					display: block;
+					padding-right: 0.5em;
+				}
+
+				.assignment-grade {
+					display: block;
+				}
+			}
+
+			.assignment-category {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+
+				h5 {
+					display: block;
+				}
+			}
+		}
+	}
 }

@@ -10,7 +10,7 @@ export class LoadingSpinner extends Component {
 export class Logo extends Component {
 	render() {
 		return (
-			<div style={{ position: 'absolute', left: '50%', bottom: '2em' }}>
+			<div className="logowrapper">
 				<img className="logo" src="../assets/logo.svg" />
 			</div>
 		)
@@ -220,19 +220,11 @@ export class Table extends Component {
 					{header}
 					{this.state.sortIndex === index &&
 						this.state.sortDirection === 1 && (
-							<i
-								className="material-icons"
-								style={{ color: '#000', position: 'absolute', top: '37%' }}>
-								arrow_drop_down
-							</i>
+							<i className="material-icons tablesort">arrow_drop_down</i>
 						)}
 					{this.state.sortIndex === index &&
 						this.state.sortDirection === -1 && (
-							<i
-								className="material-icons"
-								style={{ color: '#000', position: 'absolute', top: '37%' }}>
-								arrow_drop_up
-							</i>
+							<i className="material-icons tablesort">arrow_drop_up</i>
 						)}
 				</th>
 			)
@@ -357,7 +349,7 @@ export class QuarterSelector extends Component {
 	render() {
 		return (
 			<div className="quarter-selector">
-				<h1 style={{ display: 'inline-block' }}>Quarter</h1>
+				<h1>Quarter</h1>
 				<a
 					onClick={() => {
 						this.handleQuarterChange(1)
@@ -403,12 +395,7 @@ export class CourseInfoPane extends Component {
 	render() {
 		return (
 			<div className="course-info-pane">
-				<div
-					style={{
-						display: 'flex',
-						flexDirection: 'row',
-						justifyContent: 'space-between'
-					}}>
+				<div className="type-selector">
 					<h3 className={this.state.page === 'assignments' ? 'highlight' : ''}>
 						Assignments
 					</h3>
@@ -433,17 +420,11 @@ export class CourseInfoPane extends Component {
 export class FinalGrades extends Component {
 	render() {
 		return (
-			<div
-				style={{
-					position: 'absolute',
-					bottom: '4em',
-					right: '0',
-					textAlign: 'right'
-				}}>
+			<div className="final-grades">
 				<h1>99.9</h1>
-				<h4 style={{ color: '#527aff', fontWeight: 'bold' }}>-6.6</h4>
-				<h4 style={{ color: '#527aff', fontWeight: 'bold' }}>
-					<k style={{ color: '#cccccc' }}>projected:</k> 93.3
+				<h4 className="highlight">-6.6</h4>
+				<h4 className="highlight">
+					<span className="unselected">projected:</span> 93.3
 				</h4>
 			</div>
 		)
@@ -523,49 +504,21 @@ export class Assignment extends Component {
 
 	render() {
 		return (
-			<div>
-				<div
-					style={{
-						display: 'flex',
-						flexDirection: 'row',
-						justifyContent: 'space-between',
-						alignItems: 'top'
-					}}
-					onClick={this.handleClick}>
-					<h5
-						style={{
-							display: 'inline-block',
-							paddingTop: '0.2em',
-							width: '4em'
-						}}>
-						{this.props.date}
-					</h5>
+			<div className="assignment">
+				<div className="assignment-main" onClick={this.handleClick}>
+					<h5 className="assignment-date">{this.props.date}</h5>
 					<svg height="12" width="12" style={{ paddingTop: '0.6em' }}>
 						<circle cx="6" cy="6" r="6" fill="#12EB9D" />
 					</svg>
-					<div style={{ display: 'inline-block' }}>
-						<div
-							style={{
-								display: 'flex',
-								flexDirection: 'row',
-								justifyContent: 'space-between',
-								width: '22em'
-							}}>
-							<h4 style={{ display: 'block', paddingRight: '0.5em' }}>
-								{this.props.name}
-							</h4>
-							<h4 style={{ display: 'block' }}>
+					<div className="assignment-info">
+						<div className="assignment-name-grade">
+							<h4 className="assignment-name">{this.props.name}</h4>
+							<h4 className="assignment-grade">
 								{this.props.grade.toFixed(1)}
 							</h4>
 						</div>
-						<div
-							style={{
-								display: 'flex',
-								flexDirection: 'row',
-								justifyContent: 'space-between',
-								width: '20em'
-							}}>
-							<h5 style={{ display: 'block' }}>{this.props.category}</h5>
+						<div className="assignment-category">
+							<h5>{this.props.category}</h5>
 						</div>
 					</div>
 				</div>

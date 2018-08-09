@@ -53,6 +53,10 @@ body .allcenter {
   align-items: center;
 }
 
+.highlight {
+  color: #527aff;
+}
+
 .button {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -119,7 +123,12 @@ body .allcenter {
   }
 }
 
-img.logo {
+.logowrapper {
+  position: absolute;
+  left: 50%;
+  bottom: 2em;
+}
+.logowrapper img.logo {
   height: 1em;
   position: relative;
   left: -50%;
@@ -229,6 +238,12 @@ i {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  color: black;
+  position: absolute;
+}
+i.tablesort {
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .sidebar {
@@ -330,12 +345,69 @@ table tbody tr td:last-of-type {
 .quarter-selector a:hover, .quarter-selector a.highlight {
   color: #527aff;
 }
+.quarter-selector h1, .quarter-selector h2, .quarter-selector h4, .quarter-selector h5 {
+  display: inline-block;
+}
 
 .course-info-pane {
   position: relative;
   height: calc(100% - 8em);
   width: 28em;
   padding-top: 2em;
+}
+.course-info-pane .type-selector {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.course-info-pane .type-selector h3 {
+  display: inline-block;
+}
+
+.final-grades {
+  position: absolute;
+  bottom: 4em;
+  right: 0;
+  text-align: right;
+}
+.final-grades .unselected {
+  color: #ccc;
+}
+
+.assignment .assignment-main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: top;
+}
+.assignment .assignment-main .assignment-date {
+  display: inline-block;
+  padding-top: 0.2em;
+  width: 4em;
+}
+.assignment .assignment-main .assignment-info {
+  display: inline-block;
+}
+.assignment .assignment-main .assignment-info .assignment-name-grade {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 22em;
+}
+.assignment .assignment-main .assignment-info .assignment-name-grade .assignment-name {
+  display: block;
+  padding-right: 0.5em;
+}
+.assignment .assignment-main .assignment-info .assignment-name-grade .assignment-grade {
+  display: block;
+}
+.assignment .assignment-main .assignment-info .assignment-category {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.assignment .assignment-main .assignment-info .assignment-category h5 {
+  display: block;
 }
 
 /*# sourceMappingURL=styles.css.map */

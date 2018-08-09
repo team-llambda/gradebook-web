@@ -2,6 +2,12 @@ import React, { Component } from 'react'
 import { Button, Logo, Textbox, QuarterSelector } from './Components'
 
 export default class LoginPage extends Component {
+	constructor(props) {
+		super(props)
+
+		//TODO: call reauth route to see if already authenticated
+	}
+
 	render() {
 		return (
 			<div className="cover fullsize allcenter">
