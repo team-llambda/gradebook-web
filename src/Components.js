@@ -69,14 +69,18 @@ export class Textbox extends Component {
 
 		this.state = { errored: false, text: this.props.text || '' }
 		this.blocker = React.createRef()
+	}
 
+	componentDidMount() {
 		setTimeout(() => {
 			const width = ReactDOM.findDOMNode(
 				this.refs.label
 			).getBoundingClientRect().width
+
+			// 1em is the total latteral padding of the white blocker, 0.5em for each side
 			if (this.state.text.length > 0)
-				this.blocker.current.style.width = 'calc(' + width + 'px - 0.7em)'
-		}, 200)
+				this.blocker.current.style.width = 'calc(' + width + 'px + 1em)'
+		}, 300)
 	}
 
 	setText(text) {
@@ -96,13 +100,11 @@ export class Textbox extends Component {
 	}
 
 	handleFocus = () => {
+		// 1.25 is the ratio of the large placeholder font size to the small placeholder font size
 		const width = ReactDOM.findDOMNode(this.refs.label).getBoundingClientRect()
 			.width
-		if (this.state.text.length > 0)
-			this.blocker.current.style.width = 'calc(' + width + 'px - 0.8em)'
-		else
-			this.blocker.current.style.width =
-				'calc(' + (width * 14) / 20 + 'px + 0.95em)'
+		if (this.state.text.length === 0)
+			this.blocker.current.style.width = 'calc(' + width / 1.25 + 'px + 1em)'
 	}
 
 	handleBlur = () => {
@@ -507,49 +509,71 @@ export class AssignmentsPane extends Component {
 }
 
 export class Assignment extends Component {
+	constructor(props) {
+		super(props)
+
+		this.state = {
+			expanded: false
+		}
+	}
+
+	handleClick = () => {
+		this.setState({ expanded: !this.state.expanded })
+	}
+
 	render() {
 		return (
-			<div
-				style={{
-					display: 'flex',
-					flexDirection: 'row',
-					justifyContent: 'space-between',
-					alignItems: 'top'
-				}}>
-				<h5
+			<div>
+				<div
 					style={{
-						display: 'inline-block',
-						paddingTop: '0.2em',
-						width: '4em'
-					}}>
-					{this.props.date}
-				</h5>
-				<svg height="12" width="12" style={{ paddingTop: '0.6em' }}>
-					<circle cx="6" cy="6" r="6" fill="#12EB9D" />
-				</svg>
-				<div style={{ display: 'inline-block' }}>
-					<div
+						display: 'flex',
+						flexDirection: 'row',
+						justifyContent: 'space-between',
+						alignItems: 'top'
+					}}
+					onClick={this.handleClick}>
+					<h5
 						style={{
-							display: 'flex',
-							flexDirection: 'row',
-							justifyContent: 'space-between',
-							width: '22em'
+							display: 'inline-block',
+							paddingTop: '0.2em',
+							width: '4em'
 						}}>
-						<h4 style={{ display: 'block', paddingRight: '0.5em' }}>
-							{this.props.name}
-						</h4>
-						<h4 style={{ display: 'block' }}>{this.props.grade.toFixed(1)}</h4>
-					</div>
-					<div
-						style={{
-							display: 'flex',
-							flexDirection: 'row',
-							justifyContent: 'space-between',
-							width: '20em'
-						}}>
-						<h5 style={{ display: 'block' }}>{this.props.category}</h5>
+						{this.props.date}
+					</h5>
+					<svg height="12" width="12" style={{ paddingTop: '0.6em' }}>
+						<circle cx="6" cy="6" r="6" fill="#12EB9D" />
+					</svg>
+					<div style={{ display: 'inline-block' }}>
+						<div
+							style={{
+								display: 'flex',
+								flexDirection: 'row',
+								justifyContent: 'space-between',
+								width: '22em'
+							}}>
+							<h4 style={{ display: 'block', paddingRight: '0.5em' }}>
+								{this.props.name}
+							</h4>
+							<h4 style={{ display: 'block' }}>
+								{this.props.grade.toFixed(1)}
+							</h4>
+						</div>
+						<div
+							style={{
+								display: 'flex',
+								flexDirection: 'row',
+								justifyContent: 'space-between',
+								width: '20em'
+							}}>
+							<h5 style={{ display: 'block' }}>{this.props.category}</h5>
+						</div>
 					</div>
 				</div>
+				{this.state.expanded && (
+					<div>
+						<h4>Comments</h4>
+					</div>
+				)}
 			</div>
 		)
 	}

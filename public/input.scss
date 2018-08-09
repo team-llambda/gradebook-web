@@ -1,8 +1,3 @@
-* {
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
-
 @font-face {
 	font-family: Sofia-Pro;
 	src: url(assets/sofia_pro_bold-webfont.woff2);
@@ -32,49 +27,50 @@ $error: #f05056;
 
 $a: #12eb9d;
 
-a {
+* {
+	// supposedly antialiases stuff
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 	text-decoration: none;
-	color: #000;
-	// disable text highlighting in button
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
 }
 
 html {
+	// page dimensions
 	margin: 0 !important;
 	padding: 0 !important;
-	font-family: 'Sofia-Pro';
 	width: 100%;
-	font-size: 16px;
 	height: 100%;
 	overflow: hidden;
+
+	// font
+	font-family: 'Sofia-Pro';
+	font-size: 16px;
+	color: #000;
 }
 
 body {
+	// more screen dimensions
 	margin: 0 !important;
 	padding: 0 !important;
-	font-family: 'Sofia-Pro';
 	width: 100%;
 	height: 100%;
 
+	// root element of every react page
 	.fullsize {
 		height: 100%;
 		display: flex;
 		flex-direction: row;
 		justify-content: start;
-		// white-space: nowrap;
 	}
 
+	// pages w/ the splash cover svg
 	.cover {
 		background-image: url('./assets/cover.svg');
 		background-size: 110%;
 		background-position: center;
 	}
 
+	// pages w/ vertical and horizontal centering
 	.allcenter {
 		display: flex;
 		flex-direction: column;
@@ -83,27 +79,7 @@ body {
 	}
 }
 
-.button {
-	cursor: pointer;
-	background: $highlight;
-	color: white;
-	position: relative;
-	display: inline-block;
-	font-size: 1.5em;
-
-	height: 1.7em;
-
-	margin-top: 0.5em;
-	margin-left: 0.25em;
-	margin-right: 0.25em;
-	margin-bottom: 0.5em;
-	padding-top: 0.3em;
-	padding-left: 2em;
-	padding-right: 2em;
-
-	border-radius: 2em;
-	border: none;
-
+@mixin noselect() {
 	// disable text highlighting in button
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
@@ -111,58 +87,84 @@ body {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
-
-	// handle hover + click animation
-	transition: box-shadow 0.1s;
-	box-shadow: 1px 2px 8px $grayLight;
-	&:hover {
-		transition: 0.1s;
-		box-shadow: 1px 3px 12px $grayDark;
-	}
-	&:active {
-		transition: 0.1s;
-		box-shadow: 1px 2px 8px $grayLight;
-	}
 }
 
-.loading-spinner {
+$shadowIdle: 1px 2px 8px $grayLight;
+$shadowClicked: 1px 3px 12px $grayDark;
+$shadowHover: 1px 2px 8px $grayLight;
+
+// button component
+$buttonMargin: 0.5em;
+$buttonHeight: 1.7em;
+$buttonPadding: 2em;
+
+.button {
+	@include noselect();
+	cursor: pointer;
+	background: $highlight;
+	color: white;
+	position: relative;
 	display: inline-block;
-	width: 1em;
-	height: 1em;
-	position: absolute;
-	top: 0.45em;
-	right: 0.5em;
-	opacity: 0;
-	transition: opacity 0.3s;
 
-	// these supposedly get rid of weird aliasing effects
-	transform: translateZ(0);
-	-webkit-transform: translateZ(0);
-	-webkit-backface-visibility: hidden;
+	font-size: $buttonHeight;
+	height: $buttonHeight;
 
-	&.on {
-		opacity: 1;
+	margin-top: $buttonMargin;
+	margin-left: $buttonMargin;
+	margin-right: $buttonMargin;
+	margin-bottom: $buttonMargin;
+
+	padding-left: $buttonPadding;
+	padding-right: $buttonPadding;
+
+	border-radius: $buttonHeight / 2;
+	border: none;
+
+	// handle hover + click animation
+	transition: 0.2s ease box-shadow;
+	box-shadow: $shadowIdle;
+	&:hover {
+		box-shadow: $shadowHover;
+	}
+	&:active {
+		box-shadow: $shadowClicked;
+	}
+
+	.loading-spinner {
+		display: inline-block;
+		width: 1em;
+		height: 1em;
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		right: $buttonHeight / 4;
+		opacity: 0;
 		transition: opacity 0.3s;
-	}
 
-	&:after {
-		content: ' ';
-		display: block;
-		width: 0.75em;
-		height: 0.75em;
-		margin: 1px;
-		border-radius: 50%;
-		border: 3px solid #fff;
-		border-color: #fff #fff #fff transparent;
-		animation: lds-dual-ring 1.2s linear infinite;
-	}
-
-	@keyframes lds-dual-ring {
-		0% {
-			transform: rotate(0deg);
+		&.on {
+			opacity: 1;
+			transition: opacity 0.3s;
 		}
-		100% {
-			transform: rotate(360deg);
+
+		&:after {
+			content: ' ';
+			display: block;
+			width: 0.75em;
+			height: 0.75em;
+			margin: 1px;
+			border-radius: 50%;
+			border: 3px solid #fff;
+			border-color: #fff #fff #fff transparent;
+			animation: lds-dual-ring 1.2s linear infinite;
+		}
+
+		@keyframes lds-dual-ring {
+			0% {
+				transform: rotate(0deg);
+			}
+			100% {
+				transform: rotate(360deg);
+			}
 		}
 	}
 }
@@ -185,6 +187,16 @@ input {
 	outline: none;
 	font-family: 'Sofia-Pro';
 	transition: 0.3s;
+	box-shadow: none;
+
+	outline: none;
+	font-size: 1.25em;
+	width: 16em;
+	padding: 0;
+	padding-left: 1.5em;
+	padding-right: 1.5em;
+	height: calc(2.5em - 8px);
+
 	&:focus,
 	&:not(:focus):valid {
 		transition: 0.3s;
@@ -194,59 +206,34 @@ input {
 	&:focus ~ .floating-label,
 	&:not(:focus):valid ~ .floating-label {
 		color: $highlight;
-		top: -18px;
+		top: -0.75em;
 		height: 1em;
-		left: 20px;
-		font-size: 14px;
-		//background: white;
-		margin-bottom: 0.5em;
-		padding-top: 0.5em;
-		margin-left: 0.5em;
-		padding-left: 1em;
-		padding-right: 1em;
-		opacity: 1;
+		left: 2.5em;
+		font-size: 1em;
 		z-index: 1;
-	}
-
-	&:focus ~ .blocker,
-	&:not(:focus):valid ~ .blocker {
-		transition: width 0.3s;
-		border: 2px solid white;
-	}
-
-	&:required {
-		box-shadow: none;
 	}
 }
 
 .blocker {
 	position: absolute;
-	height: 0;
-	width: 0;
-	transition: 0.3s;
 	top: 0;
 	left: 2em;
-	border: 0px solid white;
-}
 
-.inputText {
-	outline: none;
-	font-size: 20px;
-	width: 16em;
-	padding: 0;
-	padding-left: 1.5em;
-	padding-right: 1.5em;
-	height: calc(2.5em - 8px);
+	height: 3px;
+	width: 0;
+	background: white;
+
+	transition: 0.3s;
 }
 
 .floating-label {
 	color: $placeholder;
-	font-size: 20px;
+	font-size: 1.25em;
 	position: absolute;
 	pointer-events: none;
 	left: 1.5em;
 	top: 0.4em;
-	transition: 0.2s ease all;
+	transition: 0.3s;
 	z-index: 1;
 }
 
@@ -257,37 +244,31 @@ h1 {
 }
 
 h2 {
+	@extend h1;
 	font-size: 3em;
-	font-weight: bold;
-	margin: 0;
+	// font-weight: bold;
+	// margin: 0;
 }
 
 h4 {
+	@extend h1;
 	font-weight: 500;
 	font-size: 1.5em;
-	margin: 0;
 }
 
 h5 {
-	font-weight: 500;
+	@extend h4;
 	font-size: 1em;
-	margin: 0;
 	color: $subtext;
 }
 
 i {
-	// disable text highlighting in button
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
+	@include noselect();
 }
 
 .sidebar {
 	display: inline-block;
-	width: 12em;
+	width: 8em;
 	height: calc(100% - 4em);
 	position: relative;
 	padding-top: 4em;
