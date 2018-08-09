@@ -16,7 +16,6 @@
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-decoration: none;
 }
 
 html {
@@ -129,8 +128,7 @@ img.logo {
 .textbox {
   position: relative;
 }
-
-input {
+.textbox input {
   border: 3px solid #bdbdbd;
   border-radius: 2em;
   outline: none;
@@ -145,11 +143,11 @@ input {
   padding-right: 1.5em;
   height: calc(2.5em - 8px);
 }
-input:focus, input:not(:focus):valid {
+.textbox input:focus, .textbox input:not(:focus):valid {
   transition: 0.3s;
   border: 3px solid #527aff;
 }
-input:focus ~ .floating-label, input:not(:focus):valid ~ .floating-label {
+.textbox input:focus ~ .floating-label, .textbox input:not(:focus):valid ~ .floating-label {
   color: #527aff;
   top: -0.75em;
   height: 1em;
@@ -157,8 +155,7 @@ input:focus ~ .floating-label, input:not(:focus):valid ~ .floating-label {
   font-size: 1em;
   z-index: 1;
 }
-
-.blocker {
+.textbox .blocker {
   position: absolute;
   top: 0;
   left: 2em;
@@ -167,8 +164,7 @@ input:focus ~ .floating-label, input:not(:focus):valid ~ .floating-label {
   background: white;
   transition: 0.3s;
 }
-
-.floating-label {
+.textbox .floating-label {
   color: #828282;
   font-size: 1.25em;
   position: absolute;
@@ -177,6 +173,16 @@ input:focus ~ .floating-label, input:not(:focus):valid ~ .floating-label {
   top: 0.4em;
   transition: 0.3s;
   z-index: 1;
+}
+
+a {
+  cursor: pointer;
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+}
+a.highlight {
+  color: #527aff;
 }
 
 h1, h4, h5, h2 {
@@ -209,12 +215,15 @@ i {
 }
 
 .sidebar {
+  position: relative;
   display: inline-block;
   width: 8em;
   height: calc(100% - 4em);
-  position: relative;
   padding-top: 4em;
-  transition: 0.5s ease all;
+  transition: 0.5s;
+}
+.sidebar.open {
+  width: 40em;
 }
 .sidebar .menu {
   font-size: 2em;
@@ -223,49 +232,30 @@ i {
   right: 1em;
   top: 3em;
 }
-.sidebar.open {
-  width: 40em;
-  transition: 0.5s ease all;
-}
 .sidebar .menu-content {
   position: absolute;
   left: -16em;
-  transition: 0.5s ease all;
-}
-.sidebar .menu-content a {
-  cursor: pointer;
-}
-.sidebar .menu-content a.highlight {
-  color: #527aff;
-}
-.sidebar .menu-content h1, .sidebar .menu-content h2, .sidebar .menu-content h4, .sidebar .menu-content h5 {
-  margin: 0;
-  margin-bottom: 1em;
+  transition: 0.5s;
 }
 .sidebar .menu-content h2 {
+  margin: 0;
   margin-top: 0.1em;
   margin-bottom: 0.1em;
-  margin-left: 0em;
-  transition: 0.3s ease margin-left;
+  transition: 0.3s;
 }
 .sidebar .menu-content h2:hover {
-  margin-left: 0.5em;
-  transition: 0.3s ease margin-left;
+  margin-left: 0.25em;
 }
 .sidebar .menu-content.open {
   left: 6em;
 }
 
 .content {
-  font-size: 16px;
   display: inline-block;
   width: calc(100% - 12em);
-  height: calc(100%-4em);
+  height: calc(100% - 4em);
   padding-top: 4em;
   padding-right: 6em;
-}
-.content h1, .content h2, .content h4, .content h5 {
-  margin: 0;
 }
 
 table {
@@ -330,10 +320,9 @@ table tbody tr:hover {
 }
 .quarter-selector a {
   color: #bdbdbd;
-  cursor: pointer;
   font-size: 3.5em;
-  font-weight: bold;
   margin-left: 0.5em;
+  transition: 0.3s;
 }
 .quarter-selector a:hover, .quarter-selector a.highlight {
   color: #527aff;

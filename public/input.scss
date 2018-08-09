@@ -31,7 +31,6 @@ $a: #12eb9d;
 	// supposedly antialiases stuff
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	text-decoration: none;
 }
 
 html {
@@ -179,62 +178,73 @@ img {
 
 .textbox {
 	position: relative;
-}
 
-input {
-	border: 3px solid $unselected;
-	border-radius: 2em;
-	outline: none;
-	font-family: 'Sofia-Pro';
-	transition: 0.3s;
-	box-shadow: none;
-
-	outline: none;
-	font-size: 1.25em;
-	width: 16em;
-	padding: 0;
-	padding-left: 1.5em;
-	padding-right: 1.5em;
-	height: calc(2.5em - 8px);
-
-	&:focus,
-	&:not(:focus):valid {
+	input {
+		border: 3px solid $unselected;
+		border-radius: 2em;
+		outline: none;
+		font-family: 'Sofia-Pro';
 		transition: 0.3s;
-		border: 3px solid $highlight;
+		box-shadow: none;
+
+		outline: none;
+		font-size: 1.25em;
+		width: 16em;
+		padding: 0;
+		padding-left: 1.5em;
+		padding-right: 1.5em;
+		height: calc(2.5em - 8px);
+
+		&:focus,
+		&:not(:focus):valid {
+			transition: 0.3s;
+			border: 3px solid $highlight;
+		}
+
+		&:focus ~ .floating-label,
+		&:not(:focus):valid ~ .floating-label {
+			color: $highlight;
+			top: -0.75em;
+			height: 1em;
+			left: 2.5em;
+			font-size: 1em;
+			z-index: 1;
+		}
 	}
 
-	&:focus ~ .floating-label,
-	&:not(:focus):valid ~ .floating-label {
-		color: $highlight;
-		top: -0.75em;
-		height: 1em;
-		left: 2.5em;
-		font-size: 1em;
+	.blocker {
+		position: absolute;
+		top: 0;
+		left: 2em;
+
+		height: 3px;
+		width: 0;
+		background: white;
+
+		transition: 0.3s;
+	}
+
+	.floating-label {
+		color: $placeholder;
+		font-size: 1.25em;
+		position: absolute;
+		pointer-events: none;
+		left: 1.5em;
+		top: 0.4em;
+		transition: 0.3s;
 		z-index: 1;
 	}
 }
 
-.blocker {
-	position: absolute;
-	top: 0;
-	left: 2em;
+a {
+	cursor: pointer;
+	color: black;
+	text-decoration: none;
+	font-weight: bold;
 
-	height: 3px;
-	width: 0;
-	background: white;
-
-	transition: 0.3s;
-}
-
-.floating-label {
-	color: $placeholder;
-	font-size: 1.25em;
-	position: absolute;
-	pointer-events: none;
-	left: 1.5em;
-	top: 0.4em;
-	transition: 0.3s;
-	z-index: 1;
+	&.highlight {
+		color: $highlight;
+	}
 }
 
 h1 {
@@ -267,12 +277,21 @@ i {
 }
 
 .sidebar {
+	position: relative;
 	display: inline-block;
+
 	width: 8em;
 	height: calc(100% - 4em);
-	position: relative;
+
 	padding-top: 4em;
 
+	transition: 0.5s;
+
+	&.open {
+		width: 40em;
+	}
+
+	// the menu icon
 	.menu {
 		font-size: 2em;
 		cursor: pointer;
@@ -281,38 +300,17 @@ i {
 		top: 3em;
 	}
 
-	&.open {
-		width: 40em;
-		transition: 0.5s ease all;
-	}
-
-	transition: 0.5s ease all;
-
 	.menu-content {
 		position: absolute;
 
-		a {
-			cursor: pointer;
-
-			&.highlight {
-				color: $highlight;
-			}
-		}
-
-		h1 {
-			margin: 0;
-			margin-bottom: 1em;
-		}
-
 		h2 {
+			margin: 0;
 			margin-top: 0.1em;
 			margin-bottom: 0.1em;
 
-			margin-left: 0em;
-			transition: 0.3s ease margin-left;
+			transition: 0.3s;
 			&:hover {
-				margin-left: 0.5em;
-				transition: 0.3s ease margin-left;
+				margin-left: 0.25em;
 			}
 		}
 
@@ -320,21 +318,17 @@ i {
 		&.open {
 			left: 6em;
 		}
-		transition: 0.5s ease all;
+		transition: 0.5s;
 	}
 }
 
+// this is the real page content (not the sidebar)
 .content {
-	font-size: 16px;
 	display: inline-block;
 	width: calc(100% - 12em);
-	height: calc(100%-4em);
+	height: calc(100% - 4em);
 	padding-top: 4em;
 	padding-right: 6em;
-
-	h1 {
-		margin: 0;
-	}
 }
 
 table {
@@ -407,15 +401,14 @@ table {
 
 	a {
 		color: $unselected;
-		cursor: pointer;
 		font-size: 3.5em;
-		font-weight: bold;
 		margin-left: 0.5em;
 
 		&:hover,
 		&.highlight {
 			color: $highlight;
 		}
+		transition: 0.3s;
 	}
 }
 
