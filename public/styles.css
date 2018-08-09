@@ -195,6 +195,23 @@ h2 {
   font-size: 3em;
 }
 
+h3 {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  color: #bdbdbd;
+  transition: 0.2s;
+  font-size: 2em;
+  margin: 0;
+}
+h3:hover, h3.highlight {
+  color: #527aff;
+}
+
 h4, h5 {
   font-weight: 500;
   font-size: 1.5em;
@@ -271,52 +288,38 @@ table thead {
   -ms-user-select: none;
   user-select: none;
 }
+table thead tr {
+  height: 2em;
+}
 table thead tr th {
+  font-size: 2em;
   cursor: pointer;
-  color: black;
-  transition: 0.2s ease all;
+  position: relative;
+  transition: 0.2s;
 }
 table thead tr th:hover {
   color: #527aff;
-  transition: 0.2s ease all;
 }
-table tr th {
-  font-size: 2em;
-  position: relative;
-}
-table tr td {
-  font-size: 2em;
-}
-table tr td:last-of-type,
-table tr th:last-of-type {
+table thead tr th:last-of-type {
   text-align: right;
-  width: 8em;
-}
-table tr td:first-of-type,
-table tr th:first-of-type {
-  width: 6em;
-}
-table tr td,
-table tr th {
-  height: 2em;
 }
 table tbody tr {
-  font-size: 0.75em;
-  transition: 0.2s ease all;
+  height: 2em;
+  font-size: 1.7em;
+  transition: 0.2s;
   cursor: pointer;
 }
 table tbody tr:hover {
   color: #527aff;
-  transition: 0.2s ease all;
+}
+table tbody tr td:last-of-type {
+  text-align: right;
 }
 
 .quarter-selector {
   position: absolute;
   top: 4em;
   right: 6em;
-}
-.quarter-selector h1, .quarter-selector h2, .quarter-selector h4, .quarter-selector h5 {
-  margin: 0;
 }
 .quarter-selector a {
   color: #bdbdbd;
@@ -329,27 +332,10 @@ table tbody tr:hover {
 }
 
 .course-info-pane {
-  width: 28em;
-  padding-top: 2em;
   position: relative;
   height: calc(100% - 8em);
-}
-.course-info-pane h3 {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  cursor: pointer;
-  color: #bdbdbd;
-  transition: 0.2s ease all;
-  font-size: 2em;
-  margin: 0;
-}
-.course-info-pane h3:hover, .course-info-pane h3.highlight {
-  color: #527aff;
-  transition: 0.2s ease all;
+  width: 28em;
+  padding-top: 2em;
 }
 
 /*# sourceMappingURL=styles.css.map */

@@ -260,6 +260,21 @@ h2 {
 	// margin: 0;
 }
 
+h3 {
+	@include noselect();
+
+	cursor: pointer;
+	color: $unselected;
+	transition: 0.2s;
+	&:hover,
+	&.highlight {
+		color: $highlight;
+	}
+
+	font-size: 2em;
+	margin: 0;
+}
+
 h4 {
 	@extend h1;
 	font-weight: 500;
@@ -336,65 +351,44 @@ table {
 	width: 100%;
 	margin-top: 1em;
 	thead {
-		-webkit-touch-callout: none;
-		-webkit-user-select: none;
-		-khtml-user-select: none;
-		-moz-user-select: none;
-		-ms-user-select: none;
-		user-select: none;
+		@include noselect();
 		tr {
+			height: 2em;
 			th {
+				font-size: 2em;
 				cursor: pointer;
-				color: black;
-				transition: 0.2s ease all;
+				position: relative;
+
+				transition: 0.2s;
 				&:hover {
 					color: $highlight;
-					transition: 0.2s ease all;
+				}
+
+				&:last-of-type {
+					text-align: right;
 				}
 			}
 		}
 	}
-	tr {
-		th {
-			font-size: 2em;
-			position: relative;
-		}
-		td {
-			font-size: 2em;
-		}
-		td:last-of-type,
-		th:last-of-type {
-			text-align: right;
-			width: 8em;
-		}
-		td:first-of-type,
-		th:first-of-type {
-			width: 6em;
-		}
-		td,
-		th {
-			height: 2em;
-		}
-	}
 	tbody {
 		tr {
-			font-size: 0.75em;
-			transition: 0.2s ease all;
+			height: 2em;
+			font-size: 1.7em;
+			transition: 0.2s;
+			cursor: pointer;
 
 			&:hover {
 				color: $highlight;
-				transition: 0.2s ease all;
 			}
-			cursor: pointer;
+
+			td:last-of-type {
+				text-align: right;
+			}
 		}
-		// overflow-y: scroll;
 	}
 }
 
 .quarter-selector {
-	h1 {
-		margin: 0;
-	}
 	position: absolute;
 	top: 4em;
 	right: 6em;
@@ -413,29 +407,8 @@ table {
 }
 
 .course-info-pane {
-	width: 28em;
-	padding-top: 2em;
 	position: relative;
 	height: calc(100% - 8em);
-	h3 {
-		// disable text highlighting in button
-		-webkit-touch-callout: none;
-		-webkit-user-select: none;
-		-khtml-user-select: none;
-		-moz-user-select: none;
-		-ms-user-select: none;
-		user-select: none;
-
-		cursor: pointer;
-		color: $unselected;
-		transition: 0.2s ease all;
-		&:hover,
-		&.highlight {
-			color: $highlight;
-			transition: 0.2s ease all;
-		}
-
-		font-size: 2em;
-		margin: 0;
-	}
+	width: 28em;
+	padding-top: 2em;
 }
