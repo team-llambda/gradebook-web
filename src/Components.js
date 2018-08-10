@@ -412,20 +412,78 @@ export class CourseInfoPane extends Component {
 					<CategoriesPane categories={this.props.categories} />
 				)}
 
-				<FinalGrades />
+				<FinalGrades
+					assignments={this.props.assignments}
+					categories={this.props.categories}
+					projectedAssignments={this.props.projectedAssignments}
+				/>
 			</div>
 		)
 	}
 }
 export class FinalGrades extends Component {
+	getGrades = (assignments, categories, projectedAssignments) => {
+		var grade = 0
+		var projected = 0
+
+		categories.forEach(category => {
+			var points = 0
+			var total = 0
+			assignments.forEach(assignment => {
+				if (assignment.category === category.name) {
+					points += assignment.score
+					total += assignment.available
+				}
+			})
+			if (total === 0) {
+				grade += category.weight
+			} else {
+				grade += (category.weight * points) / total
+			}
+
+			var projectedPoints = 0
+			var projectedTotal = 0
+			projectedAssignments.forEach(assignment => {
+				if (assignment.category === category.name) {
+					projectedPoints += assignment.score
+					projectedTotal += assignment.available
+				}
+			})
+
+			if (projectedTotal === 0) {
+				projected += category.weight
+			} else {
+				projected += (category.weight * projectedPoints) / projectedTotal
+			}
+		})
+
+		return {
+			grade: (grade * 100).toFixed(1),
+			projected: (projected * 100).toFixed(1)
+		}
+	}
+
 	render() {
+		var grades = this.getGrades(
+			this.props.assignments,
+			this.props.categories,
+			this.props.projectedAssignments
+		)
 		return (
 			<div className="final-grades">
-				<h1>99.9</h1>
-				<h4 className="highlight">-6.6</h4>
-				<h4 className="highlight">
-					<span className="unselected">projected:</span> 93.3
-				</h4>
+				<h1>{grades.grade}</h1>
+				{this.props.projectedAssignments.length > 0 && (
+					<div>
+						<h4 className="highlight">
+							{grades.projected - grades.grade > 0
+								? '+' + (grades.projected - grades.grade).toFixed(1)
+								: (grades.projected - grades.grade).toFixed(1)}
+						</h4>
+						<h4 className="highlight">
+							<span className="unselected">projected:</span> {grades.projected}
+						</h4>
+					</div>
+				)}
 			</div>
 		)
 	}
@@ -468,9 +526,9 @@ export class AssignmentsPane extends Component {
 		var shownAssignments = this.state.assignments.slice().filter(
 			a =>
 				a.name.toLowerCase().includes(filter.toLowerCase()) ||
-				a.grade
+				(a.score / a.available)
+					.toFixed(1)
 					.toString()
-					.toLowerCase()
 					.includes(filter.toLowerCase()) ||
 				a.comments.toLowerCase().includes(filter.toLowerCase()) ||
 				a.category.toLowerCase().includes(filter.toLowerCase()) ||
@@ -492,7 +550,7 @@ export class AssignmentsPane extends Component {
 							handleClick={() => this.handleClick(index)}
 							date={assignment.date}
 							name={assignment.name}
-							grade={assignment.grade}
+							grade={(assignment.score / assignment.available) * 100}
 							category={assignment.category}
 							comments={assignment.comments}
 						/>
