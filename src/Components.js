@@ -537,10 +537,13 @@ export class Assignment extends Component {
 					className={
 						'assignment-comments' + (this.state.expanded ? ' expanded' : '')
 					}>
-					<h4 className={this.state.expanded ? 'expanded' : ''}>Comments</h4>
-					<p className={this.state.expanded ? 'expanded' : ''} ref="comments">
-						{this.props.comments}
-					</p>
+					<div className="assignment-comments-content">
+						<h4>Comments</h4>
+						<p ref="comments">{this.props.comments}</p>
+					</div>
+					<div className="assignment-controls">
+						<i className="material-icons">arrow_drop_down</i>
+					</div>
 				</div>
 			</div>
 		)

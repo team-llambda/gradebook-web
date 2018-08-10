@@ -503,10 +503,27 @@ table {
 	.assignment-comments {
 		padding-left: 6em;
 		height: 0;
-
 		overflow: hidden;
-
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: top;
 		transition: 0.2s;
+
+		.assignment-comments-content {
+			display: inline-block;
+			width: 20em;
+		}
+
+		.assignment-controls {
+			padding-top: 0.3em;
+			display: inline-block;
+			width: 2em;
+		}
+
+		i {
+			position: relative;
+		}
 
 		p {
 			margin-top: 0;

@@ -415,7 +415,23 @@ table tbody tr td:last-of-type {
   padding-left: 6em;
   height: 0;
   overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: top;
   transition: 0.2s;
+}
+.assignment .assignment-comments .assignment-comments-content {
+  display: inline-block;
+  width: 20em;
+}
+.assignment .assignment-comments .assignment-controls {
+  padding-top: 0.3em;
+  display: inline-block;
+  width: 2em;
+}
+.assignment .assignment-comments i {
+  position: relative;
 }
 .assignment .assignment-comments p {
   margin-top: 0;
