@@ -516,9 +516,13 @@ table {
 		}
 
 		.assignment-controls {
-			padding-top: 0.3em;
 			display: inline-block;
 			width: 2em;
+
+			.assignment-action {
+				cursor: pointer;
+				margin-top: 0.3em;
+			}
 		}
 
 		i {

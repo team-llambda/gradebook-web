@@ -426,9 +426,12 @@ table tbody tr td:last-of-type {
   width: 20em;
 }
 .assignment .assignment-comments .assignment-controls {
-  padding-top: 0.3em;
   display: inline-block;
   width: 2em;
+}
+.assignment .assignment-comments .assignment-controls .assignment-action {
+  cursor: pointer;
+  margin-top: 0.3em;
 }
 .assignment .assignment-comments i {
   position: relative;

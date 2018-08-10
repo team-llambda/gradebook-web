@@ -437,7 +437,8 @@ export class AssignmentsPane extends Component {
 
 		this.state = {
 			filter: '',
-			assignments: this.props.assignments || []
+			assignments: this.props.assignments || [],
+			expandedAssignment: null
 		}
 	}
 
@@ -448,6 +449,18 @@ export class AssignmentsPane extends Component {
 	handleFilterChange = text => {
 		console.log('filter change')
 		this.setState({ filter: text })
+	}
+
+	handleClick = index => {
+		if (this.state.expandedAssignment !== null) {
+			if (this.state.expandedAssignment == index) {
+				this.setState({ expandedAssignment: null })
+			} else {
+				this.setState({ expandedAssignment: index })
+			}
+		} else {
+			this.setState({ expandedAssignment: index })
+		}
 	}
 
 	render() {
@@ -472,10 +485,11 @@ export class AssignmentsPane extends Component {
 					onTextChange={this.handleFilterChange}
 				/>
 				{/* TODO: INSERT ASSIGNMENT CREATION MEME */}
-				{shownAssignments.map(assignment => {
-					console.log(assignment)
+				{shownAssignments.map((assignment, index) => {
 					return (
 						<Assignment
+							expanded={this.state.expandedAssignment === index}
+							handleClick={() => this.handleClick(index)}
 							date={assignment.date}
 							name={assignment.name}
 							grade={assignment.grade}
@@ -493,29 +507,26 @@ export class Assignment extends Component {
 	constructor(props) {
 		super(props)
 
-		this.state = {
-			expanded: false
-		}
-
 		this.commentsDiv = React.createRef()
 	}
 
-	handleClick = () => {
-		if (!this.state.expanded) {
+	componentWillReceiveProps(newProps) {
+		var expanded = newProps.expanded
+
+		if (expanded) {
 			const height = ReactDOM.findDOMNode(
 				this.refs.comments
 			).getBoundingClientRect().height
-			this.commentsDiv.current.style.height = 'calc(' + height + 'px + 2.5em)'
+			this.commentsDiv.current.style.height = 'calc(' + height + 'px + 3em)'
 		} else {
 			this.commentsDiv.current.style.height = '0'
 		}
-		this.setState({ expanded: !this.state.expanded })
 	}
 
 	render() {
 		return (
 			<div className="assignment">
-				<div className="assignment-main" onClick={this.handleClick}>
+				<div className="assignment-main" onClick={this.props.handleClick}>
 					<h5 className="assignment-date">{this.props.date}</h5>
 					<svg height="12" width="12" style={{ paddingTop: '0.6em' }}>
 						<circle cx="6" cy="6" r="6" fill="#12EB9D" />
@@ -535,14 +546,15 @@ export class Assignment extends Component {
 				<div
 					ref={this.commentsDiv}
 					className={
-						'assignment-comments' + (this.state.expanded ? ' expanded' : '')
+						'assignment-comments' + (this.props.expanded ? ' expanded' : '')
 					}>
 					<div className="assignment-comments-content">
 						<h4>Comments</h4>
 						<p ref="comments">{this.props.comments}</p>
 					</div>
 					<div className="assignment-controls">
-						<i className="material-icons">arrow_drop_down</i>
+						<i className="material-icons assignment-action">delete</i>
+						<i className="material-icons assignment-action">autorenew</i>
 					</div>
 				</div>
 			</div>
