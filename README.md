@@ -8,11 +8,13 @@ Our service stores metadata for every user to make the user experience smoother.
 
 ## Dependencies
 
-1.  **react** >= 16.4.2
-2.  **react-dom** >= 16.4.2
-3.  **react-router-dom** >= 4.3.1
-4.  **react-scripts** == 1.1.4
-5.  **socket.io-client** >= 2.1.1
+1.  **chart.js** >= 2.7.2
+2.  **react** >= 16.4.2
+3.  **react-chartjs-2** >= 2.7.4
+4.  **react-dom** >= 16.4.2
+5.  **react-router-dom** >= 4.3.1
+6.  **react-scripts** == 1.1.4
+7.  **socket.io-client** >= 2.1.1
 
 ## How to run
 

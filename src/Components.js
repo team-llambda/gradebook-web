@@ -622,7 +622,7 @@ export class Assignment extends Component {
 					<svg height="12" width="12" style={{ paddingTop: '0.6em' }}>
 						<circle cx="6" cy="6" r="6" fill="#12EB9D" />
 					</svg>
-					<div className="assignment-info category">
+					<div className="assignment-info">
 						<div className="assignment-name-grade">
 							<h4 className="assignment-name">{this.props.name}</h4>
 							<h4 className="assignment-grade">
