@@ -73,13 +73,14 @@ export class Textbox extends Component {
 
 	componentDidMount() {
 		setTimeout(() => {
-			const width = ReactDOM.findDOMNode(
-				this.refs.label
-			).getBoundingClientRect().width
+			const label = ReactDOM.findDOMNode(this.refs.label)
+			if (label) {
+				const width = label.getBoundingClientRect().width
 
-			// 1em is the total latteral padding of the white blocker, 0.5em for each side
-			if (this.state.text.length > 0)
-				this.blocker.current.style.width = 'calc(' + width + 'px + 1em)'
+				// 1em is the total latteral padding of the white blocker, 0.5em for each side
+				if (this.state.text.length > 0)
+					this.blocker.current.style.width = 'calc(' + width + 'px + 1em)'
+			}
 		}, 500)
 	}
 
@@ -388,24 +389,47 @@ export class CourseInfoPane extends Component {
 		super(props)
 
 		this.state = {
-			page: 'assignments'
+			page: 'assignments',
+
+			// should stay empty until there are modifications to the assignments
+			projectedAssignments: []
 		}
+
+		this.assignmentsPane = React.createRef()
+	}
+
+	handleProjectionChange = projectedAssignments => {
+		this.setState({ projectedAssignments: projectedAssignments })
+	}
+
+	handleProjectionReset = () => {
+		// TODO: implement projection reset
+		this.assignmentsPane.current.resetProjection()
+		this.setState({ projectedAssignments: [] })
 	}
 
 	render() {
 		return (
 			<div className="course-info-pane">
 				<div className="type-selector">
-					<h3 className={this.state.page === 'assignments' ? 'highlight' : ''}>
+					<h3
+						onClick={() => this.setState({ page: 'assignments' })}
+						className={this.state.page === 'assignments' ? 'highlight' : ''}>
 						Assignments
 					</h3>
-					<h3 className={this.state.page === 'categories' ? 'highlight' : ''}>
+					<h3
+						onClick={() => this.setState({ page: 'categories' })}
+						className={this.state.page === 'categories' ? 'highlight' : ''}>
 						Categories
 					</h3>
 				</div>
 
 				{this.state.page === 'assignments' && (
-					<AssignmentsPane assignments={this.props.assignments} />
+					<AssignmentsPane
+						ref={this.assignmentsPane}
+						assignments={this.props.assignments}
+						onProjectionChange={this.handleProjectionChange}
+					/>
 				)}
 
 				{this.state.page === 'categories' && (
@@ -415,7 +439,7 @@ export class CourseInfoPane extends Component {
 				<FinalGrades
 					assignments={this.props.assignments}
 					categories={this.props.categories}
-					projectedAssignments={this.props.projectedAssignments}
+					projectedAssignments={this.state.projectedAssignments}
 				/>
 			</div>
 		)
@@ -505,8 +529,11 @@ export class AssignmentsPane extends Component {
 	}
 
 	handleFilterChange = text => {
-		console.log('filter change')
 		this.setState({ filter: text })
+	}
+
+	handleProjectionChange = change => {
+		// TODO: modify this.state, call props handleProjectionChange with new this.state.assignments
 	}
 
 	handleClick = index => {
@@ -521,12 +548,16 @@ export class AssignmentsPane extends Component {
 		}
 	}
 
+	resetProjection = () => {}
+
 	render() {
 		var filter = this.state.filter
 		var shownAssignments = this.state.assignments.slice().filter(
 			a =>
 				a.name.toLowerCase().includes(filter.toLowerCase()) ||
-				(a.score / a.available)
+				a.score.toString().includes(filter.toLowerCase()) ||
+				a.available.toString().includes(filter.toLowerCase()) ||
+				((a.score / a.available) * 100)
 					.toFixed(1)
 					.toString()
 					.includes(filter.toLowerCase()) ||
@@ -546,6 +577,7 @@ export class AssignmentsPane extends Component {
 				{shownAssignments.map((assignment, index) => {
 					return (
 						<Assignment
+							// TODO: INCLUDE ASSIGNMENT EDITING MEME
 							expanded={this.state.expandedAssignment === index}
 							handleClick={() => this.handleClick(index)}
 							date={assignment.date}
@@ -590,7 +622,7 @@ export class Assignment extends Component {
 					<svg height="12" width="12" style={{ paddingTop: '0.6em' }}>
 						<circle cx="6" cy="6" r="6" fill="#12EB9D" />
 					</svg>
-					<div className="assignment-info">
+					<div className="assignment-info category">
 						<div className="assignment-name-grade">
 							<h4 className="assignment-name">{this.props.name}</h4>
 							<h4 className="assignment-grade">
@@ -622,4 +654,57 @@ export class Assignment extends Component {
 	}
 }
 
-export class CategoriesPane extends Component {}
+export class CategoriesPane extends Component {
+	render() {
+		return (
+			<div>
+				{this.props.categories.map((category, index) => {
+					return (
+						<Category
+							name={category.name}
+							score={category.score}
+							available={category.available}
+							weight={category.weight}
+						/>
+					)
+				})}
+			</div>
+		)
+	}
+}
+
+export class Category extends Component {
+	render() {
+		return (
+			<div className="category">
+				<div className="category-name-grade">
+					<h4 className="category-name">{this.props.name}</h4>
+					<h4 className="category-grade">
+						{this.props.available === 0
+							? '100.0%'
+							: ((this.props.score / this.props.available) * 100).toFixed(1) +
+							  '%'}
+					</h4>
+				</div>
+				<div className="category-details">
+					<h5>{this.props.score + '/' + this.props.available}</h5>
+					<h5>
+						{this.props.available === 0
+							? (this.props.weight * 100).toFixed(1) +
+							  '/' +
+							  (this.props.weight * 100).toFixed(1) +
+							  '%'
+							: (
+									(this.props.score / this.props.available) *
+									this.props.weight *
+									100
+							  ).toFixed(1) +
+							  '/' +
+							  (this.props.weight * 100).toFixed(1) +
+							  '%'}
+					</h5>
+				</div>
+			</div>
+		)
+	}
+}

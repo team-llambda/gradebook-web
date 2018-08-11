@@ -7,15 +7,15 @@ export default class SingleClassPage extends Component {
 
 		this.state = {
 			assignments: [],
-			categories: [],
-			projectedAssignments: []
+			categories: []
 		}
 	}
 
 	componentDidMount() {
+		// fetches the period from the redirect
 		const { period } = this.props.match.params
 
-		// TODO: call route to replace this temp data
+		// TODO: call route w/ period to replace this temp data
 		const assignments = [
 			{
 				date: '05/20/18',
@@ -44,19 +44,23 @@ export default class SingleClassPage extends Component {
 			}
 		]
 
-		const projectedAssignments = assignments.slice()
-
 		const categories = [
 			{
 				name: 'Tests',
-				weight: 0.6
+				weight: 0.6,
+				score: 46,
+				available: 50
 			},
 			{
 				name: 'Homework',
-				weight: 0.2
+				weight: 0.2,
+				score: 20,
+				available: 25
 			},
 			{
 				name: 'Projects',
+				score: 0,
+				available: 0,
 				weight: 0.2
 			}
 		]
@@ -65,7 +69,6 @@ export default class SingleClassPage extends Component {
 			period: period,
 			assignments: assignments,
 			categories: categories
-			//projectedAssignments: projectedAssignments
 		})
 	}
 
@@ -78,7 +81,6 @@ export default class SingleClassPage extends Component {
 					<CourseInfoPane
 						assignments={this.state.assignments}
 						categories={this.state.categories}
-						projectedAssignments={this.state.projectedAssignments}
 					/>
 				</div>
 				<QuarterSelector />

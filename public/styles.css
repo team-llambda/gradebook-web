@@ -448,4 +448,35 @@ table tbody tr td:last-of-type {
   margin-top: 0;
 }
 
+.category {
+  margin-top: 0.5em;
+}
+.category .category-name-grade {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+.category .category-name-grade .category-name {
+  display: inline-block;
+  white-space: nowrap;
+  overflow-x: scroll;
+  margin-right: 0.5em;
+}
+.category .category-name-grade .category-name::-webkit-scrollbar {
+  display: none;
+}
+.category .category-name-grade .category-grade {
+  display: inline-block;
+}
+.category .category-details {
+  z-index: -1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.category .category-details h5 {
+  display: block;
+}
+
 /*# sourceMappingURL=styles.css.map */

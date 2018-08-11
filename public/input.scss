@@ -541,3 +541,39 @@ table {
 		}
 	}
 }
+
+.category {
+	margin-top: 0.5em;
+	.category-name-grade {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		width: 100%;
+
+		.category-name {
+			display: inline-block;
+			white-space: nowrap;
+			// height: 1.5em;
+			&::-webkit-scrollbar {
+				display: none;
+			}
+			overflow-x: scroll;
+			margin-right: 0.5em;
+		}
+
+		.category-grade {
+			display: inline-block;
+		}
+	}
+
+	.category-details {
+		z-index: -1;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+
+		h5 {
+			display: block;
+		}
+	}
+}
