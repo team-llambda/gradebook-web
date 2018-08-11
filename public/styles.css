@@ -374,6 +374,9 @@ table tbody tr td:last-of-type {
   color: #ccc;
 }
 
+.assignment {
+  margin-top: 0.5em;
+}
 .assignment .assignment-main {
   cursor: pointer;
   display: flex;
@@ -397,7 +400,12 @@ table tbody tr td:last-of-type {
 }
 .assignment .assignment-main .assignment-info .assignment-name-grade .assignment-name {
   display: block;
-  padding-right: 0.5em;
+  white-space: nowrap;
+  overflow-x: scroll;
+  margin-right: 0.5em;
+}
+.assignment .assignment-main .assignment-info .assignment-name-grade .assignment-name::-webkit-scrollbar {
+  display: none;
 }
 .assignment .assignment-main .assignment-info .assignment-name-grade .assignment-grade {
   display: block;

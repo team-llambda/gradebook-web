@@ -80,7 +80,7 @@ export class Textbox extends Component {
 			// 1em is the total latteral padding of the white blocker, 0.5em for each side
 			if (this.state.text.length > 0)
 				this.blocker.current.style.width = 'calc(' + width + 'px + 1em)'
-		}, 300)
+		}, 500)
 	}
 
 	setText(text) {
@@ -550,7 +550,8 @@ export class AssignmentsPane extends Component {
 							handleClick={() => this.handleClick(index)}
 							date={assignment.date}
 							name={assignment.name}
-							grade={(assignment.score / assignment.available) * 100}
+							score={assignment.score}
+							available={assignment.available}
 							category={assignment.category}
 							comments={assignment.comments}
 						/>
@@ -593,11 +594,12 @@ export class Assignment extends Component {
 						<div className="assignment-name-grade">
 							<h4 className="assignment-name">{this.props.name}</h4>
 							<h4 className="assignment-grade">
-								{this.props.grade.toFixed(1)}
+								{((this.props.score / this.props.available) * 100).toFixed(1)}
 							</h4>
 						</div>
 						<div className="assignment-category">
 							<h5>{this.props.category}</h5>
+							<h5>{this.props.score + '/' + this.props.available}</h5>
 						</div>
 					</div>
 				</div>

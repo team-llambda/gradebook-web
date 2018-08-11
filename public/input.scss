@@ -455,6 +455,7 @@ table {
 }
 
 .assignment {
+	margin-top: 0.5em;
 	.assignment-main {
 		cursor: pointer;
 		display: flex;
@@ -479,7 +480,13 @@ table {
 
 				.assignment-name {
 					display: block;
-					padding-right: 0.5em;
+					white-space: nowrap;
+					// height: 1.5em;
+					&::-webkit-scrollbar {
+						display: none;
+					}
+					overflow-x: scroll;
+					margin-right: 0.5em;
 				}
 
 				.assignment-grade {
