@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Menu, Logo, Table, QuarterSelector } from '../Components'
-import LoginPage from '../LoginPage'
 
 export default class ClassesPage extends Component {
 	constructor(props) {

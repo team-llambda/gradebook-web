@@ -11,7 +11,7 @@ export class Logo extends Component {
 	render() {
 		return (
 			<div className="logowrapper">
-				<img className="logo" src="../assets/logo.svg" />
+				<img alt="logo" className="logo" src="../assets/logo.svg" />
 			</div>
 		)
 	}
@@ -158,6 +158,7 @@ export class Menu extends Component {
 		const links = MenuItems.map((item, index) => {
 			return (
 				<a
+					key={item.text}
 					href={item.href}
 					className={this.props.currentItemIndex === index ? 'highlight' : ''}>
 					<h2>{item.text}</h2>
@@ -276,6 +277,7 @@ export class Table extends Component {
 						)
 					}
 				}
+				return null
 			})
 		} else {
 			const data = this.props.data.slice()

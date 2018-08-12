@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Menu, { Logo } from './Components'
+import { Logo } from './Components'
 
 export default class LostPage extends Component {
 	render() {

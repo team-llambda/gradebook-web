@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import { Logo, Menu, QuarterSelector, CourseInfoPane } from '../Components'
+import ReactDOM from 'react-dom'
+import { Logo, Menu, QuarterSelector, Textbox } from '../Components'
+import { Radar } from 'react-chartjs-2'
 
 export default class SingleClassPage extends Component {
 	constructor(props) {
@@ -244,7 +246,7 @@ class AssignmentsPane extends Component {
 
 	handleClick = index => {
 		if (this.state.expandedAssignment !== null) {
-			if (this.state.expandedAssignment == index) {
+			if (this.state.expandedAssignment === index) {
 				this.setState({ expandedAssignment: null })
 			} else {
 				this.setState({ expandedAssignment: index })
@@ -283,6 +285,7 @@ class AssignmentsPane extends Component {
 				{shownAssignments.map((assignment, index) => {
 					return (
 						<Assignment
+							key={assignment.name + ' ' + assignment.date}
 							// TODO: INCLUDE ASSIGNMENT EDITING MEME
 							expanded={this.state.expandedAssignment === index}
 							handleClick={() => this.handleClick(index)}
@@ -362,18 +365,65 @@ class Assignment extends Component {
 
 class CategoriesPane extends Component {
 	render() {
+		const categories = this.props.categories.map((category, index) => {
+			return (
+				<Category
+					key={category.name}
+					name={category.name}
+					score={category.score}
+					available={category.available}
+					weight={category.weight}
+				/>
+			)
+		})
+
+		const data = {
+			labels: this.props.categories.map(c => c.name),
+			datasets: [
+				{
+					label: 'Category Performance',
+					backgroundColor: 'rgba(179,181,198,0.2)',
+					borderColor: 'rgba(179,181,198,1)',
+					pointBackgroundColor: 'rgba(179,181,198,1)',
+					pointBorderColor: '#fff',
+					pointHoverBackgroundColor: '#fff',
+					pointHoverBorderColor: 'rgba(179,181,198,1)',
+					data: this.props.categories
+						.slice()
+						.map(c => (c.available > 0 ? (c.score / c.available) * 100 : 100))
+				}
+			]
+		}
+
 		return (
 			<div>
-				{this.props.categories.map((category, index) => {
-					return (
-						<Category
-							name={category.name}
-							score={category.score}
-							available={category.available}
-							weight={category.weight}
-						/>
-					)
-				})}
+				{categories}
+				<Radar
+					height={40}
+					options={{
+						legend: {
+							display: false
+						},
+						scale: {
+							ticks: {
+								//fontSize: 32,
+								beginAtZero: true,
+								min: 0,
+								max: 100,
+								stepSize: 20,
+								userCallback: function(label, index, labels) {
+									// when the floored value is the same as the value we have a whole number
+									if (Math.floor(label) === label) {
+										return label
+									}
+								}
+							},
+							pointLabels: { fontSize: 18 }
+						},
+						maintainAspectRatio: false
+					}}
+					data={data}
+				/>
 			</div>
 		)
 	}

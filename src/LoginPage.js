@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Logo, Textbox, QuarterSelector } from './Components'
+import { Button, Logo, Textbox } from './Components'
 
 export default class LoginPage extends Component {
 	constructor(props) {
@@ -12,6 +12,7 @@ export default class LoginPage extends Component {
 		return (
 			<div className="cover fullsize allcenter">
 				<img
+					alt="logo"
 					style={{ height: '4em', marginBottom: '1em' }}
 					src="../assets/logo.svg"
 				/>
