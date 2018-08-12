@@ -201,7 +201,7 @@ export default class SingleClassPage extends Component {
 									}
 								}
 							}}
-							height={100}
+							height={80}
 						/>
 					</div>
 				</div>
@@ -516,11 +516,20 @@ class CategoriesPane extends Component {
 		}
 
 		return (
-			<div style={{ height: 'calc(100% - 12em)' }}>
+			<div
+				style={{
+					height: 'calc(100% - 12em)',
+					overflow: 'hidden',
+					position: 'relative'
+				}}>
 				<div style={{ height: '16em' }}>
 					<Radar
-						height={100}
 						options={{
+							layout: {
+								padding: {
+									bottom: 5
+								}
+							},
 							legend: {
 								display: false
 							},
@@ -547,8 +556,12 @@ class CategoriesPane extends Component {
 				</div>
 				<div
 					style={{
+						position: 'absolute',
 						overflow: 'auto',
-						height: 'calc(100% - 16em)',
+						top: '16em',
+						height: 'calc(100% - 17em)',
+						width: '100%',
+						marginTop: '1em',
 						paddingRight: '1em'
 					}}>
 					{categories}
