@@ -7,6 +7,7 @@ import SettingsPage from './SettingsPage'
 import LogoutPage from './LogoutPage'
 import LostPage from './LostPage'
 import SingleClassPage from './Grades/SingleClassPage'
+import { Chart } from 'chart.js'
 
 // eslint-disable-next-line
 String.prototype.isValidEmail = function() {
@@ -20,6 +21,21 @@ String.prototype.isOnlyWhitespace = function() {
 	if (this === '') return true
 	return this.replace(/\s/g, '').length === 0
 }
+
+String.prototype.hashCode = function() {
+	var hash = 0,
+		i,
+		chr
+	if (this.length === 0) return hash
+	for (i = 0; i < this.length; i++) {
+		chr = this.charCodeAt(i)
+		hash = (hash << 5) - hash + chr
+		hash |= 0 // Convert to 32bit integer
+	}
+	return hash
+}
+
+Chart.defaults.global.defaultFontFamily = 'Sofia-Pro'
 
 export default class App extends React.Component {
 	render() {

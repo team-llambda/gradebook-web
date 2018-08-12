@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { Logo, Menu, QuarterSelector, Textbox } from '../Components'
-import { Radar } from 'react-chartjs-2'
+import { Radar, Line } from 'react-chartjs-2'
 
 export default class SingleClassPage extends Component {
 	constructor(props) {
@@ -55,7 +55,7 @@ export default class SingleClassPage extends Component {
 			},
 			{
 				name: 'Homework',
-				weight: 0.2,
+				weight: 0.1,
 				score: 20,
 				available: 25
 			},
@@ -63,7 +63,19 @@ export default class SingleClassPage extends Component {
 				name: 'Projects',
 				score: 0,
 				available: 0,
-				weight: 0.2
+				weight: 0.1
+			},
+			{
+				name: 'Quizzes',
+				score: 0,
+				available: 0,
+				weight: 0.1
+			},
+			{
+				name: 'Memes',
+				score: 0,
+				available: 0,
+				weight: 0.1
 			}
 		]
 
@@ -74,7 +86,47 @@ export default class SingleClassPage extends Component {
 		})
 	}
 
+	getGrades = assignments => {
+		const categories = this.state.categories.slice()
+		var grade = 0
+
+		categories.forEach(category => {
+			var points = 0
+			var total = 0
+			assignments.forEach(assignment => {
+				if (assignment.category === category.name) {
+					points += assignment.score
+					total += assignment.available
+				}
+			})
+			if (total === 0) {
+				grade += category.weight
+			} else {
+				grade += (category.weight * points) / total
+			}
+		})
+
+		return (grade * 100).toFixed(1)
+	}
+
+	parseGraphData = () => {
+		var data = { x: [], y: [] }
+		var cumulativeAssignments = []
+		this.state.assignments.slice().forEach(assignment => {
+			cumulativeAssignments.push(assignment)
+
+			data.x.push(assignment.date)
+
+			const grade = this.getGrades(cumulativeAssignments)
+
+			data.y.push(grade)
+		})
+
+		return data
+	}
+
 	render() {
+		const data = this.parseGraphData()
 		return (
 			<div className="fullsize">
 				<Menu currentItemIndex={0} />
@@ -84,6 +136,74 @@ export default class SingleClassPage extends Component {
 						assignments={this.state.assignments}
 						categories={this.state.categories}
 					/>
+					<div className="grades-chart">
+						<Line
+							data={{
+								labels: data.x,
+								datasets: [
+									{
+										data: data.y,
+										label: 'My Grades',
+										fill: true,
+										backgroundColor: 'rgba(82,122,255,0.4)',
+										borderColor: 'rgba(82,122,255,1)',
+										borderCapStyle: 'butt',
+										borderDash: [],
+										cubicInterpolationMode: 'monotone',
+										borderDashOffset: 0.0,
+										borderJoinStyle: 'miter',
+										pointBorderColor: 'rgba(82,122,255,1)',
+										pointBackgroundColor: '#fff',
+										pointHoverBackgroundColor: 'rgba(82,122,255,1)',
+										pointHoverBorderColor: 'rgba(82,122,255,0.4)',
+										pointRadius: 4,
+										pointBorderWidth: 2,
+										pointHoverRadius: 4,
+										pointHoverBorderWidth: 4,
+										pointHitRadius: 8
+									}
+								]
+							}}
+							options={{
+								legend: {
+									display: false
+								},
+								maintainAspectRatio: false,
+								scales: {
+									yAxes: [{ ticks: { fontSize: 18 } }],
+									xAxes: [{ ticks: { fontSize: 18 } }]
+								},
+								tooltips: {
+									callbacks: {
+										title: (items, data) => {
+											const index = items[0].index
+
+											return this.state.assignments[index].name
+										},
+										label: (item, data) => {
+											const index = item.index
+
+											return this.state.assignments[index].category
+										},
+										labelColor: (item, data) => {
+											const index = item.index
+
+											var category = this.state.assignments[index].category
+											var hex = Math.abs(category.hashCode())
+												.toString(16)
+												.substring(0, 6)
+											console.log(hex)
+											return {
+												borderColor: '#' + hex,
+												backgroundColor: '#' + hex
+											}
+										}
+									}
+								}
+							}}
+							height={100}
+						/>
+					</div>
 				</div>
 				<QuarterSelector />
 				<Logo />
@@ -396,34 +516,43 @@ class CategoriesPane extends Component {
 		}
 
 		return (
-			<div>
-				{categories}
-				<Radar
-					height={40}
-					options={{
-						legend: {
-							display: false
-						},
-						scale: {
-							ticks: {
-								//fontSize: 32,
-								beginAtZero: true,
-								min: 0,
-								max: 100,
-								stepSize: 20,
-								userCallback: function(label, index, labels) {
-									// when the floored value is the same as the value we have a whole number
-									if (Math.floor(label) === label) {
-										return label
-									}
-								}
+			<div style={{ height: 'calc(100% - 12em)' }}>
+				<div style={{ height: '16em' }}>
+					<Radar
+						height={100}
+						options={{
+							legend: {
+								display: false
 							},
-							pointLabels: { fontSize: 18 }
-						},
-						maintainAspectRatio: false
-					}}
-					data={data}
-				/>
+							scale: {
+								ticks: {
+									//fontSize: 32,
+									beginAtZero: true,
+									min: 0,
+									max: 100,
+									stepSize: 20,
+									userCallback: function(label, index, labels) {
+										// when the floored value is the same as the value we have a whole number
+										if (Math.floor(label) === label) {
+											return label
+										}
+									}
+								},
+								pointLabels: { fontSize: 18 }
+							},
+							maintainAspectRatio: false
+						}}
+						data={data}
+					/>
+				</div>
+				<div
+					style={{
+						overflow: 'auto',
+						height: 'calc(100% - 16em)',
+						paddingRight: '1em'
+					}}>
+					{categories}
+				</div>
 			</div>
 		)
 	}

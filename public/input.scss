@@ -427,6 +427,14 @@ table {
 	}
 }
 
+.grades-chart {
+	display: inline-block;
+	width: calc(100% - 32em);
+	height: calc(100% - 14em);
+	padding-left: 4em;
+	padding-top: 3em;
+}
+
 .course-info-pane {
 	.type-selector {
 		display: flex;
@@ -437,7 +445,9 @@ table {
 			display: inline-block;
 		}
 	}
+	vertical-align: top;
 	position: relative;
+	display: inline-block;
 	height: calc(100% - 8em);
 	width: 28em;
 	padding-top: 2em;
@@ -485,7 +495,8 @@ table {
 					&::-webkit-scrollbar {
 						display: none;
 					}
-					overflow-x: scroll;
+					// TODO: firefox needs to hide the scrollbar
+					overflow-x: auto;
 					margin-right: 0.5em;
 				}
 
@@ -557,7 +568,7 @@ table {
 			&::-webkit-scrollbar {
 				display: none;
 			}
-			overflow-x: scroll;
+			overflow-x: auto;
 			margin-right: 0.5em;
 		}
 

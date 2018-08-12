@@ -349,8 +349,18 @@ table tbody tr td:last-of-type {
   display: inline-block;
 }
 
+.grades-chart {
+  display: inline-block;
+  width: calc(100% - 32em);
+  height: calc(100% - 14em);
+  padding-left: 4em;
+  padding-top: 3em;
+}
+
 .course-info-pane {
+  vertical-align: top;
   position: relative;
+  display: inline-block;
   height: calc(100% - 8em);
   width: 28em;
   padding-top: 2em;
@@ -401,7 +411,7 @@ table tbody tr td:last-of-type {
 .assignment .assignment-main .assignment-info .assignment-name-grade .assignment-name {
   display: block;
   white-space: nowrap;
-  overflow-x: scroll;
+  overflow-x: auto;
   margin-right: 0.5em;
 }
 .assignment .assignment-main .assignment-info .assignment-name-grade .assignment-name::-webkit-scrollbar {
@@ -460,7 +470,7 @@ table tbody tr td:last-of-type {
 .category .category-name-grade .category-name {
   display: inline-block;
   white-space: nowrap;
-  overflow-x: scroll;
+  overflow-x: auto;
   margin-right: 0.5em;
 }
 .category .category-name-grade .category-name::-webkit-scrollbar {
