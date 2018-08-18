@@ -388,7 +388,6 @@ table tbody tr td:last-of-type {
   margin-top: 0.5em;
 }
 .assignment .assignment-main {
-  cursor: pointer;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -409,6 +408,7 @@ table tbody tr td:last-of-type {
   width: 22em;
 }
 .assignment .assignment-main .assignment-info .assignment-name-grade .assignment-name {
+  cursor: pointer;
   display: block;
   white-space: nowrap;
   overflow-x: auto;
@@ -428,6 +428,15 @@ table tbody tr td:last-of-type {
 }
 .assignment .assignment-main .assignment-info .assignment-category h5 {
   display: block;
+}
+.assignment .assignment-main .assignment-info .assignment-category .assignment-category-name {
+  cursor: pointer;
+}
+.assignment .assignment-main .assignment-info .assignment-category .assignment-fraction h5 {
+  display: inline;
+}
+.assignment .assignment-main .assignment-info .assignment-category .assignment-fraction.highlight h5 {
+  color: #527aff;
 }
 .assignment .assignment-comments {
   padding-left: 6em;
@@ -487,6 +496,25 @@ table tbody tr td:last-of-type {
 }
 .category .category-details h5 {
   display: block;
+}
+
+.editable-input {
+  border: none;
+  outline: none;
+  font-family: "Sofia-Pro";
+  font-size: 1.5em;
+  font-weight: 500;
+  display: block;
+  text-align: right;
+}
+.editable-input.enabled {
+  width: 2em;
+  border-bottom: 3px solid #527aff;
+}
+.editable-input.small {
+  display: inline;
+  width: 1em;
+  font-size: 1em;
 }
 
 /*# sourceMappingURL=styles.css.map */

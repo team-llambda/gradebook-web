@@ -467,7 +467,6 @@ table {
 .assignment {
 	margin-top: 0.5em;
 	.assignment-main {
-		cursor: pointer;
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
@@ -489,6 +488,7 @@ table {
 				width: 22em;
 
 				.assignment-name {
+					cursor: pointer;
 					display: block;
 					white-space: nowrap;
 					// height: 1.5em;
@@ -513,6 +513,22 @@ table {
 
 				h5 {
 					display: block;
+				}
+
+				.assignment-category-name {
+					cursor: pointer;
+				}
+
+				.assignment-fraction {
+					h5 {
+						display: inline;
+					}
+
+					&.highlight {
+						h5 {
+							color: $highlight;
+						}
+					}
 				}
 			}
 		}
@@ -586,5 +602,27 @@ table {
 		h5 {
 			display: block;
 		}
+	}
+}
+
+.editable-input {
+	border: none;
+	outline: none;
+	font-family: 'Sofia-Pro';
+	font-size: 1.5em;
+	font-weight: 500;
+	display: block;
+
+	text-align: right;
+
+	&.enabled {
+		width: 2em;
+		border-bottom: 3px solid $highlight;
+	}
+
+	&.small {
+		display: inline;
+		width: 1em;
+		font-size: 1em;
 	}
 }

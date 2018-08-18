@@ -385,3 +385,59 @@ export class QuarterSelector extends Component {
 		)
 	}
 }
+
+export class EditableInput extends Component {
+	constructor(props) {
+		super(props)
+
+		this.state = {
+			editing: false,
+			value: this.props.value
+		}
+	}
+
+	enableEditing = () => {
+		this.setState({ editing: true })
+	}
+
+	handleSave = () => {
+		this.setState({ editing: false })
+		this.props.handleChange(this.state.value)
+	}
+
+	handleChange = e => {
+		if (!this.state.editing) return
+		if (!e) return
+		var raw = e.target.value
+
+		if (isNaN(raw)) return
+		this.setState({ value: raw })
+	}
+
+	render() {
+		return (
+			<div style={{ display: 'inline' }}>
+				{this.state.editing ? (
+					<input
+						onKeyPress={e => {
+							if (e.charCode === 13) {
+								this.handleSave()
+							}
+						}}
+						className={'editable-input enabled ' + this.props.className}
+						value={this.state.value}
+						onChange={this.handleChange}
+						style={this.props.highlight ? { color: '#527aff' } : {}}
+					/>
+				) : (
+					<h4
+						className={'editable-input ' + this.props.className}
+						style={this.props.highlight ? { color: '#527aff' } : {}}
+						onClick={this.enableEditing}>
+						{this.state.value}
+					</h4>
+				)}
+			</div>
+		)
+	}
+}

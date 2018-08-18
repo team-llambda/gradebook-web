@@ -1,6 +1,12 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import { Logo, Menu, QuarterSelector, Textbox } from '../Components'
+import {
+	Logo,
+	Menu,
+	QuarterSelector,
+	Textbox,
+	EditableInput
+} from '../Components'
 import { Radar, Line } from 'react-chartjs-2'
 
 export default class SingleClassPage extends Component {
@@ -20,27 +26,36 @@ export default class SingleClassPage extends Component {
 		// TODO: call route w/ period to replace this temp data
 		const assignments = [
 			{
+				id: 1,
 				date: '05/20/18',
 				name: 'Homework 11',
 				score: 20,
 				available: 25,
+				altered: {
+					score: 22,
+					available: 25
+				},
 				comments:
 					'Keep up the great work! Lorem ipsum jk im too lazy to copy the lorem ipsum here we go memememememmememememmememememe',
 				category: 'Homework'
 			},
 			{
+				id: 2,
 				date: '12/22/22',
 				name: 'Really long assignment',
 				score: 22,
 				available: 25,
+				altered: null,
 				comments: 'Keep up the great work!',
 				category: 'Tests'
 			},
 			{
+				id: 3,
 				date: '12/22/22',
 				name: 'Really really really really long assignment',
 				score: 24,
 				available: 25,
+				altered: null,
 				comments: 'Keep up the great work!',
 				category: 'Tests'
 			}
@@ -84,6 +99,10 @@ export default class SingleClassPage extends Component {
 			assignments: assignments,
 			categories: categories
 		})
+	}
+
+	alterAssignment = (field, value) => {
+		// TODO:
 	}
 
 	getGrades = assignments => {
@@ -135,6 +154,7 @@ export default class SingleClassPage extends Component {
 					<CourseInfoPane
 						assignments={this.state.assignments}
 						categories={this.state.categories}
+						alterAssignment={this.alterAssignment}
 					/>
 					<div className="grades-chart">
 						<Line
@@ -217,23 +237,10 @@ class CourseInfoPane extends Component {
 		super(props)
 
 		this.state = {
-			page: 'assignments',
-
-			// should stay empty until there are modifications to the assignments
-			projectedAssignments: []
+			page: 'assignments'
 		}
 
 		this.assignmentsPane = React.createRef()
-	}
-
-	handleProjectionChange = projectedAssignments => {
-		this.setState({ projectedAssignments: projectedAssignments })
-	}
-
-	handleProjectionReset = () => {
-		// TODO: implement projection reset
-		this.assignmentsPane.current.resetProjection()
-		this.setState({ projectedAssignments: [] })
 	}
 
 	render() {
@@ -256,7 +263,7 @@ class CourseInfoPane extends Component {
 					<AssignmentsPane
 						ref={this.assignmentsPane}
 						assignments={this.props.assignments}
-						onProjectionChange={this.handleProjectionChange}
+						alterAssignment={this.props.alterAssignment}
 					/>
 				)}
 
@@ -267,16 +274,14 @@ class CourseInfoPane extends Component {
 				<FinalGrades
 					assignments={this.props.assignments}
 					categories={this.props.categories}
-					projectedAssignments={this.state.projectedAssignments}
 				/>
 			</div>
 		)
 	}
 }
 class FinalGrades extends Component {
-	getGrades = (assignments, categories, projectedAssignments) => {
+	getGrades = (assignments, categories) => {
 		var grade = 0
-		var projected = 0
 
 		categories.forEach(category => {
 			var points = 0
@@ -292,50 +297,17 @@ class FinalGrades extends Component {
 			} else {
 				grade += (category.weight * points) / total
 			}
-
-			var projectedPoints = 0
-			var projectedTotal = 0
-			projectedAssignments.forEach(assignment => {
-				if (assignment.category === category.name) {
-					projectedPoints += assignment.score
-					projectedTotal += assignment.available
-				}
-			})
-
-			if (projectedTotal === 0) {
-				projected += category.weight
-			} else {
-				projected += (category.weight * projectedPoints) / projectedTotal
-			}
 		})
 
-		return {
-			grade: (grade * 100).toFixed(1),
-			projected: (projected * 100).toFixed(1)
-		}
+		return (grade * 100).toFixed(1)
 	}
 
 	render() {
-		var grades = this.getGrades(
-			this.props.assignments,
-			this.props.categories,
-			this.props.projectedAssignments
-		)
+		var grade = this.getGrades(this.props.assignments, this.props.categories)
 		return (
 			<div className="final-grades">
-				<h1>{grades.grade}</h1>
-				{this.props.projectedAssignments.length > 0 && (
-					<div>
-						<h4 className="highlight">
-							{grades.projected - grades.grade > 0
-								? '+' + (grades.projected - grades.grade).toFixed(1)
-								: (grades.projected - grades.grade).toFixed(1)}
-						</h4>
-						<h4 className="highlight">
-							<span className="unselected">projected:</span> {grades.projected}
-						</h4>
-					</div>
-				)}
+				<h1>{grade}</h1>
+				{/* TODO: display projected grades as necessary */}
 			</div>
 		)
 	}
@@ -360,10 +332,6 @@ class AssignmentsPane extends Component {
 		this.setState({ filter: text })
 	}
 
-	handleProjectionChange = change => {
-		// TODO: modify this.state, call props handleProjectionChange with new this.state.assignments
-	}
-
 	handleClick = index => {
 		if (this.state.expandedAssignment !== null) {
 			if (this.state.expandedAssignment === index) {
@@ -375,8 +343,6 @@ class AssignmentsPane extends Component {
 			this.setState({ expandedAssignment: index })
 		}
 	}
-
-	resetProjection = () => {}
 
 	render() {
 		var filter = this.state.filter
@@ -406,8 +372,9 @@ class AssignmentsPane extends Component {
 					return (
 						<Assignment
 							key={assignment.name + ' ' + assignment.date}
-							// TODO: INCLUDE ASSIGNMENT EDITING MEME
 							expanded={this.state.expandedAssignment === index}
+							altered={assignment.altered}
+							alterAssignment={this.props.alterAssignment}
 							handleClick={() => this.handleClick(index)}
 							date={assignment.date}
 							name={assignment.name}
@@ -443,24 +410,76 @@ class Assignment extends Component {
 		}
 	}
 
+	getPercentage = () => {
+		if (this.props.altered)
+			return (
+				(this.props.altered.score / this.props.altered.available) *
+				100
+			).toFixed(1)
+		else return ((this.props.score / this.props.available) * 100).toFixed(1)
+	}
+
+	getScore = () => {
+		if (this.props.altered) return this.props.altered.score
+		else return this.props.score
+	}
+
+	getAvailable = () => {
+		if (this.props.altered) return this.props.altered.available
+		else return this.props.available
+	}
+
 	render() {
 		return (
 			<div className="assignment">
-				<div className="assignment-main" onClick={this.props.handleClick}>
+				<div className="assignment-main">
 					<h5 className="assignment-date">{this.props.date}</h5>
 					<svg height="12" width="12" style={{ paddingTop: '0.6em' }}>
 						<circle cx="6" cy="6" r="6" fill="#12EB9D" />
 					</svg>
 					<div className="assignment-info">
 						<div className="assignment-name-grade">
-							<h4 className="assignment-name">{this.props.name}</h4>
-							<h4 className="assignment-grade">
-								{((this.props.score / this.props.available) * 100).toFixed(1)}
+							<h4 className="assignment-name" onClick={this.props.handleClick}>
+								{this.props.name}
 							</h4>
+							<EditableInput
+								highlight={this.props.altered}
+								value={this.getPercentage()}
+								handleChange={newValue =>
+									this.props.alterAssignment('percentage', newValue)
+								}
+							/>
 						</div>
 						<div className="assignment-category">
-							<h5>{this.props.category}</h5>
-							<h5>{this.props.score + '/' + this.props.available}</h5>
+							{/* TODO: these need to be altered */}
+							<h5
+								className="assignment-category-name"
+								onClick={this.props.handleClick}>
+								{this.props.category}
+							</h5>
+							<div
+								className={
+									'assignment-fraction' +
+									(this.props.altered ? ' highlight' : '')
+								}>
+								<EditableInput
+									className="small"
+									value={this.getScore()}
+									highlight={this.props.altered}
+									handleChange={newValue =>
+										this.props.alterAssignment('score', newValue)
+									}
+								/>
+								<h5>/</h5>
+								<EditableInput
+									className="small"
+									value={this.getAvailable()}
+									highlight={this.props.altered}
+									handleChange={newValue =>
+										this.props.alterAssignment('available', newValue)
+									}
+								/>
+							</div>
 						</div>
 					</div>
 				</div>
