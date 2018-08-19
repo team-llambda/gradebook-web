@@ -5,7 +5,8 @@ import {
 	Menu,
 	QuarterSelector,
 	Textbox,
-	EditableInput
+	EditableInput,
+	Dropdown
 } from '../Components'
 import { Radar, Line } from 'react-chartjs-2'
 
@@ -263,6 +264,7 @@ class CourseInfoPane extends Component {
 					<AssignmentsPane
 						ref={this.assignmentsPane}
 						assignments={this.props.assignments}
+						categories={this.props.categories}
 						alterAssignment={this.props.alterAssignment}
 					/>
 				)}
@@ -381,6 +383,7 @@ class AssignmentsPane extends Component {
 							score={assignment.score}
 							available={assignment.available}
 							category={assignment.category}
+							categories={this.props.categories}
 							comments={assignment.comments}
 						/>
 					)
@@ -451,12 +454,12 @@ class Assignment extends Component {
 							/>
 						</div>
 						<div className="assignment-category">
-							{/* TODO: these need to be altered */}
-							<h5
-								className="assignment-category-name"
-								onClick={this.props.handleClick}>
-								{this.props.category}
-							</h5>
+							<Dropdown
+								items={this.props.categories.map(c => c.name)}
+								selectedIndex={this.props.categories
+									.map(c => c.name)
+									.indexOf(this.props.category)}
+							/>
 							<div
 								className={
 									'assignment-fraction' +

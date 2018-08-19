@@ -517,4 +517,16 @@ table tbody tr td:last-of-type {
   font-size: 1em;
 }
 
+.dropdown-list {
+  list-style: none;
+  box-shadow: 1px 2px 8px #c4c4c4;
+  border-radius: 1em;
+  position: absolute;
+  z-index: 1000;
+  padding: 1em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  margin: 0;
+}
+
 /*# sourceMappingURL=styles.css.map */

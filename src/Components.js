@@ -441,3 +441,36 @@ export class EditableInput extends Component {
 		)
 	}
 }
+
+export class Dropdown extends Component {
+	constructor(props) {
+		super(props)
+
+		this.state = {
+			open: false,
+			selectedIndex: this.props.selectedIndex
+		}
+	}
+
+	render() {
+		return (
+			<div>
+				<h5
+					onClick={() => this.setState({ open: !this.state.open })}
+					className={this.props.className}
+					style={{ cursor: 'pointer' }}>
+					{this.props.items[this.state.selectedIndex]}
+				</h5>
+				<ul
+					className="dropdown-list"
+					style={!this.state.open ? { display: 'none' } : {}}>
+					{this.props.items.map((i, index) => {
+						if (index === this.state.selectedIndex)
+							return <li className="highlight">{i}</li>
+						else return <li>{i}</li>
+					})}
+				</ul>
+			</div>
+		)
+	}
+}

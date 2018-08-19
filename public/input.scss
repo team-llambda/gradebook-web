@@ -626,3 +626,16 @@ table {
 		font-size: 1em;
 	}
 }
+
+.dropdown-list {
+	list-style: none;
+	box-shadow: $shadowIdle;
+	border-radius: 1em;
+	position: absolute;
+	z-index: 1000;
+
+	padding: 1em;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+	margin: 0;
+}
