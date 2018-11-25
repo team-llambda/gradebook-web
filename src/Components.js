@@ -220,10 +220,9 @@ export class Table extends Component {
 					key={header}
 					onClick={() => this.toggleSortByIndex(index)}>
 					{header}
-					{this.state.sortIndex === index &&
-						this.state.sortDirection === 1 && (
-							<i className="material-icons tablesort">arrow_drop_down</i>
-						)}
+					{this.state.sortIndex === index && this.state.sortDirection === 1 && (
+						<i className="material-icons tablesort">arrow_drop_down</i>
+					)}
 					{this.state.sortIndex === index &&
 						this.state.sortDirection === -1 && (
 							<i className="material-icons tablesort">arrow_drop_up</i>
@@ -248,10 +247,14 @@ export class Table extends Component {
 				sortIndex < data[0].fields.length
 			) {
 				data.sort((a, b) => {
-					return (
-						sortDirection *
-						a.fields[sortIndex].toString().localeCompare(b.fields[sortIndex])
-					)
+					if (isNaN(a.fields[sortIndex])) {
+						return (
+							sortDirection *
+							a.fields[sortIndex].toString().localeCompare(b.fields[sortIndex])
+						)
+					} else {
+						return sortDirection * (a.fields[sortIndex] - b.fields[sortIndex])
+					}
 				})
 			}
 
@@ -295,10 +298,14 @@ export class Table extends Component {
 			) {
 				data.sort((a, b) => {
 					if (!a.fields[sortIndex]) return 1
-					return (
-						sortDirection *
-						a.fields[sortIndex].toString().localeCompare(b.fields[sortIndex])
-					)
+					if (isNaN(a.fields[sortIndex])) {
+						return (
+							sortDirection *
+							a.fields[sortIndex].toString().localeCompare(b.fields[sortIndex])
+						)
+					} else {
+						return sortDirection * (a.fields[sortIndex] - b.fields[sortIndex])
+					}
 				})
 			}
 
@@ -346,7 +353,7 @@ export class QuarterSelector extends Component {
 
 		this.setState({ quarter: quarter })
 
-		this.props.handleQuarterChange()
+		// this.props.handleQuarterChange()
 	}
 
 	render() {

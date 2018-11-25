@@ -16,17 +16,52 @@ export default class ClassesPage extends Component {
 		const classes = [
 			{
 				period: '1',
-				class: 'AP Calculus',
-				teacher: 'Helene Tate',
-				room: '1106',
+				class: 'Chamber Orchestra',
+				teacher: 'Gero',
+				room: '1225',
 				grade: 95.3
 			},
 			{
 				period: '2',
-				class: 'AP Physics C Mechanics',
-				teacher: 'Casey Appel',
+				class: 'Advanced Calculus',
+				teacher: 'Pham',
 				room: '1106',
-				grade: 99.9
+				grade: 98.7
+			},
+			{
+				period: '3',
+				class: 'AP Biology',
+				teacher: 'Hatton',
+				room: '3111',
+				grade: 96.5
+			},
+			{
+				period: '4',
+				class: 'AP US History',
+				teacher: 'Wong-Heffter',
+				room: '2121',
+				grade: 89.9
+			},
+			{
+				period: '5',
+				class: 'AP English Lang/Comp',
+				teacher: 'Glowacki',
+				room: '2115',
+				grade: 87.6
+			},
+			{
+				period: '6',
+				class: 'AP Physics 2',
+				teacher: 'Nara',
+				room: '3101',
+				grade: 99.2
+			},
+			{
+				period: '7',
+				class: 'AP Computer Science A',
+				teacher: 'Fincher',
+				room: '1401',
+				grade: 101.2
 			}
 		]
 
