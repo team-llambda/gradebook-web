@@ -20,29 +20,52 @@ export default class SingleClassPage extends Component {
 		// TODO: call route w/ period to replace this temp data
 		const assignments = [
 			{
-				date: '05/20/18',
-				name: 'Homework 11',
-				score: 20,
-				available: 25,
-				comments:
-					'Keep up the great work! Lorem ipsum jk im too lazy to copy the lorem ipsum here we go memememememmememememmememememe',
+				date: '10/30/2018',
+				name: 'Participation 2',
+				score: 9,
+				available: 10,
+				comments: '',
+				category: 'Participation'
+			},
+			{
+				date: '10/27/2018',
+				name: 'Test 2',
+				score: 95,
+				available: 100,
+				comments: '',
+				category: 'Tests'
+			},
+			{
+				date: '10/01/2018',
+				name: 'Homework 1',
+				score: 10,
+				available: 10,
+				comments: '',
 				category: 'Homework'
 			},
 			{
-				date: '12/22/22',
-				name: 'Really long assignment',
-				score: 22,
-				available: 25,
-				comments: 'Keep up the great work!',
+				date: '9/30/2018',
+				name: 'Participation 1',
+				score: 10,
+				available: 10,
+				comments: '',
+				category: 'Participation'
+			},
+			{
+				date: '9/27/2018',
+				name: 'Test 1',
+				score: 87,
+				available: 100,
+				comments: '',
 				category: 'Tests'
 			},
 			{
-				date: '12/22/22',
-				name: 'Really really really really long assignment',
-				score: 24,
-				available: 25,
-				comments: 'Keep up the great work!',
-				category: 'Tests'
+				date: '9/01/2018',
+				name: 'Homework 1',
+				score: 9,
+				available: 10,
+				comments: '',
+				category: 'Homework'
 			}
 		]
 
@@ -55,27 +78,15 @@ export default class SingleClassPage extends Component {
 			},
 			{
 				name: 'Homework',
-				weight: 0.1,
+				weight: 0.2,
 				score: 20,
 				available: 25
 			},
 			{
-				name: 'Projects',
-				score: 0,
-				available: 0,
-				weight: 0.1
-			},
-			{
-				name: 'Quizzes',
-				score: 0,
-				available: 0,
-				weight: 0.1
-			},
-			{
-				name: 'Memes',
-				score: 0,
-				available: 0,
-				weight: 0.1
+				name: 'Participation',
+				weight: 0.2,
+				score: 20,
+				available: 25
 			}
 		]
 
@@ -112,15 +123,18 @@ export default class SingleClassPage extends Component {
 	parseGraphData = () => {
 		var data = { x: [], y: [] }
 		var cumulativeAssignments = []
-		this.state.assignments.slice().forEach(assignment => {
-			cumulativeAssignments.push(assignment)
+		this.state.assignments
+			.slice()
+			.sort((a, b) => new Date(a.date) - new Date(b.date))
+			.forEach(assignment => {
+				cumulativeAssignments.push(assignment)
 
-			data.x.push(assignment.date)
+				data.x.push(assignment.date)
 
-			const grade = this.getGrades(cumulativeAssignments)
+				const grade = this.getGrades(cumulativeAssignments)
 
-			data.y.push(grade)
-		})
+				data.y.push(grade)
+			})
 
 		return data
 	}
@@ -396,7 +410,7 @@ class AssignmentsPane extends Component {
 		return (
 			<div>
 				<Textbox
-					inputStyle={{ width: '19.4em' }}
+					inputStyle={{ width: '23.4em' }}
 					style={{ marginBottom: '1em' }}
 					hint="filter"
 					onTextChange={this.handleFilterChange}
@@ -448,7 +462,10 @@ class Assignment extends Component {
 			<div className="assignment">
 				<div className="assignment-main" onClick={this.props.handleClick}>
 					<h5 className="assignment-date">{this.props.date}</h5>
-					<svg height="12" width="12" style={{ paddingTop: '0.6em' }}>
+					<svg
+						height="12"
+						width="12"
+						style={{ paddingTop: '0.6em', marginRight: '1em' }}>
 						<circle cx="6" cy="6" r="6" fill="#12EB9D" />
 					</svg>
 					<div className="assignment-info">
