@@ -184,7 +184,15 @@ export default class SingleClassPage extends Component {
 								},
 								maintainAspectRatio: false,
 								scales: {
-									yAxes: [{ ticks: { fontSize: 18 } }],
+									yAxes: [
+										{
+											ticks: {
+												fontSize: 18,
+												beginAtZero: true,
+												suggestedMax: 100
+											}
+										}
+									],
 									xAxes: [{ ticks: { fontSize: 18 } }]
 								},
 								tooltips: {
