@@ -351,7 +351,7 @@ table tbody tr td:last-of-type {
 
 .grades-chart {
   display: inline-block;
-  width: calc(100% - 32em);
+  width: calc(100% - 36em);
   height: calc(100% - 14em);
   padding-left: 4em;
   padding-top: 3em;
@@ -362,7 +362,7 @@ table tbody tr td:last-of-type {
   position: relative;
   display: inline-block;
   height: calc(100% - 8em);
-  width: 28em;
+  width: 32em;
   padding-top: 2em;
 }
 .course-info-pane .type-selector {
@@ -390,22 +390,22 @@ table tbody tr td:last-of-type {
 .assignment .assignment-main {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: start;
   align-items: top;
 }
 .assignment .assignment-main .assignment-date {
   display: inline-block;
   padding-top: 0.2em;
-  width: 4em;
+  width: 5.5em;
 }
 .assignment .assignment-main .assignment-info {
   display: inline-block;
+  flex-grow: 2;
 }
 .assignment .assignment-main .assignment-info .assignment-name-grade {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 22em;
 }
 .assignment .assignment-main .assignment-info .assignment-name-grade .assignment-name {
   cursor: pointer;

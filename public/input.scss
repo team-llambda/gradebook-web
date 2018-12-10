@@ -429,7 +429,7 @@ table {
 
 .grades-chart {
 	display: inline-block;
-	width: calc(100% - 32em);
+	width: calc(100% - 36em);
 	height: calc(100% - 14em);
 	padding-left: 4em;
 	padding-top: 3em;
@@ -449,7 +449,7 @@ table {
 	position: relative;
 	display: inline-block;
 	height: calc(100% - 8em);
-	width: 28em;
+	width: 32em;
 	padding-top: 2em;
 }
 
@@ -469,23 +469,23 @@ table {
 	.assignment-main {
 		display: flex;
 		flex-direction: row;
-		justify-content: space-between;
+		justify-content: start;
 		align-items: top;
 
 		.assignment-date {
 			display: inline-block;
 			padding-top: 0.2em;
-			width: 4em;
+			width: 5.5em;
 		}
 
 		.assignment-info {
 			display: inline-block;
+			flex-grow: 2;
 
 			.assignment-name-grade {
 				display: flex;
 				flex-direction: row;
 				justify-content: space-between;
-				width: 22em;
 
 				.assignment-name {
 					cursor: pointer;
