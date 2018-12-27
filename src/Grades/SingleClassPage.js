@@ -27,6 +27,7 @@ export default class SingleClassPage extends Component {
 		// TODO: call route w/ period to replace this temp data
 		const assignments = [
 			{
+				_id: 1,
 				date: '10/30/2018',
 				name: 'Participation 2',
 				score: 9,
@@ -35,6 +36,7 @@ export default class SingleClassPage extends Component {
 				category: 'Participation'
 			},
 			{
+				_id: 2,
 				date: '10/27/2018',
 				name: 'Test 2',
 				score: 95,
@@ -43,6 +45,7 @@ export default class SingleClassPage extends Component {
 				category: 'Tests'
 			},
 			{
+				_id: 3,
 				date: '10/01/2018',
 				name: 'Homework 1',
 				score: 10,
@@ -51,6 +54,7 @@ export default class SingleClassPage extends Component {
 				category: 'Homework'
 			},
 			{
+				_id: 4,
 				date: '9/30/2018',
 				name: 'Participation 1',
 				score: 10,
@@ -59,6 +63,7 @@ export default class SingleClassPage extends Component {
 				category: 'Participation'
 			},
 			{
+				_id: 5,
 				date: '9/27/2018',
 				name: 'Test 1',
 				score: 87,
@@ -67,6 +72,7 @@ export default class SingleClassPage extends Component {
 				category: 'Tests'
 			},
 			{
+				_id: 6,
 				date: '9/01/2018',
 				name: 'Homework 1',
 				score: 9,
@@ -104,7 +110,8 @@ export default class SingleClassPage extends Component {
 		})
 	}
 
-	alterAssignment = (field, value) => {
+	alterAssignment = (field, value, id) => {
+		console.log('altered assignment ', field, value, id)
 		// TODO:
 	}
 
@@ -386,6 +393,7 @@ class AssignmentsPane extends Component {
 				{shownAssignments.map((assignment, index) => {
 					return (
 						<Assignment
+							id={assignment._id}
 							key={assignment.name + ' ' + assignment.date}
 							expanded={this.state.expandedAssignment === index}
 							altered={assignment.altered}
@@ -465,7 +473,11 @@ class Assignment extends Component {
 								highlight={this.props.altered}
 								value={this.getPercentage()}
 								handleChange={newValue =>
-									this.props.alterAssignment('percentage', newValue)
+									this.props.alterAssignment(
+										'percentage',
+										newValue,
+										this.props.id
+									)
 								}
 							/>
 						</div>
