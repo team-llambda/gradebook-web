@@ -113,6 +113,32 @@ export default class SingleClassPage extends Component {
 	alterAssignment = (field, value, id) => {
 		console.log('altered assignment ', field, value, id)
 		// TODO:
+		let assignmentsCopy = this.state.assignments.slice()
+		let alteredAssignment = assignmentsCopy.filter(a => a._id === id)[0]
+
+		alteredAssignment.altered = {
+			score: alteredAssignment.score,
+			available: alteredAssignment.available
+		}
+
+		if (field === 'score') {
+			alteredAssignment.altered.score = value
+		} else if (field === 'percentage') {
+			alteredAssignment.altered.score =
+				(value / 100) * alteredAssignment.altered.available
+		}
+
+		this.setState({ assignment: assignmentsCopy })
+	}
+
+	resetAssignments = () => {
+		let assignmentsCopy = this.state.assignments.slice()
+
+		assignmentsCopy.forEach(a => {
+			a.altered = undefined
+		})
+
+		this.setState({ assignments: assignmentsCopy })
 	}
 
 	getGrades = assignments => {
@@ -454,6 +480,8 @@ class Assignment extends Component {
 	}
 
 	render() {
+		let percentage = this.getPercentage()
+		console.log(percentage)
 		return (
 			<div className="assignment">
 				<div className="assignment-main">
@@ -471,7 +499,7 @@ class Assignment extends Component {
 							</h4>
 							<EditableInput
 								highlight={this.props.altered}
-								value={this.getPercentage()}
+								value={percentage}
 								handleChange={newValue =>
 									this.props.alterAssignment(
 										'percentage',
@@ -498,18 +526,16 @@ class Assignment extends Component {
 									value={this.getScore()}
 									highlight={this.props.altered}
 									handleChange={newValue =>
-										this.props.alterAssignment('score', newValue)
+										this.props.alterAssignment('score', newValue, this.props.id)
 									}
 								/>
 								<h5>/</h5>
-								<EditableInput
-									className="small"
-									value={this.getAvailable()}
-									highlight={this.props.altered}
-									handleChange={newValue =>
-										this.props.alterAssignment('available', newValue)
-									}
-								/>
+								<h4
+									className={'editable-input small'}
+									style={this.props.altered}
+									onClick={this.enableEditing}>
+									{this.getAvailable()}
+								</h4>
 							</div>
 						</div>
 					</div>

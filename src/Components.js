@@ -421,6 +421,10 @@ export class EditableInput extends Component {
 		this.setState({ value: raw })
 	}
 
+	componentWillReceiveProps(newProps) {
+		this.setState({ value: newProps.value })
+	}
+
 	render() {
 		return (
 			<div style={{ display: 'inline' }}>
