@@ -541,7 +541,7 @@ table {
 	}
 
 	.assignment-comments {
-		padding-left: 6em;
+		padding-left: calc(6.5em + 12px);
 		height: 0;
 		overflow: hidden;
 		display: flex;
