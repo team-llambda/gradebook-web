@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
 import {
 	Logo,
 	Menu,
@@ -9,6 +8,7 @@ import {
 	Dropdown
 } from '../Components'
 import { Radar, Line } from 'react-chartjs-2'
+import gb from '@team-llambda/gradebook-api'
 
 export default class SingleClassPage extends Component {
 	constructor(props) {
@@ -20,88 +20,47 @@ export default class SingleClassPage extends Component {
 		}
 	}
 
-	componentDidMount() {
+	async componentDidMount() {
 		// fetches the period from the redirect
 		const { period } = this.props.match.params
 
-		// TODO: call route w/ period to replace this temp data
-		const assignments = [
-			{
-				_id: 1,
-				date: '10/30/2018',
-				name: 'Participation 2',
-				score: 9,
-				available: 10,
-				comments: '',
-				category: 'Participation'
-			},
-			{
-				_id: 2,
-				date: '10/27/2018',
-				name: 'Test 2',
-				score: 95,
-				available: 100,
-				comments: '',
-				category: 'Tests'
-			},
-			{
-				_id: 3,
-				date: '10/01/2018',
-				name: 'Homework 1',
-				score: 10,
-				available: 10,
-				comments: '',
-				category: 'Homework'
-			},
-			{
-				_id: 4,
-				date: '9/30/2018',
-				name: 'Participation 1',
-				score: 10,
-				available: 10,
-				comments: '',
-				category: 'Participation'
-			},
-			{
-				_id: 5,
-				date: '9/27/2018',
-				name: 'Test 1',
-				score: 87,
-				available: 100,
-				comments: '',
-				category: 'Tests'
-			},
-			{
-				_id: 6,
-				date: '9/01/2018',
-				name: 'Homework 1',
-				score: 9,
-				available: 10,
-				comments: '',
-				category: 'Homework'
-			}
-		]
+		let data = await (await gb.getClass(period)).json()
 
-		const categories = [
-			{
-				name: 'Tests',
-				weight: 0.6,
-				score: 46,
-				available: 50
-			},
-			{
-				name: 'Homework',
-				weight: 0.2,
-				score: 20,
-				available: 25
-			},
-			{
-				name: 'Participation',
-				weight: 0.2,
-				score: 20,
-				available: 25
+		const assignments = data.assignments.map((a, i) => {
+			a._id = i
+			a.score = isNaN(a.pointsEarned) ? 0 : a.pointsEarned
+			a.available = isNaN(a.pointsTotal) ? 0 : a.pointsTotal
+
+			delete a.pointsEarned
+			delete a.pointsTotal
+
+			return a
+		})
+
+		console.log(assignments)
+
+		let categories = []
+
+		if (Object.keys(data.categories).length > 0) {
+			for (let c in data.categories) {
+				if (c === 'TOTAL') continue
+
+				let category = {
+					name: c,
+					weight: data.categories[c].percentage / 100,
+					score: 0,
+					available: 0
+				}
+
+				assignments
+					.filter(a => a.category === c)
+					.forEach(a => {
+						category.score += a.score
+						category.available += a.available
+					})
+				categories.push(category)
 			}
-		]
+		}
 
 		this.setState({
 			period: period,
@@ -457,7 +416,7 @@ class AssignmentsPane extends Component {
 				a.date.toLowerCase().includes(filter.toLowerCase())
 		)
 		return (
-			<div>
+			<div className="assignments-pane">
 				<Textbox
 					inputStyle={{ width: '23.4em' }}
 					style={{ marginBottom: '1em' }}
@@ -465,25 +424,27 @@ class AssignmentsPane extends Component {
 					onTextChange={this.handleFilterChange}
 				/>
 				{/* TODO: INSERT ASSIGNMENT CREATION MEME */}
-				{shownAssignments.map((assignment, index) => {
-					return (
-						<Assignment
-							id={assignment._id}
-							key={assignment.name + ' ' + assignment.date}
-							expanded={this.state.expandedAssignment === index}
-							altered={assignment.altered}
-							alterAssignment={this.props.alterAssignment}
-							handleClick={() => this.handleClick(index)}
-							date={assignment.date}
-							name={assignment.name}
-							score={assignment.score}
-							available={assignment.available}
-							category={assignment.category}
-							categories={this.props.categories}
-							comments={assignment.comments}
-						/>
-					)
-				})}
+				<div className="assignments-content">
+					{shownAssignments.map((assignment, index) => {
+						return (
+							<Assignment
+								id={assignment._id}
+								key={assignment.name + ' ' + assignment.date}
+								expanded={this.state.expandedAssignment === index}
+								altered={assignment.altered}
+								alterAssignment={this.props.alterAssignment}
+								handleClick={() => this.handleClick(index)}
+								date={assignment.date}
+								name={assignment.name}
+								score={assignment.score}
+								available={assignment.available}
+								category={assignment.category}
+								categories={this.props.categories}
+								comments={assignment.comments}
+							/>
+						)
+					})}
+				</div>
 			</div>
 		)
 	}
@@ -502,7 +463,14 @@ class Assignment extends Component {
 				(this.props.altered.score / this.props.altered.available) *
 				100
 			).toFixed(1)
-		else return ((this.props.score / this.props.available) * 100).toFixed(1)
+		else {
+			if (this.props.available > 0)
+				return ((this.props.score / this.props.available) * 100).toFixed(1)
+
+			if (this.props.score > 0) return this.props.score + ' EC'
+
+			return 'N/A'
+		}
 	}
 
 	getScore = () => {
