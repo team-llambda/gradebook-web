@@ -12,61 +12,15 @@ export default class ClassesPage extends Component {
 	}
 
 	async componentDidMount() {
-		// TODO: pull real data from backend
-		// let classesReal = await gb.getClasses()
-		// console.log(classesReal)
+		let classes = await (await gb.getClasses()).json()
 
-		const classes = [
-			{
-				period: '1',
-				class: 'Chamber Orchestra',
-				teacher: 'Gero',
-				room: '1225',
-				grade: 95.3
-			},
-			{
-				period: '2',
-				class: 'Advanced Calculus',
-				teacher: 'Pham',
-				room: '1106',
-				grade: 98.7
-			},
-			{
-				period: '3',
-				class: 'AP Biology',
-				teacher: 'Hatton',
-				room: '3111',
-				grade: 96.5
-			},
-			{
-				period: '4',
-				class: 'AP US History',
-				teacher: 'Wong-Heffter',
-				room: '2121',
-				grade: 89.9
-			},
-			{
-				period: '5',
-				class: 'AP English Lang/Comp',
-				teacher: 'Glowacki',
-				room: '2115',
-				grade: 87.6
-			},
-			{
-				period: '6',
-				class: 'AP Physics 2',
-				teacher: 'Nara',
-				room: '3101',
-				grade: 99.2
-			},
-			{
-				period: '7',
-				class: 'AP Computer Science A',
-				teacher: 'Fincher',
-				room: '1401',
-				grade: 101.2
-			}
-		]
+		classes = classes.data
+		classes.forEach(c => {
+			c.class = c.class_name
+			c.grade = Number(c.grade.substring(0, c.grade.length - 1)).toFixed(1)
+			c.room = c.room.substring(6)
+			delete c.class_name
+		})
 
 		this.setState({ classes: classes })
 	}
