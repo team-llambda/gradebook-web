@@ -412,10 +412,18 @@ export class EditableInput extends Component {
 			editing: false,
 			value: this.props.value
 		}
+
+		// this.input = React.createRef()
 	}
 
 	enableEditing = () => {
-		this.setState({ editing: true })
+		this.setState({ editing: true }, () => {
+			this.input.focus()
+		})
+	}
+
+	disableEditing = () => {
+		this.setState({ editing: false })
 	}
 
 	handleSave = () => {
@@ -446,9 +454,13 @@ export class EditableInput extends Component {
 								this.handleSave()
 							}
 						}}
+						ref={input => {
+							this.input = input
+						}}
 						className={'editable-input enabled ' + this.props.className}
 						value={this.state.value}
 						onChange={this.handleChange}
+						onBlur={this.disableEditing}
 						style={this.props.highlight ? { color: '#527aff' } : {}}
 					/>
 				) : (

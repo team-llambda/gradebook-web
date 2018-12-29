@@ -13,8 +13,8 @@ export default class ClassesPage extends Component {
 
 	async componentDidMount() {
 		// TODO: pull real data from backend
-		let classesReal = await gb.getClasses()
-		console.log(classesReal)
+		// let classesReal = await gb.getClasses()
+		// console.log(classesReal)
 
 		const classes = [
 			{
