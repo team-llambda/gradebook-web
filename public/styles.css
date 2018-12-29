@@ -202,6 +202,9 @@ h1, h4, h5, h2 {
 h2 {
   font-size: 3em;
 }
+h2.highlight {
+  color: #527aff;
+}
 
 h3 {
   -webkit-touch-callout: none;

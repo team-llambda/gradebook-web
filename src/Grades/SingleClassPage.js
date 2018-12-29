@@ -122,10 +122,20 @@ export default class SingleClassPage extends Component {
 		}
 
 		if (field === 'score') {
-			alteredAssignment.altered.score = value
+			// check if the alteration puts it back at to its actual score
+			if (alteredAssignment.score === value) {
+				alteredAssignment.altered = undefined
+			} else {
+				alteredAssignment.altered.score = value
+			}
 		} else if (field === 'percentage') {
-			alteredAssignment.altered.score =
-				(value / 100) * alteredAssignment.altered.available
+			// check if the alteration puts it back at to its actual score
+			let newScore = (value / 100) * alteredAssignment.altered.available
+			if (alteredAssignment.score === newScore) {
+				alteredAssignment.altered = undefined
+			} else {
+				alteredAssignment.altered.score = newScore
+			}
 		}
 
 		this.setState({ assignment: assignmentsCopy })
@@ -351,12 +361,53 @@ class FinalGrades extends Component {
 		return (grade * 100).toFixed(1)
 	}
 
+	getProjectedGrades = (assignments, categories) => {
+		// check if there are projections at all
+		let hasProjection = false
+		for (let a of assignments) {
+			if (a.altered) {
+				hasProjection = true
+				break
+			}
+		}
+
+		if (!hasProjection) return null
+
+		let grade = 0
+		categories.forEach(category => {
+			var points = 0
+			var total = 0
+			assignments.forEach(assignment => {
+				if (assignment.category === category.name) {
+					if (assignment.altered) {
+						points += assignment.altered.score
+						total += assignment.altered.available
+					} else {
+						points += assignment.score
+						total += assignment.available
+					}
+				}
+			})
+			if (total === 0) {
+				grade += category.weight
+			} else {
+				grade += (category.weight * points) / total
+			}
+		})
+
+		return (grade * 100).toFixed(1)
+	}
+
 	render() {
+		let projected = this.getProjectedGrades(
+			this.props.assignments,
+			this.props.categories
+		)
 		var grade = this.getGrades(this.props.assignments, this.props.categories)
 		return (
 			<div className="final-grades">
 				<h1>{grade}</h1>
-				{/* TODO: display projected grades as necessary */}
+				{projected && <h2 className="highlight">{projected}</h2>}
 			</div>
 		)
 	}
