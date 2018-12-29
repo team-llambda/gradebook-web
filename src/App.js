@@ -22,6 +22,7 @@ String.prototype.isOnlyWhitespace = function() {
 	return this.replace(/\s/g, '').length === 0
 }
 
+// eslint-disable-next-line
 String.prototype.hashCode = function() {
 	var hash = 0,
 		i,

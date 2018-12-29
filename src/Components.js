@@ -119,7 +119,6 @@ export class Textbox extends Component {
 
 	handleKeyPress = e => {
 		if (e.charCode === 13 && this.props.onEnter) {
-			console.log('enter pressed')
 			this.props.onEnter()
 		}
 	}
@@ -368,6 +367,7 @@ export class QuarterSelector extends Component {
 		return (
 			<div className="quarter-selector">
 				<h1>Quarter</h1>
+				{/* eslint-disable-next-line */}
 				<a
 					onClick={() => {
 						this.handleQuarterChange(1)
@@ -375,6 +375,7 @@ export class QuarterSelector extends Component {
 					className={this.state.quarter === 1 ? 'highlight' : ''}>
 					1
 				</a>
+				{/* eslint-disable-next-line */}
 				<a
 					onClick={() => {
 						this.handleQuarterChange(2)
@@ -382,6 +383,7 @@ export class QuarterSelector extends Component {
 					className={this.state.quarter === 2 ? 'highlight' : ''}>
 					2
 				</a>
+				{/* eslint-disable-next-line */}
 				<a
 					onClick={() => {
 						this.handleQuarterChange(3)
@@ -389,6 +391,7 @@ export class QuarterSelector extends Component {
 					className={this.state.quarter === 3 ? 'highlight' : ''}>
 					3
 				</a>
+				{/* eslint-disable-next-line */}
 				<a
 					onClick={() => {
 						this.handleQuarterChange(4)

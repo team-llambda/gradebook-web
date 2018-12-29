@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Menu, Logo, Table, QuarterSelector } from '../Components'
+import gb from '@team-llambda/gradebook-api'
 
 export default class ClassesPage extends Component {
 	constructor(props) {
@@ -10,8 +11,11 @@ export default class ClassesPage extends Component {
 		}
 	}
 
-	componentDidMount() {
+	async componentDidMount() {
 		// TODO: pull real data from backend
+		let classesReal = await gb.getClasses()
+		console.log(classesReal)
+
 		const classes = [
 			{
 				period: '1',

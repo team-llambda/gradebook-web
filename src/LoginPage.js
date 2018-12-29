@@ -16,7 +16,6 @@ export default class LoginPage extends Component {
 
 		let res = await gb.login(username, password)
 
-		// console.log(res)
 		if (res.status === 200) {
 			window.location.href = '/classes'
 		} else {

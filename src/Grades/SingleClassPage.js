@@ -111,8 +111,6 @@ export default class SingleClassPage extends Component {
 	}
 
 	alterAssignment = (field, value, id) => {
-		console.log('altered assignment ', field, value, id)
-
 		let assignmentsCopy = this.state.assignments.slice()
 		let alteredAssignment = assignmentsCopy.filter(a => a._id === id)[0]
 
@@ -270,7 +268,6 @@ export default class SingleClassPage extends Component {
 											var hex = Math.abs(category.hashCode())
 												.toString(16)
 												.substring(0, 6)
-											console.log(hex)
 											return {
 												borderColor: '#' + hex,
 												backgroundColor: '#' + hex
@@ -533,7 +530,6 @@ class Assignment extends Component {
 
 	render() {
 		let percentage = this.getPercentage()
-		console.log(percentage)
 		return (
 			<div className="assignment">
 				<div className="assignment-main">
