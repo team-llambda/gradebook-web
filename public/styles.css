@@ -207,6 +207,10 @@ h2.highlight {
 }
 
 h3 {
+  font-size: 2em;
+  margin: 0;
+}
+h3:not(.nolink) {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -216,8 +220,6 @@ h3 {
   cursor: pointer;
   color: #bdbdbd;
   transition: 0.2s;
-  font-size: 2em;
-  margin: 0;
 }
 h3:hover, h3.highlight {
   color: #527aff;

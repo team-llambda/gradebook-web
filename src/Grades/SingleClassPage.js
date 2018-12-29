@@ -407,7 +407,7 @@ class FinalGrades extends Component {
 		return (
 			<div className="final-grades">
 				<h1>{grade}</h1>
-				{projected && <h2 className="highlight">{projected}</h2>}
+				{projected && <h3 className="highlight nolink">{projected}</h3>}
 			</div>
 		)
 	}
