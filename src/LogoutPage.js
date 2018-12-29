@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { Logo } from './Components'
+import gb from '@team-llambda/gradebook-api'
 
 export default class LogoutPage extends Component {
 	async componentDidMount() {
-		// TODO: actually perform the logout
-		// const response = await logout()
+		await gb.logout()
 		window.location.href = '/'
 	}
 

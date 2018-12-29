@@ -11,8 +11,7 @@ export default class ClassesPage extends Component {
 	}
 
 	componentDidMount() {
-		// TODO: use some async function here
-		// heres temporary data before backend integration
+		// TODO: pull real data from backend
 		const classes = [
 			{
 				period: '1',

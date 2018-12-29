@@ -6,8 +6,6 @@ export default class LoginPage extends Component {
 	constructor(props) {
 		super(props)
 
-		//TODO: call reauth route to see if already authenticated
-
 		this.usernameTextbox = React.createRef()
 		this.passwordTextbox = React.createRef()
 	}
@@ -15,8 +13,15 @@ export default class LoginPage extends Component {
 	login = async () => {
 		let username = this.usernameTextbox.current.getText()
 		let password = this.passwordTextbox.current.getText()
-		console.log('LOGIN CALLED')
+
 		let res = await gb.login(username, password)
+
+		// console.log(res)
+		if (res.status === 200) {
+			window.location.href = '/classes'
+		} else {
+			// TODO: show error msg
+		}
 	}
 
 	render() {
@@ -27,8 +32,17 @@ export default class LoginPage extends Component {
 					style={{ height: '4em', marginBottom: '1em' }}
 					src="../assets/logo.svg"
 				/>
-				<Textbox hint="username" ref={this.usernameTextbox} />
-				<Textbox hint="password" type="password" ref={this.passwordTextbox} />
+				<Textbox
+					hint="username"
+					ref={this.usernameTextbox}
+					onEnter={this.login}
+				/>
+				<Textbox
+					hint="password"
+					type="password"
+					ref={this.passwordTextbox}
+					onEnter={this.login}
+				/>
 				<Button text="login" triggerLoadOnClick={true} onClick={this.login} />
 				<Logo />
 			</div>

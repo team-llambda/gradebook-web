@@ -112,7 +112,7 @@ export default class SingleClassPage extends Component {
 
 	alterAssignment = (field, value, id) => {
 		console.log('altered assignment ', field, value, id)
-		// TODO:
+
 		let assignmentsCopy = this.state.assignments.slice()
 		let alteredAssignment = assignmentsCopy.filter(a => a._id === id)[0]
 
@@ -185,6 +185,7 @@ export default class SingleClassPage extends Component {
 
 	render() {
 		const data = this.parseGraphData()
+		// TODO: implement a reset button
 		return (
 			<div className="fullsize">
 				<Menu currentItemIndex={0} />

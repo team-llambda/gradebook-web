@@ -117,6 +117,13 @@ export class Textbox extends Component {
 		this.setState({ text: e.target.value })
 	}
 
+	handleKeyPress = e => {
+		if (e.charCode === 13 && this.props.onEnter) {
+			console.log('enter pressed')
+			this.props.onEnter()
+		}
+	}
+
 	render() {
 		const style = { ...this.props.style }
 		style.marginTop = '1em'
@@ -129,6 +136,7 @@ export class Textbox extends Component {
 					type={this.props.type || 'text'}
 					className="inputText"
 					onChange={this.handleChange}
+					onKeyPress={this.handleKeyPress}
 					required
 				/>
 				<span ref="label" className="floating-label">
