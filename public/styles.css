@@ -445,12 +445,16 @@ table tbody tr td:last-of-type {
 .assignment .assignment-comments {
   padding-left: calc(6.5em + 12px);
   height: 0;
+  min-height: 0;
   overflow: hidden;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: top;
   transition: 0.2s;
+}
+.assignment .assignment-comments.expanded {
+  min-height: 5em;
 }
 .assignment .assignment-comments .assignment-comments-content {
   display: inline-block;

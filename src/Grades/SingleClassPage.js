@@ -496,19 +496,6 @@ class Assignment extends Component {
 		this.commentsDiv = React.createRef()
 	}
 
-	componentWillReceiveProps(newProps) {
-		var expanded = newProps.expanded
-
-		if (expanded) {
-			const height = ReactDOM.findDOMNode(
-				this.refs.comments
-			).getBoundingClientRect().height
-			this.commentsDiv.current.style.height = 'calc(' + height + 'px + 3em)'
-		} else {
-			this.commentsDiv.current.style.height = '0'
-		}
-	}
-
 	getPercentage = () => {
 		if (this.props.altered)
 			return (
