@@ -57,7 +57,7 @@ export class Button extends Component {
 				onClick={this.handleClick}
 				className="button">
 				{this.props.text}
-				<LoadingSpinner on={this.state.loading} />
+				{/* <LoadingSpinner on={this.state.loading} /> */}
 			</div>
 		)
 	}
