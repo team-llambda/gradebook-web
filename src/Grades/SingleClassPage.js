@@ -271,11 +271,13 @@ class CourseInfoPane extends Component {
 						className={this.state.page === 'assignments' ? 'highlight' : ''}>
 						Assignments
 					</h3>
-					<h3
-						onClick={() => this.setState({ page: 'categories' })}
-						className={this.state.page === 'categories' ? 'highlight' : ''}>
-						Categories
-					</h3>
+					{this.props.categories.length > 0 && (
+						<h3
+							onClick={() => this.setState({ page: 'categories' })}
+							className={this.state.page === 'categories' ? 'highlight' : ''}>
+							Categories
+						</h3>
+					)}
 				</div>
 
 				{this.state.page === 'assignments' && (
@@ -311,7 +313,6 @@ class FinalGrades extends Component {
 			return ((points / total) * 100).toFixed(1)
 		}
 
-		console.log('before: ', categories)
 		let effectiveCategories = JSON.parse(JSON.stringify(categories))
 
 		for (let i = 0; i < effectiveCategories.length; i++) {
@@ -329,7 +330,6 @@ class FinalGrades extends Component {
 			c.weight *= scaleFactor
 		})
 
-		console.log('after: ', effectiveCategories)
 		var grade = 0
 
 		effectiveCategories.forEach(category => {
@@ -475,10 +475,13 @@ class AssignmentsPane extends Component {
 				{/* TODO: INSERT ASSIGNMENT CREATION MEME */}
 				<div className="assignments-content">
 					{shownAssignments.map((assignment, index) => {
+						let key = `${assignment.name} ${assignment.date} ${
+							assignment.category
+						} ${assignment.score} ${assignment.available}`
 						return (
 							<Assignment
 								id={assignment._id}
-								key={assignment.name + ' ' + assignment.date}
+								key={key}
 								expanded={this.state.expandedAssignment === index}
 								altered={assignment.altered}
 								alterAssignment={this.props.alterAssignment}

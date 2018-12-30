@@ -500,8 +500,12 @@ export class Dropdown extends Component {
 					style={!this.state.open ? { display: 'none' } : {}}>
 					{this.props.items.map((i, index) => {
 						if (index === this.state.selectedIndex)
-							return <li className="highlight">{i}</li>
-						else return <li>{i}</li>
+							return (
+								<li key={i} className="highlight">
+									{i}
+								</li>
+							)
+						else return <li key={i}>{i}</li>
 					})}
 				</ul>
 			</div>
