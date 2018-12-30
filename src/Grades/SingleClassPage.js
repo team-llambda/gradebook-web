@@ -303,6 +303,16 @@ class CourseInfoPane extends Component {
 }
 class FinalGrades extends Component {
 	getGrades = (assignments, categories) => {
+		if (categories.length === 0) {
+			var points = 0
+			var total = 0
+			assignments.forEach(a => {
+				points += a.score
+				total += a.available
+			})
+			return ((points / total) * 100).toFixed(1)
+		}
+
 		var grade = 0
 
 		categories.forEach(category => {
@@ -335,6 +345,21 @@ class FinalGrades extends Component {
 		}
 
 		if (!hasProjection) return null
+
+		if (categories.length === 0) {
+			var points = 0
+			var total = 0
+			assignments.forEach(a => {
+				if (a.altered) {
+					points += a.altered.score
+					total += a.altered.available
+				} else {
+					points += a.score
+					total += a.available
+				}
+			})
+			return ((points / total) * 100).toFixed(1)
+		}
 
 		let grade = 0
 		categories.forEach(category => {
