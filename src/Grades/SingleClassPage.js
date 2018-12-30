@@ -418,7 +418,7 @@ class AssignmentsPane extends Component {
 		return (
 			<div className="assignments-pane">
 				<Textbox
-					inputStyle={{ width: '23.4em' }}
+					inputStyle={{ width: 'calc(22.6em - 6px)' }}
 					style={{ marginBottom: '1em' }}
 					hint="filter"
 					onTextChange={this.handleFilterChange}
