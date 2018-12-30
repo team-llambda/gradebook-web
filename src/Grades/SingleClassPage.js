@@ -322,6 +322,7 @@ class CourseInfoPane extends Component {
 }
 class FinalGrades extends Component {
 	getGrades = (assignments, categories) => {
+		// if there are no categories, grade is simple
 		if (categories.length === 0) {
 			var points = 0
 			var total = 0
@@ -332,8 +333,11 @@ class FinalGrades extends Component {
 			return ((points / total) * 100).toFixed(1)
 		}
 
+		// account for categories that do not have assignments in them
+		// make deep copy of categories
 		let effectiveCategories = JSON.parse(JSON.stringify(categories))
 
+		// remove categories with no assignments
 		for (let i = 0; i < effectiveCategories.length; i++) {
 			if (effectiveCategories[i].available === 0) {
 				effectiveCategories.splice(i, 1)
@@ -349,8 +353,8 @@ class FinalGrades extends Component {
 			c.weight *= scaleFactor
 		})
 
+		// calculate grade based on category weights
 		var grade = 0
-
 		effectiveCategories.forEach(category => {
 			var points = 0
 			var total = 0
@@ -382,6 +386,7 @@ class FinalGrades extends Component {
 
 		if (!hasProjection) return null
 
+		// if this class has no categories, ez
 		if (categories.length === 0) {
 			var points = 0
 			var total = 0
@@ -402,14 +407,9 @@ class FinalGrades extends Component {
 			var points = 0
 			var total = 0
 			assignments.forEach(assignment => {
-				if (assignment.category === category.name) {
-					if (assignment.altered) {
-						points += assignment.altered.score
-						total += assignment.altered.available
-					} else {
-						points += assignment.score
-						total += assignment.available
-					}
+				if (effProp(assignment, 'category') === category.name) {
+					points += effProp(assignment, 'score')
+					total += effProp(assignment, 'available')
 				}
 			})
 			if (total === 0) {
@@ -469,20 +469,19 @@ class AssignmentsPane extends Component {
 	}
 
 	render() {
-		var filter = this.state.filter
-		var shownAssignments = this.state.assignments.slice().filter(
-			a =>
-				a.name.toLowerCase().includes(filter.toLowerCase()) ||
-				a.score.toString().includes(filter.toLowerCase()) ||
-				a.available.toString().includes(filter.toLowerCase()) ||
-				((a.score / a.available) * 100)
-					.toFixed(1)
-					.toString()
-					.includes(filter.toLowerCase()) ||
-				a.comments.toLowerCase().includes(filter.toLowerCase()) ||
-				a.category.toLowerCase().includes(filter.toLowerCase()) ||
-				a.date.toLowerCase().includes(filter.toLowerCase())
-		)
+		var filter = this.state.filter.toLowerCase()
+		var shownAssignments = this.state.assignments.slice().filter(a => {
+			let concat =
+				a.name +
+				a.score +
+				a.available +
+				a.comments +
+				a.category +
+				a.date +
+				(a.score / a.available) * 100
+
+			return concat.toLowerCase().includes(filter)
+		})
 		return (
 			<div className="assignments-pane">
 				<Textbox
@@ -497,6 +496,7 @@ class AssignmentsPane extends Component {
 						let key = `${assignment.name} ${assignment.date} ${
 							assignment.category
 						} ${assignment.score} ${assignment.available}`
+
 						return (
 							<Assignment
 								id={assignment._id}
@@ -636,6 +636,7 @@ class Assignment extends Component {
 						<p ref="comments">{this.props.comments}</p>
 					</div>
 					<div className="assignment-controls">
+						{/* TODO: implement these */}
 						<i className="material-icons assignment-action">delete</i>
 						<i className="material-icons assignment-action">autorenew</i>
 					</div>
@@ -741,7 +742,7 @@ class Category extends Component {
 					<h4 className="category-name">{this.props.name}</h4>
 					<h4 className="category-grade">
 						{this.props.available === 0
-							? '100.0%'
+							? 'N/A'
 							: ((this.props.score / this.props.available) * 100).toFixed(1) +
 							  '%'}
 					</h4>
@@ -750,10 +751,7 @@ class Category extends Component {
 					<h5>{this.props.score + '/' + this.props.available}</h5>
 					<h5>
 						{this.props.available === 0
-							? (this.props.weight * 100).toFixed(1) +
-							  '/' +
-							  (this.props.weight * 100).toFixed(1) +
-							  '%'
+							? '0/0%'
 							: (
 									(this.props.score / this.props.available) *
 									this.props.weight *
