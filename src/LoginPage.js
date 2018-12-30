@@ -19,7 +19,7 @@ export default class LoginPage extends Component {
 		if (res.status === 200) {
 			window.location.href = '/classes'
 		} else {
-			// TODO: show error msg
+			// TODO: show error message on login fail
 		}
 	}
 
