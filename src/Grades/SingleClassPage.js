@@ -10,6 +10,13 @@ import {
 import { Radar, Line } from 'react-chartjs-2'
 import gb from '@team-llambda/gradebook-api'
 
+const effProp = (assignment, property) => {
+	if (assignment.altered) {
+		return assignment.altered[property]
+	}
+	return assignment[property]
+}
+
 export default class SingleClassPage extends Component {
 	constructor(props) {
 		super(props)
@@ -26,6 +33,7 @@ export default class SingleClassPage extends Component {
 
 		let data = await (await gb.getClass(period)).json()
 
+		// sanitize assignment data
 		const assignments = data.assignments.map((a, i) => {
 			a._id = i
 			a.score = isNaN(a.pointsEarned) ? 0 : a.pointsEarned
@@ -37,6 +45,7 @@ export default class SingleClassPage extends Component {
 			return a
 		})
 
+		// sanitize category data
 		let categories = []
 
 		if (Object.keys(data.categories).length > 0) {
@@ -71,48 +80,36 @@ export default class SingleClassPage extends Component {
 		let assignmentsCopy = this.state.assignments.slice()
 		let alteredAssignment = assignmentsCopy.filter(a => a._id === id)[0]
 
-		value = Number(value)
 		alteredAssignment.altered = {
-			score: alteredAssignment.altered
-				? alteredAssignment.altered.score
-				: alteredAssignment.score,
-			available: alteredAssignment.altered
-				? alteredAssignment.altered.available
-				: alteredAssignment.available
+			score: effProp(alteredAssignment, 'score'),
+			available: effProp(alteredAssignment, 'available'),
+			category: effProp(alteredAssignment, 'category')
 		}
 
-		console.log(alteredAssignment)
-		if (field === 'score') {
-			// check if the alteration puts it back at to its actual score
-			if (
-				alteredAssignment.score === value &&
-				alteredAssignment.altered.available === alteredAssignment.available
-			) {
-				alteredAssignment.altered = undefined
-			} else {
-				alteredAssignment.altered.score = value
-			}
-		} else if (field === 'percentage') {
-			// check if the alteration puts it back at to its actual score
-			let newScore = (value / 100) * alteredAssignment.altered.available
-			if (
-				alteredAssignment.score === newScore &&
-				alteredAssignment.altered.available === alteredAssignment.available
-			) {
-				alteredAssignment.altered = undefined
-			} else {
+		switch (field) {
+			case 'score':
+				alteredAssignment.altered.score = Number(value)
+				break
+			case 'percentage':
+				let newScore =
+					(Number(value) / 100) * alteredAssignment.altered.available
 				alteredAssignment.altered.score = newScore
-			}
-		} else if (field === 'available') {
-			// check if the alteration puts it back at to its actual score
-			if (
-				alteredAssignment.score === alteredAssignment.altered.score &&
-				value === alteredAssignment.available
-			) {
-				alteredAssignment.altered = undefined
-			} else {
-				alteredAssignment.altered.available = value
-			}
+				break
+			case 'available':
+				alteredAssignment.altered.available = Number(value)
+				break
+			case 'category':
+				break
+		}
+
+		// check if the altered is the same as unaltered
+		let altered = alteredAssignment.altered
+		if (
+			altered.score === alteredAssignment.score &&
+			altered.available === alteredAssignment.available &&
+			altered.category === alteredAssignment.category
+		) {
+			alteredAssignment.altered = undefined
 		}
 
 		this.setState({ assignment: assignmentsCopy })
@@ -128,7 +125,7 @@ export default class SingleClassPage extends Component {
 		this.setState({ assignments: assignmentsCopy })
 	}
 
-	getGrades = assignments => {
+	getRunningGrade = assignments => {
 		const categories = this.state.categories.slice()
 		var grade = 0
 
@@ -136,9 +133,9 @@ export default class SingleClassPage extends Component {
 			var points = 0
 			var total = 0
 			assignments.forEach(assignment => {
-				if (assignment.category === category.name) {
-					points += assignment.score
-					total += assignment.available
+				if (effProp(assignment, 'category') === category.name) {
+					points += effProp(assignment, 'score')
+					total += effProp(assignment, 'available')
 				}
 			})
 			if (total === 0) {
@@ -163,7 +160,7 @@ export default class SingleClassPage extends Component {
 
 				data.x.push(assignment.date)
 
-				const grade = this.getGrades(cumulativeAssignments)
+				const grade = this.getRunningGrade(cumulativeAssignments)
 
 				data.y.push(grade)
 			})
@@ -625,12 +622,6 @@ class Assignment extends Component {
 										)
 									}
 								/>
-								{/* <h4
-									className={'editable-input small'}
-									style={this.props.altered}
-									onClick={this.enableEditing}>
-									{this.getAvailable()}
-								</h4> */}
 							</div>
 						</div>
 					</div>
