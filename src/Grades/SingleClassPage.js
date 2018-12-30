@@ -136,7 +136,8 @@ export default class SingleClassPage extends Component {
 		var cumulativeAssignments = []
 		this.state.assignments
 			.slice()
-			.sort((a, b) => new Date(a.date) - new Date(b.date))
+			.sort((a, b) => new Date(b.date) - new Date(a.date))
+			.reverse()
 			.forEach(assignment => {
 				cumulativeAssignments.push(assignment)
 
@@ -213,17 +214,23 @@ export default class SingleClassPage extends Component {
 										title: (items, data) => {
 											const index = items[0].index
 
-											return this.state.assignments[index].name
+											return this.state.assignments[
+												this.state.assignments.length - 1 - index
+											].name
 										},
 										label: (item, data) => {
 											const index = item.index
 
-											return this.state.assignments[index].category
+											return this.state.assignments[
+												this.state.assignments.length - 1 - index
+											].category
 										},
 										labelColor: (item, data) => {
 											const index = item.index
 
-											var category = this.state.assignments[index].category
+											var category = this.state.assignments[
+												this.state.assignments.length - 1 - index
+											].category
 											var hex = Math.abs(category.hashCode())
 												.toString(16)
 												.substring(0, 6)
