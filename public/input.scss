@@ -500,6 +500,7 @@ table {
 		.assignment-info {
 			display: inline-block;
 			flex-grow: 2;
+			max-width: 23.8125em;
 
 			.assignment-name-grade {
 				display: flex;
@@ -507,6 +508,7 @@ table {
 				justify-content: space-between;
 
 				.assignment-name {
+					max-width: calc(15.875em - 58.08px);
 					cursor: pointer;
 					display: block;
 					white-space: nowrap;

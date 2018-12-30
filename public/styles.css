@@ -416,6 +416,7 @@ table tbody tr td:last-of-type {
 .assignment .assignment-main .assignment-info {
   display: inline-block;
   flex-grow: 2;
+  max-width: 23.8125em;
 }
 .assignment .assignment-main .assignment-info .assignment-name-grade {
   display: flex;
@@ -423,6 +424,7 @@ table tbody tr td:last-of-type {
   justify-content: space-between;
 }
 .assignment .assignment-main .assignment-info .assignment-name-grade .assignment-name {
+  max-width: calc(15.875em - 58.08px);
   cursor: pointer;
   display: block;
   white-space: nowrap;
