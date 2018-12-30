@@ -71,14 +71,23 @@ export default class SingleClassPage extends Component {
 		let assignmentsCopy = this.state.assignments.slice()
 		let alteredAssignment = assignmentsCopy.filter(a => a._id === id)[0]
 
+		value = Number(value)
 		alteredAssignment.altered = {
-			score: alteredAssignment.score,
-			available: alteredAssignment.available
+			score: alteredAssignment.altered
+				? alteredAssignment.altered.score
+				: alteredAssignment.score,
+			available: alteredAssignment.altered
+				? alteredAssignment.altered.available
+				: alteredAssignment.available
 		}
 
+		console.log(alteredAssignment)
 		if (field === 'score') {
 			// check if the alteration puts it back at to its actual score
-			if (alteredAssignment.score === value) {
+			if (
+				alteredAssignment.score === value &&
+				alteredAssignment.altered.available === alteredAssignment.available
+			) {
 				alteredAssignment.altered = undefined
 			} else {
 				alteredAssignment.altered.score = value
@@ -86,10 +95,23 @@ export default class SingleClassPage extends Component {
 		} else if (field === 'percentage') {
 			// check if the alteration puts it back at to its actual score
 			let newScore = (value / 100) * alteredAssignment.altered.available
-			if (alteredAssignment.score === newScore) {
+			if (
+				alteredAssignment.score === newScore &&
+				alteredAssignment.altered.available === alteredAssignment.available
+			) {
 				alteredAssignment.altered = undefined
 			} else {
 				alteredAssignment.altered.score = newScore
+			}
+		} else if (field === 'available') {
+			// check if the alteration puts it back at to its actual score
+			if (
+				alteredAssignment.score === alteredAssignment.altered.score &&
+				value === alteredAssignment.available
+			) {
+				alteredAssignment.altered = undefined
+			} else {
+				alteredAssignment.altered.available = value
 			}
 		}
 
@@ -510,12 +532,18 @@ class Assignment extends Component {
 	}
 
 	getPercentage = () => {
-		if (this.props.altered)
-			return (
-				(this.props.altered.score / this.props.altered.available) *
-				100
-			).toFixed(1)
-		else {
+		if (this.props.altered) {
+			if (this.props.altered.available > 0) {
+				return (
+					(this.props.altered.score / this.props.altered.available) *
+					100
+				).toFixed(1)
+			}
+
+			if (this.props.altered.score > 0) return this.props.altered.score + ' EC'
+
+			return 'NA'
+		} else {
 			if (this.props.available > 0)
 				return ((this.props.score / this.props.available) * 100).toFixed(1)
 
@@ -553,6 +581,7 @@ class Assignment extends Component {
 								{this.props.name}
 							</h4>
 							<EditableInput
+								enabled={true}
 								highlight={this.props.altered}
 								value={percentage}
 								handleChange={newValue =>
@@ -577,6 +606,7 @@ class Assignment extends Component {
 									(this.props.altered ? ' highlight' : '')
 								}>
 								<EditableInput
+									enabled={true}
 									className="small"
 									value={this.getScore()}
 									highlight={this.props.altered}
@@ -585,12 +615,25 @@ class Assignment extends Component {
 									}
 								/>
 								<h5>/</h5>
-								<h4
+								<EditableInput
+									enabled={true}
+									className="small"
+									value={this.getAvailable()}
+									highlight={this.props.altered}
+									handleChange={newValue =>
+										this.props.alterAssignment(
+											'available',
+											newValue,
+											this.props.id
+										)
+									}
+								/>
+								{/* <h4
 									className={'editable-input small'}
 									style={this.props.altered}
 									onClick={this.enableEditing}>
 									{this.getAvailable()}
-								</h4>
+								</h4> */}
 							</div>
 						</div>
 					</div>

@@ -444,6 +444,10 @@ export class EditableInput extends Component {
 		this.setState({ value: newProps.value })
 	}
 
+	handleFocus = e => {
+		e.target.select()
+	}
+
 	render() {
 		return (
 			<div style={{ display: 'inline' }}>
@@ -461,6 +465,7 @@ export class EditableInput extends Component {
 						value={this.state.value}
 						onChange={this.handleChange}
 						onBlur={this.disableEditing}
+						onFocus={this.handleFocus}
 						style={this.props.highlight ? { color: '#527aff' } : {}}
 					/>
 				) : (
