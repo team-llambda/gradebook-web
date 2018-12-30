@@ -239,84 +239,44 @@ export class Table extends Component {
 		})
 
 		var rows
-		if (this.props.filter.length > 0) {
-			const data = this.props.data.slice()
+		const data = this.props.data.slice()
 
-			const sortIndex = this.state.sortIndex
-			const sortDirection = this.state.sortDirection
-			if (
-				data.length > 0 &&
-				sortIndex != null &&
-				sortDirection != null &&
-				!isNaN(sortIndex) &&
-				!isNaN(sortDirection) &&
-				sortIndex >= 0 &&
-				sortIndex < data[0].fields.length
-			) {
-				data.sort((a, b) => {
-					if (isNaN(a.fields[sortIndex])) {
-						return (
-							sortDirection *
-							a.fields[sortIndex].toString().localeCompare(b.fields[sortIndex])
-						)
-					} else {
-						return sortDirection * (a.fields[sortIndex] - b.fields[sortIndex])
-					}
-				})
-			}
+		const sortIndex = this.state.sortIndex
+		const sortDirection = this.state.sortDirection
 
-			rows = data.slice().map(row => {
-				for (var i = 0; i < row.fields.length; i++) {
-					if (!row.fields[i]) continue
-					if (
-						row.fields[i]
-							.toString()
-							.toLowerCase()
-							.includes(this.props.filter.toLowerCase())
-					) {
-						return (
-							<tr
-								key={row._id}
-								onClick={() => {
-									if (this.props.onItemClick) this.props.onItemClick(row._id)
-								}}>
-								{row.fields.map((item, index) => {
-									return <td hey={index}>{item}</td>
-								})}
-							</tr>
-						)
-					}
+		if (
+			data.length > 0 &&
+			sortIndex != null &&
+			sortDirection != null &&
+			!isNaN(sortIndex) &&
+			!isNaN(sortDirection) &&
+			sortIndex >= 0 &&
+			sortIndex < data[0].fields.length
+		) {
+			data.sort((a, b) => {
+				if (isNaN(a.fields[sortIndex])) {
+					return (
+						sortDirection *
+						a.fields[sortIndex].toString().localeCompare(b.fields[sortIndex])
+					)
+				} else {
+					return sortDirection * (a.fields[sortIndex] - b.fields[sortIndex])
 				}
-				return null
 			})
-		} else {
-			const data = this.props.data.slice()
+		}
 
-			const sortIndex = this.state.sortIndex
-			const sortDirection = this.state.sortDirection
-			if (
-				data.length > 0 &&
-				sortIndex != null &&
-				sortDirection != null &&
-				!isNaN(sortIndex) &&
-				!isNaN(sortDirection) &&
-				sortIndex >= 0 &&
-				sortIndex < data[0].fields.length
-			) {
-				data.sort((a, b) => {
-					if (!a.fields[sortIndex]) return 1
-					if (isNaN(a.fields[sortIndex])) {
-						return (
-							sortDirection *
-							a.fields[sortIndex].toString().localeCompare(b.fields[sortIndex])
-						)
-					} else {
-						return sortDirection * (a.fields[sortIndex] - b.fields[sortIndex])
-					}
-				})
-			}
-
-			rows = data.slice().map(row => {
+		rows = data.slice().map(row => {
+			let valid = row.fields.reduce(
+				(a, c) =>
+					a &&
+					c &&
+					c
+						.toString()
+						.toLowerCase()
+						.includes(this.props.filter.toLowerCase()),
+				true
+			)
+			if (valid) {
 				return (
 					<tr
 						key={row._id}
@@ -324,12 +284,14 @@ export class Table extends Component {
 							if (this.props.onItemClick) this.props.onItemClick(row._id)
 						}}>
 						{row.fields.map((item, index) => {
-							return <td key={index}>{item}</td>
+							return <td hey={index}>{item}</td>
 						})}
 					</tr>
 				)
-			})
-		}
+			}
+
+			return null
+		})
 
 		return (
 			<table>
@@ -412,8 +374,6 @@ export class EditableInput extends Component {
 			editing: false,
 			value: this.props.value
 		}
-
-		// this.input = React.createRef()
 	}
 
 	enableEditing = () => {
@@ -466,12 +426,10 @@ export class EditableInput extends Component {
 						onChange={this.handleChange}
 						onBlur={this.disableEditing}
 						onFocus={this.handleFocus}
-						style={this.props.highlight ? { color: '#527aff' } : {}}
 					/>
 				) : (
 					<h4
 						className={'editable-input ' + this.props.className}
-						style={this.props.highlight ? { color: '#527aff' } : {}}
 						onClick={this.enableEditing}>
 						{this.state.value}
 					</h4>

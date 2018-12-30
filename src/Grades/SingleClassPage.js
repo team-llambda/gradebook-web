@@ -582,6 +582,7 @@ class Assignment extends Component {
 							</h4>
 							<EditableInput
 								enabled={true}
+								className={this.props.altered ? 'highlight' : ''}
 								highlight={this.props.altered}
 								value={percentage}
 								handleChange={newValue =>
@@ -600,14 +601,10 @@ class Assignment extends Component {
 									.map(c => c.name)
 									.indexOf(this.props.category)}
 							/>
-							<div
-								className={
-									'assignment-fraction' +
-									(this.props.altered ? ' highlight' : '')
-								}>
+							<div className={'assignment-fraction'}>
 								<EditableInput
 									enabled={true}
-									className="small"
+									className={'small' + (this.props.altered ? ' highlight' : '')}
 									value={this.getScore()}
 									highlight={this.props.altered}
 									handleChange={newValue =>
@@ -617,7 +614,7 @@ class Assignment extends Component {
 								<h5>/</h5>
 								<EditableInput
 									enabled={true}
-									className="small"
+									className={'small' + (this.props.altered ? ' highlight' : '')}
 									value={this.getAvailable()}
 									highlight={this.props.altered}
 									handleChange={newValue =>
