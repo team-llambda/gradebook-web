@@ -313,9 +313,24 @@ class FinalGrades extends Component {
 			return ((points / total) * 100).toFixed(1)
 		}
 
+		let effectiveCategories = JSON.parse(JSON.stringify(categories))
+
+		for (let i = 0; i < effectiveCategories.length; i++) {
+			if (effectiveCategories[i].available === 0) {
+				effectiveCategories.splice(i, 1)
+				i--
+			}
+		}
+
+		// effectiveCategories now only has categories that have assignments in them;
+		// scale the category weights as necessary
+		let weightSum = effectiveCategories.reduce((a, c) => a + c.weight, 0)
+		let scaleFactor = 1 / weightSum
+		effectiveCategories.forEach(c => (c *= scaleFactor))
+
 		var grade = 0
 
-		categories.forEach(category => {
+		effectiveCategories.forEach(category => {
 			var points = 0
 			var total = 0
 			assignments.forEach(assignment => {
