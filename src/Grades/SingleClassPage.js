@@ -37,8 +37,6 @@ export default class SingleClassPage extends Component {
 			return a
 		})
 
-		console.log(assignments)
-
 		let categories = []
 
 		if (Object.keys(data.categories).length > 0) {
@@ -313,6 +311,7 @@ class FinalGrades extends Component {
 			return ((points / total) * 100).toFixed(1)
 		}
 
+		console.log('before: ', categories)
 		let effectiveCategories = JSON.parse(JSON.stringify(categories))
 
 		for (let i = 0; i < effectiveCategories.length; i++) {
@@ -326,8 +325,11 @@ class FinalGrades extends Component {
 		// scale the category weights as necessary
 		let weightSum = effectiveCategories.reduce((a, c) => a + c.weight, 0)
 		let scaleFactor = 1 / weightSum
-		effectiveCategories.forEach(c => (c *= scaleFactor))
+		effectiveCategories.forEach(c => {
+			c.weight *= scaleFactor
+		})
 
+		console.log('after: ', effectiveCategories)
 		var grade = 0
 
 		effectiveCategories.forEach(category => {
