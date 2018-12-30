@@ -168,6 +168,10 @@ export default class SingleClassPage extends Component {
 		return data
 	}
 
+	goBack = () => {
+		window.location.href = '/classes'
+	}
+
 	render() {
 		const data = this.parseGraphData()
 		// TODO: implement a reset button
@@ -176,6 +180,9 @@ export default class SingleClassPage extends Component {
 				<Menu currentItemIndex={0} />
 				<div className="content">
 					<h1>Period {this.state.period}</h1>
+					<h3 onClick={this.goBack} className="back">
+						Back
+					</h3>
 					<CourseInfoPane
 						assignments={this.state.assignments}
 						categories={this.state.categories}

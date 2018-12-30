@@ -224,6 +224,9 @@ h3:not(.nolink) {
 h3:hover, h3.highlight {
   color: #527aff;
 }
+h3.back {
+  font-size: 1.5em;
+}
 
 h4, h5 {
   font-weight: 500;
@@ -367,10 +370,10 @@ table tbody tr td:last-of-type {
   display: inline-block;
   height: calc(100% - 8em);
   width: 32em;
-  padding-top: 2em;
+  padding-top: 1em;
 }
 .course-info-pane .assignments-pane {
-  height: calc(100% - 14em);
+  height: calc(100% - 16em);
   overflow: hidden;
 }
 .course-info-pane .assignments-pane .assignments-content {
@@ -391,12 +394,15 @@ table tbody tr td:last-of-type {
 
 .final-grades {
   position: absolute;
-  bottom: 4em;
+  bottom: 6em;
   right: 0;
   text-align: right;
 }
 .final-grades .unselected {
   color: #ccc;
+}
+.final-grades h3 {
+  margin-top: -0.5em;
 }
 
 .assignment {
