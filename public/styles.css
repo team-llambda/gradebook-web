@@ -225,6 +225,7 @@ h3:hover, h3.highlight {
   color: #527aff;
 }
 h3.back {
+  display: table;
   font-size: 1.5em;
 }
 
