@@ -528,6 +528,10 @@ table {
 					// TODO: firefox needs to hide the scrollbar
 					overflow-x: auto;
 					margin-right: 0.5em;
+
+					&.gray {
+						color: $grayDark;
+					}
 				}
 
 				.assignment-grade {
@@ -659,6 +663,10 @@ table {
 		display: inline;
 		width: 1em;
 		font-size: 1em;
+	}
+
+	&.gray {
+		color: $grayDark;
 	}
 }
 

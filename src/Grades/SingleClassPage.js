@@ -112,7 +112,32 @@ export default class SingleClassPage extends Component {
 			alteredAssignment.altered = undefined
 		}
 
-		this.setState({ assignment: assignmentsCopy })
+		this.setState({ assignments: assignmentsCopy })
+	}
+
+	deleteAssignment = id => {
+		let assignmentsCopy = this.state.assignments.slice()
+		let alteredAssignment = assignmentsCopy.filter(a => a._id === id)[0]
+
+		if (alteredAssignment.score === 0 && alteredAssignment.available === 0)
+			return
+
+		alteredAssignment.altered = {
+			score: 0,
+			available: 0,
+			category: effProp(alteredAssignment, 'category')
+		}
+
+		this.setState({ assignments: assignmentsCopy })
+	}
+
+	resetAssignment = id => {
+		let assignmentsCopy = this.state.assignments.slice()
+		let alteredAssignment = assignmentsCopy.filter(a => a._id === id)[0]
+
+		alteredAssignment.altered = undefined
+
+		this.setState({ assignments: assignmentsCopy })
 	}
 
 	resetAssignments = () => {
@@ -187,6 +212,8 @@ export default class SingleClassPage extends Component {
 						assignments={this.state.assignments}
 						categories={this.state.categories}
 						alterAssignment={this.alterAssignment}
+						resetAssignment={this.resetAssignment}
+						deleteAssignment={this.deleteAssignment}
 					/>
 					<div className="grades-chart">
 						<Line
@@ -312,6 +339,8 @@ class CourseInfoPane extends Component {
 						assignments={this.props.assignments}
 						categories={this.props.categories}
 						alterAssignment={this.props.alterAssignment}
+						deleteAssignment={this.props.deleteAssignment}
+						resetAssignment={this.props.resetAssignment}
 					/>
 				)}
 
@@ -518,6 +547,8 @@ class AssignmentsPane extends Component {
 								available={assignment.available}
 								category={assignment.category}
 								categories={this.props.categories}
+								delete={this.props.deleteAssignment}
+								reset={this.props.resetAssignment}
 								comments={assignment.comments}
 							/>
 						)
@@ -546,7 +577,7 @@ class Assignment extends Component {
 
 			if (this.props.altered.score > 0) return this.props.altered.score + ' EC'
 
-			return 'NA'
+			return 'N/A'
 		} else {
 			if (this.props.available > 0)
 				return ((this.props.score / this.props.available) * 100).toFixed(1)
@@ -581,12 +612,21 @@ class Assignment extends Component {
 					</svg>
 					<div className="assignment-info">
 						<div className="assignment-name-grade">
-							<h4 className="assignment-name" onClick={this.props.handleClick}>
+							<h4
+								className={
+									'assignment-name' + (percentage === 'N/A' ? ' gray' : '')
+								}
+								onClick={this.props.handleClick}>
 								{this.props.name}
 							</h4>
 							<EditableInput
-								enabled={true}
-								className={this.props.altered ? 'highlight' : ''}
+								className={
+									this.props.altered
+										? 'highlight'
+										: percentage === 'N/A'
+										? 'gray'
+										: ''
+								}
 								highlight={this.props.altered}
 								value={percentage}
 								handleChange={newValue =>
@@ -607,7 +647,6 @@ class Assignment extends Component {
 							/>
 							<div className={'assignment-fraction'}>
 								<EditableInput
-									enabled={true}
 									className={'small' + (this.props.altered ? ' highlight' : '')}
 									value={this.getScore()}
 									highlight={this.props.altered}
@@ -617,7 +656,6 @@ class Assignment extends Component {
 								/>
 								<h5>/</h5>
 								<EditableInput
-									enabled={true}
 									className={'small' + (this.props.altered ? ' highlight' : '')}
 									value={this.getAvailable()}
 									highlight={this.props.altered}
@@ -644,8 +682,20 @@ class Assignment extends Component {
 					</div>
 					<div className="assignment-controls">
 						{/* TODO: implement these */}
-						<i className="material-icons assignment-action">delete</i>
-						<i className="material-icons assignment-action">autorenew</i>
+						<i
+							onClick={() => {
+								this.props.delete(this.props.id)
+							}}
+							className="material-icons assignment-action">
+							delete
+						</i>
+						<i
+							onClick={() => {
+								this.props.reset(this.props.id)
+							}}
+							className="material-icons assignment-action">
+							autorenew
+						</i>
 					</div>
 				</div>
 			</div>

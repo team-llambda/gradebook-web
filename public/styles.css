@@ -441,6 +441,9 @@ table tbody tr td:last-of-type {
 .assignment .assignment-main .assignment-info .assignment-name-grade .assignment-name::-webkit-scrollbar {
   display: none;
 }
+.assignment .assignment-main .assignment-info .assignment-name-grade .assignment-name.gray {
+  color: #888;
+}
 .assignment .assignment-main .assignment-info .assignment-name-grade .assignment-grade {
   display: block;
 }
@@ -543,6 +546,9 @@ table tbody tr td:last-of-type {
   display: inline;
   width: 1em;
   font-size: 1em;
+}
+.editable-input.gray {
+  color: #888;
 }
 
 .dropdown-list {
