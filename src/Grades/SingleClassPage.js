@@ -213,6 +213,7 @@ export default class SingleClassPage extends Component {
 						categories={this.state.categories}
 						alterAssignment={this.alterAssignment}
 						resetAssignment={this.resetAssignment}
+						resetAssignments={this.resetAssignments}
 						deleteAssignment={this.deleteAssignment}
 					/>
 					<div className="grades-chart">
@@ -341,6 +342,7 @@ class CourseInfoPane extends Component {
 						alterAssignment={this.props.alterAssignment}
 						deleteAssignment={this.props.deleteAssignment}
 						resetAssignment={this.props.resetAssignment}
+						resetAssignments={this.props.resetAssignments}
 					/>
 				)}
 
@@ -518,14 +520,38 @@ class AssignmentsPane extends Component {
 
 			return concat.toLowerCase().includes(filter)
 		})
+		let hasAlterations = this.state.assignments
+			.slice()
+			.reduce((a, c) => a || c.altered, false)
 		return (
 			<div className="assignments-pane">
-				<Textbox
-					inputStyle={{ width: 'calc(22.6em - 6px)' }}
-					style={{ marginBottom: '1em' }}
-					hint="filter"
-					onTextChange={this.handleFilterChange}
-				/>
+				<div
+					style={{
+						display: 'flex',
+						flexDirection: 'row',
+						justifyContent: 'space-between',
+						alignItems: 'center'
+					}}>
+					<Textbox
+						// inputStyle={{ width: 'calc(14.6em - 6px)' }}
+						inputStyle={{ width: 'calc(100% - 3em - 6px)' }}
+						style={{ marginBottom: '1em', flexGrow: '2' }}
+						hint="filter"
+						onTextChange={this.handleFilterChange}
+					/>
+					<h3
+						className="back"
+						onClick={this.props.resetAssignments}
+						style={{
+							textAlign: 'right',
+							flexGrow: '0',
+							marginLeft: '1em',
+							display: hasAlterations ? 'inline-block' : 'none'
+						}}>
+						Reset All
+					</h3>
+				</div>
+
 				{/* TODO: INSERT ASSIGNMENT CREATION MEME */}
 				<div className="assignments-content">
 					{shownAssignments.map((assignment, index) => {
