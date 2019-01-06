@@ -372,7 +372,8 @@ export class EditableInput extends Component {
 
 		this.state = {
 			editing: false,
-			value: this.props.value
+			value: this.props.value,
+			beforeValue: this.props.value
 		}
 	}
 
@@ -405,7 +406,12 @@ export class EditableInput extends Component {
 	}
 
 	handleFocus = e => {
+		this.setState({ beforeValue: this.state.value })
 		e.target.select()
+	}
+
+	resetToBefore = () => {
+		this.setState({ value: this.state.beforeValue })
 	}
 
 	render() {
@@ -424,7 +430,10 @@ export class EditableInput extends Component {
 						className={'editable-input enabled ' + this.props.className}
 						value={this.state.value}
 						onChange={this.handleChange}
-						onBlur={this.disableEditing}
+						onBlur={() => {
+							this.disableEditing()
+							this.resetToBefore()
+						}}
 						onFocus={this.handleFocus}
 					/>
 				) : (
