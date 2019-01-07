@@ -170,7 +170,7 @@ export default class SingleClassPage extends Component {
 			}
 		})
 
-		return (grade * 100).toFixed(1)
+		return (grade * 100).toFixed(2)
 	}
 
 	parseGraphData = () => {
@@ -368,7 +368,7 @@ class FinalGrades extends Component {
 				points += a.score
 				total += a.available
 			})
-			return ((points / total) * 100).toFixed(1)
+			return ((points / total) * 100).toFixed(2)
 		}
 
 		// account for categories that do not have assignments in them
@@ -409,7 +409,7 @@ class FinalGrades extends Component {
 			}
 		})
 
-		return (grade * 100).toFixed(1)
+		return (grade * 100).toFixed(2)
 	}
 
 	getProjectedGrades = (assignments, categories) => {
@@ -437,7 +437,7 @@ class FinalGrades extends Component {
 					total += a.available
 				}
 			})
-			return ((points / total) * 100).toFixed(1)
+			return ((points / total) * 100).toFixed(2)
 		}
 
 		let grade = 0
@@ -457,7 +457,7 @@ class FinalGrades extends Component {
 			}
 		})
 
-		return (grade * 100).toFixed(1)
+		return (grade * 100).toFixed(2)
 	}
 
 	render() {
@@ -598,7 +598,7 @@ class Assignment extends Component {
 				return (
 					(this.props.altered.score / this.props.altered.available) *
 					100
-				).toFixed(1)
+				).toFixed(2)
 			}
 
 			if (this.props.altered.score > 0) return this.props.altered.score + ' EC'
@@ -606,7 +606,7 @@ class Assignment extends Component {
 			return 'N/A'
 		} else {
 			if (this.props.available > 0)
-				return ((this.props.score / this.props.available) * 100).toFixed(1)
+				return ((this.props.score / this.props.available) * 100).toFixed(2)
 
 			if (this.props.score > 0) return this.props.score + ' EC'
 
@@ -826,7 +826,7 @@ class Category extends Component {
 					<h4 className="category-grade">
 						{this.props.available === 0
 							? 'N/A'
-							: ((this.props.score / this.props.available) * 100).toFixed(1) +
+							: ((this.props.score / this.props.available) * 100).toFixed(2) +
 							  '%'}
 					</h4>
 				</div>
@@ -839,9 +839,9 @@ class Category extends Component {
 									(this.props.score / this.props.available) *
 									this.props.weight *
 									100
-							  ).toFixed(1) +
+							  ).toFixed(2) +
 							  '/' +
-							  (this.props.weight * 100).toFixed(1) +
+							  (this.props.weight * 100).toFixed(2) +
 							  '%'}
 					</h5>
 				</div>
