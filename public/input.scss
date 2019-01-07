@@ -687,11 +687,17 @@ table {
 	list-style: none;
 	box-shadow: $shadowIdle;
 	border-radius: 1em;
-	position: absolute;
-	z-index: 1000;
-
 	padding: 1em;
 	padding-top: 0.5em;
 	padding-bottom: 0.5em;
 	margin: 0;
+
+	li {
+		cursor: pointer;
+		transition: ease color 0.2s;
+
+		&:hover {
+			color: $highlight;
+		}
+	}
 }

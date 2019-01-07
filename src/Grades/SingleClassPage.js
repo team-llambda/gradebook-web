@@ -100,6 +100,8 @@ export default class SingleClassPage extends Component {
 				alteredAssignment.altered.available = Number(value)
 				break
 			case 'category':
+				console.log('set category to ' + value)
+				alteredAssignment.altered.category = value
 				break
 		}
 
@@ -251,6 +253,9 @@ export default class SingleClassPage extends Component {
 						resetAssignments={this.resetAssignments}
 						deleteAssignment={this.deleteAssignment}
 						addAssignment={this.addAssignment}
+						selectCategory={(c, id) => {
+							this.alterAssignment('category', c, id)
+						}}
 					/>
 					<div className="grades-chart">
 						<Line
@@ -380,6 +385,7 @@ class CourseInfoPane extends Component {
 						resetAssignment={this.props.resetAssignment}
 						resetAssignments={this.props.resetAssignments}
 						addAssignment={this.props.addAssignment}
+						selectCategory={this.props.selectCategory}
 					/>
 				)}
 
@@ -594,6 +600,7 @@ class AssignmentsPane extends Component {
 								expanded={this.state.expandedAssignment === index}
 								altered={assignment.altered}
 								alterAssignment={this.props.alterAssignment}
+								selectCategory={this.props.selectCategory}
 								handleClick={() => this.handleClick(index)}
 								date={assignment.date}
 								name={assignment.name}
@@ -652,8 +659,14 @@ class Assignment extends Component {
 		else return this.props.available
 	}
 
+	getCategory = () => {
+		if (this.props.altered) return this.props.altered.category
+		else return this.props.category
+	}
+
 	render() {
 		let percentage = this.getPercentage()
+		let category = this.getCategory()
 		return (
 			<div className="assignment">
 				<div className="assignment-main">
@@ -695,9 +708,14 @@ class Assignment extends Component {
 						<div className="assignment-category">
 							<Dropdown
 								items={this.props.categories.map(c => c.name)}
+								highlight={this.props.altered}
 								selectedIndex={this.props.categories
 									.map(c => c.name)
-									.indexOf(this.props.category)}
+									.indexOf(category)}
+								select={(category, index) => {
+									console.log('here 1')
+									this.props.selectCategory(category, this.props.id)
+								}}
 							/>
 							<div className={'assignment-fraction'}>
 								<EditableInput
@@ -735,7 +753,6 @@ class Assignment extends Component {
 						<p ref="comments">{this.props.comments}</p>
 					</div>
 					<div className="assignment-controls">
-						{/* TODO: implement these */}
 						<i
 							onClick={() => {
 								this.props.delete(this.props.id)

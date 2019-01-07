@@ -458,12 +458,16 @@ export class Dropdown extends Component {
 		}
 	}
 
+	componentWillReceiveProps(newProps) {
+		this.setState(newProps)
+	}
+
 	render() {
 		return (
 			<div>
 				<h5
 					onClick={() => this.setState({ open: !this.state.open })}
-					className={this.props.className}
+					className={this.props.highlight ? 'highlight' : ''}
 					style={{ cursor: 'pointer' }}>
 					{this.props.items[this.state.selectedIndex]}
 				</h5>
@@ -473,11 +477,27 @@ export class Dropdown extends Component {
 					{this.props.items.map((i, index) => {
 						if (index === this.state.selectedIndex)
 							return (
-								<li key={i} className="highlight">
+								<li
+									onClick={() => {
+										this.setState({ open: false })
+										this.props.select(i, index)
+									}}
+									key={i}
+									className="highlight">
 									{i}
 								</li>
 							)
-						else return <li key={i}>{i}</li>
+						else
+							return (
+								<li
+									onClick={() => {
+										this.setState({ open: false })
+										this.props.select(i, index)
+									}}
+									key={i}>
+									{i}
+								</li>
+							)
 					})}
 				</ul>
 			</div>

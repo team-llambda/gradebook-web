@@ -566,12 +566,17 @@ table tbody tr td:last-of-type {
   list-style: none;
   box-shadow: 1px 2px 8px #c4c4c4;
   border-radius: 1em;
-  position: absolute;
-  z-index: 1000;
   padding: 1em;
   padding-top: 0.5em;
   padding-bottom: 0.5em;
   margin: 0;
+}
+.dropdown-list li {
+  cursor: pointer;
+  transition: ease color 0.2s;
+}
+.dropdown-list li:hover {
+  color: #527aff;
 }
 
 /*# sourceMappingURL=styles.css.map */
