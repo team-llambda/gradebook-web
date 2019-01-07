@@ -253,6 +253,17 @@ i.tablesort {
   top: 50%;
   transform: translateY(-50%);
 }
+i.projection-control {
+  position: relative;
+  color: #bdbdbd;
+  font-size: 32px;
+  transition: ease color 0.2s;
+  cursor: pointer;
+  margin: 0 0.25em 0 0.25em;
+}
+i.projection-control:hover {
+  color: #527aff;
+}
 
 .sidebar {
   position: relative;

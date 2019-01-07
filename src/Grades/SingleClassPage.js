@@ -9,6 +9,7 @@ import {
 } from '../Components'
 import { Radar, Line } from 'react-chartjs-2'
 import gb from '@team-llambda/gradebook-api'
+import moment from 'moment'
 
 const effProp = (assignment, property) => {
 	if (assignment.altered) {
@@ -119,6 +120,18 @@ export default class SingleClassPage extends Component {
 		let assignmentsCopy = this.state.assignments.slice()
 		let alteredAssignment = assignmentsCopy.filter(a => a._id === id)[0]
 
+		if (alteredAssignment.projected) {
+			let i = 0
+			for (; i < assignmentsCopy.length; i++) {
+				if (assignmentsCopy[i]._id === alteredAssignment._id) {
+					assignmentsCopy.splice(i, 1)
+					this.setState({ assignments: assignmentsCopy })
+					break
+				}
+			}
+			return
+		}
+
 		if (alteredAssignment.score === 0 && alteredAssignment.available === 0)
 			return
 
@@ -143,9 +156,32 @@ export default class SingleClassPage extends Component {
 	resetAssignments = () => {
 		let assignmentsCopy = this.state.assignments.slice()
 
-		assignmentsCopy.forEach(a => {
-			a.altered = undefined
+		for (let i = assignmentsCopy.length - 1; i >= 0; i--) {
+			let a = assignmentsCopy[i]
+
+			if (a.projected) assignmentsCopy.splice(i, 1)
+			else a.altered = undefined
+		}
+
+		this.setState({ assignments: assignmentsCopy })
+	}
+
+	addAssignment = () => {
+		let assignmentsCopy = this.state.assignments.slice()
+
+		assignmentsCopy.reverse()
+		assignmentsCopy.push({
+			available: 0,
+			category: this.state.categories[0].name,
+			comments: '',
+			date: moment().format('MM/DD/YYYY'),
+			name: 'Projected Assignment',
+			score: 0,
+			projected: true,
+			_id: assignmentsCopy.length
 		})
+
+		assignmentsCopy.reverse()
 
 		this.setState({ assignments: assignmentsCopy })
 	}
@@ -199,7 +235,6 @@ export default class SingleClassPage extends Component {
 
 	render() {
 		const data = this.parseGraphData()
-		// TODO: implement a reset button
 		return (
 			<div className="fullsize">
 				<Menu currentItemIndex={0} />
@@ -215,6 +250,7 @@ export default class SingleClassPage extends Component {
 						resetAssignment={this.resetAssignment}
 						resetAssignments={this.resetAssignments}
 						deleteAssignment={this.deleteAssignment}
+						addAssignment={this.addAssignment}
 					/>
 					<div className="grades-chart">
 						<Line
@@ -343,6 +379,7 @@ class CourseInfoPane extends Component {
 						deleteAssignment={this.props.deleteAssignment}
 						resetAssignment={this.props.resetAssignment}
 						resetAssignments={this.props.resetAssignments}
+						addAssignment={this.props.addAssignment}
 					/>
 				)}
 
@@ -520,9 +557,6 @@ class AssignmentsPane extends Component {
 
 			return concat.toLowerCase().includes(filter)
 		})
-		let hasAlterations = this.state.assignments
-			.slice()
-			.reduce((a, c) => a || c.altered, false)
 		return (
 			<div className="assignments-pane">
 				<div
@@ -535,34 +569,28 @@ class AssignmentsPane extends Component {
 					<Textbox
 						// inputStyle={{ width: 'calc(14.6em - 6px)' }}
 						inputStyle={{ width: 'calc(100% - 3em - 6px)' }}
-						style={{ marginBottom: '1em', flexGrow: '2' }}
+						style={{ marginBottom: '1em', flexGrow: '2', marginRight: '1em' }}
 						hint="filter"
 						onTextChange={this.handleFilterChange}
 					/>
-					<h3
-						className="back"
+					<i
 						onClick={this.props.resetAssignments}
-						style={{
-							textAlign: 'right',
-							flexGrow: '0',
-							marginLeft: '1em',
-							display: hasAlterations ? 'inline-block' : 'none'
-						}}>
-						Reset All
-					</h3>
+						className="material-icons projection-control">
+						autorenew
+					</i>
+					<i
+						onClick={this.props.addAssignment}
+						className="material-icons projection-control">
+						add
+					</i>
 				</div>
 
-				{/* TODO: INSERT ASSIGNMENT CREATION MEME */}
 				<div className="assignments-content">
 					{shownAssignments.map((assignment, index) => {
-						let key = `${assignment.name} ${assignment.date} ${
-							assignment.category
-						} ${assignment.score} ${assignment.available}`
-
 						return (
 							<Assignment
 								id={assignment._id}
-								key={key}
+								key={assignment._id}
 								expanded={this.state.expandedAssignment === index}
 								altered={assignment.altered}
 								alterAssignment={this.props.alterAssignment}

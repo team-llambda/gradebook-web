@@ -317,6 +317,19 @@ i {
 		top: 50%;
 		transform: translateY(-50%);
 	}
+
+	&.projection-control {
+		position: relative;
+		color: $unselected;
+		font-size: 32px;
+		transition: ease color 0.2s;
+		cursor: pointer;
+		margin: 0 0.25em 0 0.25em;
+
+		&:hover {
+			color: $highlight;
+		}
+	}
 }
 
 .sidebar {

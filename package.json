@@ -4,6 +4,7 @@
 	"dependencies": {
 		"@team-llambda/gradebook-api": "^1.0.1",
 		"chart.js": "^2.7.3",
+		"moment": "^2.23.0",
 		"react": "^16.4.2",
 		"react-chartjs-2": "^2.7.4",
 		"react-dom": "^16.4.2",
