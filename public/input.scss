@@ -88,9 +88,9 @@ body {
 	user-select: none;
 }
 
-$shadowIdle: 1px 2px 8px $grayLight;
-$shadowClicked: 1px 3px 12px $grayDark;
-$shadowHover: 1px 2px 8px $grayLight;
+$shadowIdle: 1px 2px 8px #00000060;
+$shadowHover: 1px 3px 12px #00000060;
+$shadowClicked: 1px 2px 8px #00000060;
 
 // button component
 $buttonMargin: 0.5em;
@@ -699,5 +699,15 @@ table {
 		&:hover {
 			color: $highlight;
 		}
+	}
+}
+
+.card {
+	padding: 1em;
+	box-shadow: $shadowIdle;
+	border-radius: 1em;
+
+	&.deactivate {
+		background: $error;
 	}
 }

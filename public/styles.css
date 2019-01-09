@@ -80,13 +80,13 @@ body .allcenter {
   border-radius: 0.85em;
   border: none;
   transition: 0.2s ease box-shadow;
-  box-shadow: 1px 2px 8px #c4c4c4;
+  box-shadow: 1px 2px 8px #00000060;
 }
 .button:hover {
-  box-shadow: 1px 2px 8px #c4c4c4;
+  box-shadow: 1px 3px 12px #00000060;
 }
 .button:active {
-  box-shadow: 1px 3px 12px #888;
+  box-shadow: 1px 2px 8px #00000060;
 }
 .button .loading-spinner {
   display: inline-block;
@@ -564,7 +564,7 @@ table tbody tr td:last-of-type {
 
 .dropdown-list {
   list-style: none;
-  box-shadow: 1px 2px 8px #c4c4c4;
+  box-shadow: 1px 2px 8px #00000060;
   border-radius: 1em;
   padding: 1em;
   padding-top: 0.5em;
@@ -577,6 +577,15 @@ table tbody tr td:last-of-type {
 }
 .dropdown-list li:hover {
   color: #527aff;
+}
+
+.card {
+  padding: 1em;
+  box-shadow: 1px 2px 8px #00000060;
+  border-radius: 1em;
+}
+.card.deactivate {
+  background: #f05056;
 }
 
 /*# sourceMappingURL=styles.css.map */
