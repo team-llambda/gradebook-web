@@ -464,7 +464,7 @@ export class Dropdown extends Component {
 
 	render() {
 		return (
-			<div>
+			<div tabIndex="0" onBlur={this.setState({open: false})}>
 				<h5
 					onClick={() => this.setState({ open: !this.state.open })}
 					className={this.props.highlight ? 'highlight' : ''}
