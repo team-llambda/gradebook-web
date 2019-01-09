@@ -580,6 +580,7 @@ table tbody tr td:last-of-type {
 }
 
 .card {
+  margin-top: 1em;
   padding: 1em;
   box-shadow: 1px 2px 8px #00000060;
   border-radius: 1em;
