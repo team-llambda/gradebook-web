@@ -14,6 +14,7 @@ export default class LoginPage extends Component {
 	}
 
 	login = async () => {
+		this.loginButton.current.setLoading(true)
 		let username = this.usernameTextbox.current.getText()
 		let password = this.passwordTextbox.current.getText()
 
