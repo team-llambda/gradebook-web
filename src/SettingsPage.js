@@ -1,7 +1,22 @@
 import React, { Component } from 'react'
 import { Menu, Logo, Button } from './Components'
+import gb from '@team-llambda/gradebook-api'
 
 export default class SettingsPage extends Component {
+	constructor(props) {
+		super(props)
+	}
+
+	deactivate = async () => {
+		let res = await gb.deactivate()
+
+		if (res.status === 200) {
+			window.location.href = '/'
+		} else {
+			// TODO: some shit happen
+		}
+	}
+
 	render() {
 		return (
 			<div className="fullsize">
