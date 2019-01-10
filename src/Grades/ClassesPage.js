@@ -18,9 +18,13 @@ export default class ClassesPage extends Component {
 		// convert data to native format
 		classes.forEach(c => {
 			c.class = c.class_name
-			c.grade = Number(c.grade.replace('%', '')).toFixed(2)
-			c.room = c.room.substring(6)
 			delete c.class_name
+
+			// get rid of the % sign
+			c.grade = Number(c.grade.replace('%', '')).toFixed(2)
+
+			// start from the number
+			c.room = c.room.substring(6)
 		})
 
 		this.setState({ classes: classes })

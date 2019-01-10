@@ -73,9 +73,9 @@ export class Textbox extends Component {
 
 	componentDidMount() {
 		setTimeout(() => {
-			const label = ReactDOM.findDOMNode(this.refs.label)
+			let label = ReactDOM.findDOMNode(this.refs.label)
 			if (label) {
-				const width = label.getBoundingClientRect().width
+				let width = label.getBoundingClientRect().width
 
 				// 1em is the total latteral padding of the white blocker, 0.5em for each side
 				if (this.state.text.length > 0)
@@ -102,7 +102,7 @@ export class Textbox extends Component {
 
 	handleFocus = () => {
 		// 1.25 is the ratio of the large placeholder font size to the small placeholder font size
-		const width = ReactDOM.findDOMNode(this.refs.label).getBoundingClientRect()
+		let width = ReactDOM.findDOMNode(this.refs.label).getBoundingClientRect()
 			.width
 		if (this.state.text.length === 0)
 			this.blocker.current.style.width = 'calc(' + width / 1.25 + 'px + 1em)'
@@ -124,7 +124,7 @@ export class Textbox extends Component {
 	}
 
 	render() {
-		const style = { ...this.props.style }
+		let style = { ...this.props.style }
 		style.marginTop = '1em'
 		return (
 			<div style={style} className="textbox">
@@ -147,7 +147,7 @@ export class Textbox extends Component {
 	}
 }
 
-const MenuItems = [
+let MenuItems = [
 	{ text: 'Grades', href: '/classes' },
 	{ text: 'Chat', href: '/chat' },
 	{ text: 'Settings', href: '/settings' },
@@ -162,7 +162,7 @@ export class Menu extends Component {
 		}
 	}
 	render() {
-		const links = MenuItems.map((item, index) => {
+		let links = MenuItems.map((item, index) => {
 			return (
 				<a
 					key={item.text}
@@ -201,8 +201,8 @@ export class Table extends Component {
 	}
 
 	toggleSortByIndex = index => {
-		const currentSortIndex = this.state.sortIndex
-		const currentSortDirection = this.state.sortDirection
+		let currentSortIndex = this.state.sortIndex
+		let currentSortDirection = this.state.sortDirection
 
 		// toggle order: sort ascending, sort descending, sort off
 		if (index === currentSortIndex) {
@@ -219,8 +219,8 @@ export class Table extends Component {
 	}
 
 	render() {
-		var widths = this.props.widths || this.props.headers.map(_ => 0)
-		var headers = this.props.headers.map((header, index) => {
+		let widths = this.props.widths || this.props.headers.map(_ => 0)
+		let headers = this.props.headers.map((header, index) => {
 			return (
 				<th
 					style={widths[index] > 0 ? { width: widths[index] + 'em' } : {}}
@@ -238,11 +238,11 @@ export class Table extends Component {
 			)
 		})
 
-		var rows
-		const data = this.props.data.slice()
+		let rows
+		let data = this.props.data.slice()
 
-		const sortIndex = this.state.sortIndex
-		const sortDirection = this.state.sortDirection
+		let sortIndex = this.state.sortIndex
+		let sortDirection = this.state.sortDirection
 
 		if (
 			data.length > 0 &&
@@ -395,7 +395,7 @@ export class EditableInput extends Component {
 	handleChange = e => {
 		if (!this.state.editing) return
 		if (!e) return
-		var raw = e.target.value
+		let raw = e.target.value
 
 		if (isNaN(raw)) return
 		this.setState({ value: raw })

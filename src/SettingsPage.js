@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Menu, Logo, Button } from './Components'
 import gb from '@team-llambda/gradebook-api'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
-import 'react-notifications/lib/notifications.css'
 
 export default class SettingsPage extends Component {
 	constructor(props) {

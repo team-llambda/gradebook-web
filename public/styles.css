@@ -133,6 +133,11 @@ body .allcenter {
   left: -50%;
 }
 
+.logo {
+  height: 4em;
+  margin-bottom: 1em;
+}
+
 .textbox {
   position: relative;
 }

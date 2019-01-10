@@ -11,11 +11,23 @@ import { Radar, Line } from 'react-chartjs-2'
 import gb from '@team-llambda/gradebook-api'
 import moment from 'moment'
 
-const effProp = (assignment, property) => {
-	if (assignment.altered) {
-		return assignment.altered[property]
-	}
+let effProp = (assignment, property) => {
+	if (assignment.altered) return assignment.altered[property]
 	return assignment[property]
+}
+
+// hashcode for string
+let hashCode = s => {
+	let hash = 0,
+		i,
+		chr
+	if (s.length === 0) return hash
+	for (i = 0; i < s.length; i++) {
+		chr = s.charCodeAt(i)
+		hash = (hash << 5) - hash + chr
+		hash |= 0 // Convert to 32bit integer
+	}
+	return hash
 }
 
 export default class SingleClassPage extends Component {
@@ -30,12 +42,12 @@ export default class SingleClassPage extends Component {
 
 	async componentDidMount() {
 		// fetches the period from the redirect
-		const { period } = this.props.match.params
+		let { period } = this.props.match.params
 
 		let data = await (await gb.getClass(period)).json()
 
 		// sanitize assignment data
-		const assignments = data.assignments.map((a, i) => {
+		let assignments = data.assignments.map((a, i) => {
 			a._id = i
 			a.score = isNaN(a.pointsEarned) ? 0 : a.pointsEarned
 			a.available = isNaN(a.pointsTotal) ? 0 : a.pointsTotal
@@ -51,6 +63,7 @@ export default class SingleClassPage extends Component {
 
 		if (Object.keys(data.categories).length > 0) {
 			for (let c in data.categories) {
+				// dont include the TOTAL category
 				if (c === 'TOTAL') continue
 
 				let category = {
@@ -60,12 +73,14 @@ export default class SingleClassPage extends Component {
 					available: 0
 				}
 
+				// get the status for the category
 				assignments
 					.filter(a => a.category === c)
 					.forEach(a => {
 						category.score += a.score
 						category.available += a.available
 					})
+
 				categories.push(category)
 			}
 		}
@@ -100,7 +115,6 @@ export default class SingleClassPage extends Component {
 				alteredAssignment.altered.available = Number(value)
 				break
 			case 'category':
-				console.log('set category to ' + value)
 				alteredAssignment.altered.category = value
 				break
 		}
@@ -189,7 +203,7 @@ export default class SingleClassPage extends Component {
 	}
 
 	getRunningGrade = assignments => {
-		const categories = this.state.categories.slice()
+		let categories = this.state.categories.slice()
 		var grade = 0
 
 		categories.forEach(category => {
@@ -223,7 +237,7 @@ export default class SingleClassPage extends Component {
 
 				data.x.push(assignment.date)
 
-				const grade = this.getRunningGrade(cumulativeAssignments)
+				let grade = this.getRunningGrade(cumulativeAssignments)
 
 				data.y.push(grade)
 			})
@@ -236,7 +250,7 @@ export default class SingleClassPage extends Component {
 	}
 
 	render() {
-		const data = this.parseGraphData()
+		let data = this.parseGraphData()
 		return (
 			<div className="fullsize">
 				<Menu currentItemIndex={0} />
@@ -305,26 +319,26 @@ export default class SingleClassPage extends Component {
 								tooltips: {
 									callbacks: {
 										title: (items, data) => {
-											const index = items[0].index
+											let index = items[0].index
 
 											return this.state.assignments[
 												this.state.assignments.length - 1 - index
 											].name
 										},
 										label: (item, data) => {
-											const index = item.index
+											let index = item.index
 
 											return this.state.assignments[
 												this.state.assignments.length - 1 - index
 											].category
 										},
 										labelColor: (item, data) => {
-											const index = item.index
+											let index = item.index
 
 											var category = this.state.assignments[
 												this.state.assignments.length - 1 - index
 											].category
-											var hex = Math.abs(category.hashCode())
+											var hex = Math.abs(hashCode(category))
 												.toString(16)
 												.substring(0, 6)
 											return {
@@ -573,7 +587,6 @@ class AssignmentsPane extends Component {
 						alignItems: 'center'
 					}}>
 					<Textbox
-						// inputStyle={{ width: 'calc(14.6em - 6px)' }}
 						inputStyle={{ width: 'calc(100% - 3em - 6px)' }}
 						style={{ marginBottom: '1em', flexGrow: '2', marginRight: '1em' }}
 						hint="filter"
@@ -713,7 +726,6 @@ class Assignment extends Component {
 									.map(c => c.name)
 									.indexOf(category)}
 								select={(category, index) => {
-									console.log('here 1')
 									this.props.selectCategory(category, this.props.id)
 								}}
 							/>
@@ -776,7 +788,7 @@ class Assignment extends Component {
 
 class CategoriesPane extends Component {
 	render() {
-		const categories = this.props.categories.map((category, index) => {
+		let categories = this.props.categories.map((category, index) => {
 			return (
 				<Category
 					key={category.name}
@@ -788,7 +800,7 @@ class CategoriesPane extends Component {
 			)
 		})
 
-		const data = {
+		let data = {
 			labels: this.props.categories.map(c => c.name),
 			datasets: [
 				{

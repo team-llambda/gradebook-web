@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Button, Logo, Textbox } from './Components'
 import gb from '@team-llambda/gradebook-api'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
-import 'react-notifications/lib/notifications.css'
 
 export default class LoginPage extends Component {
 	constructor(props) {
@@ -36,11 +35,7 @@ export default class LoginPage extends Component {
 	render() {
 		return (
 			<div className="cover fullsize allcenter">
-				<img
-					alt="logo"
-					style={{ height: '4em', marginBottom: '1em' }}
-					src="../assets/logo.svg"
-				/>
+				<img className="logo" alt="logo" src="../assets/logo.svg" />
 				<Textbox
 					hint="username"
 					ref={this.usernameTextbox}
