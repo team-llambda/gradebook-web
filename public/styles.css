@@ -97,11 +97,11 @@ body .allcenter {
   transform: translateY(-50%);
   right: 0.425em;
   opacity: 0;
-  transition: opacity 0.3s;
+  transition: opacity 0.2s;
 }
 .button .loading-spinner.on {
   opacity: 1;
-  transition: opacity 0.3s;
+  transition: opacity 0.2s;
 }
 .button .loading-spinner:after {
   content: " ";

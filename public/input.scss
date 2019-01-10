@@ -142,11 +142,11 @@ $buttonPadding: 2em;
 		transform: translateY(-50%);
 		right: $buttonHeight / 4;
 		opacity: 0;
-		transition: opacity 0.3s;
+		transition: opacity 0.2s;
 
 		&.on {
 			opacity: 1;
-			transition: opacity 0.3s;
+			transition: opacity 0.2s;
 		}
 
 		&:after {

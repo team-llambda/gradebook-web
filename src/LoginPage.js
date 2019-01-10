@@ -10,6 +10,7 @@ export default class LoginPage extends Component {
 
 		this.usernameTextbox = React.createRef()
 		this.passwordTextbox = React.createRef()
+		this.loginButton = React.createRef()
 	}
 
 	login = async () => {
@@ -28,6 +29,7 @@ export default class LoginPage extends Component {
 			default:
 				NotificationManager.error('Something went wrong :(')
 		}
+		this.loginButton.current.setLoading(false)
 	}
 
 	render() {
@@ -49,7 +51,12 @@ export default class LoginPage extends Component {
 					ref={this.passwordTextbox}
 					onEnter={this.login}
 				/>
-				<Button text="login" triggerLoadOnClick={true} onClick={this.login} />
+				<Button
+					text="login"
+					triggerLoadOnClick={true}
+					onClick={this.login}
+					ref={this.loginButton}
+				/>
 				<Logo />
 				<NotificationContainer />
 			</div>
