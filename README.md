@@ -6,15 +6,18 @@ Gradebook is an application that is currently run on a Kubernetes cluster hosted
 
 Our service stores metadata for every user to make the user experience smoother. We do NOT, however, store any information about grades or classes, and such information is not available to us.
 
-## Dependencies
+## NPM Dependencies
 
-1.  **chart.js** >= 2.7.2
-2.  **react** >= 16.4.2
-3.  **react-chartjs-2** >= 2.7.4
-4.  **react-dom** >= 16.4.2
-5.  **react-router-dom** >= 4.3.1
-6.  **react-scripts** == 1.1.4
-7.  **socket.io-client** >= 2.1.1
+1.  **@team-llambda/gradebook-api** == 1.1.0
+2.  **chart.js** >= 2.7.3
+3.  **moment** >= 2.23.0
+4.  **react** >= 16.4.2
+5.  **react-chartjs-2** >= 2.7.4
+6.  **react-dom** >= 16.4.2
+7.  **react-notifications** >= 1.4.3
+8.  **react-router-dom** >= 4.3.1
+9.  **react-scripts** >= 2.1.3
+10. **socket.io-client** >= 2.1.1
 
 ## How to run
 
