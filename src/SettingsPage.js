@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Menu, Logo, Button } from './Components'
 import gb from '@team-llambda/gradebook-api'
+import { NotificationContainer, NotificationManager } from 'react-notifications'
+import 'react-notifications/lib/notifications.css'
 
 export default class SettingsPage extends Component {
 	constructor(props) {
@@ -10,10 +12,12 @@ export default class SettingsPage extends Component {
 	deactivate = async () => {
 		let res = await gb.deactivate()
 
-		if (res.status === 200) {
-			window.location.href = '/'
-		} else {
-			// TODO: some shit happen
+		switch (res.status) {
+			case 200:
+				window.location.href = '/'
+				break
+			default:
+				NotificationManager.error('Something went wrong :(')
 		}
 	}
 
@@ -45,6 +49,7 @@ export default class SettingsPage extends Component {
 					</div>
 				</div>
 				<Logo />
+				<NotificationContainer />
 			</div>
 		)
 	}

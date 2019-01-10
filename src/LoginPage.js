@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Button, Logo, Textbox } from './Components'
 import gb from '@team-llambda/gradebook-api'
+import { NotificationContainer, NotificationManager } from 'react-notifications'
+import 'react-notifications/lib/notifications.css'
 
 export default class LoginPage extends Component {
 	constructor(props) {
@@ -16,10 +18,15 @@ export default class LoginPage extends Component {
 
 		let res = await gb.login(username, password)
 
-		if (res.status === 200) {
-			window.location.href = '/classes'
-		} else {
-			// TODO: show error message on login fail
+		switch (res.status) {
+			case 200:
+				window.location.href = '/classes'
+				break
+			case 401:
+				NotificationManager.error('Username or password incorrect')
+				break
+			default:
+				NotificationManager.error('Something went wrong :(')
 		}
 	}
 
@@ -44,6 +51,7 @@ export default class LoginPage extends Component {
 				/>
 				<Button text="login" triggerLoadOnClick={true} onClick={this.login} />
 				<Logo />
+				<NotificationContainer />
 			</div>
 		)
 	}
