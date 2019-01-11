@@ -54,7 +54,7 @@ body .allcenter {
 }
 
 .highlight {
-  color: #527aff;
+  color: #527aff !important;
 }
 
 .button {
@@ -71,12 +71,8 @@ body .allcenter {
   display: inline-block;
   font-size: 1.7em;
   height: 1.7em;
-  margin-top: 0.5em;
-  margin-left: 0.5em;
-  margin-right: 0.5em;
-  margin-bottom: 0.5em;
-  padding-left: 2em;
-  padding-right: 2em;
+  margin: 0.5em;
+  padding: 0 2em 0 2em;
   border-radius: 0.85em;
   border: none;
   transition: 0.2s ease box-shadow;
@@ -127,7 +123,7 @@ body .allcenter {
   left: 50%;
   bottom: 2em;
 }
-.logowrapper img.logo {
+.logowrapper img {
   height: 1em;
   position: relative;
   left: -50%;
@@ -190,11 +186,12 @@ body .allcenter {
 
 a {
   cursor: pointer;
-  color: black;
+  color: #bdbdbd;
   text-decoration: none;
   font-weight: bold;
+  transition: 0.3s;
 }
-a.highlight {
+a:hover {
   color: #527aff;
 }
 
@@ -206,9 +203,6 @@ h1, h4, h5, h2 {
 
 h2 {
   font-size: 3em;
-}
-h2.highlight {
-  color: #527aff;
 }
 
 h3 {
@@ -226,7 +220,7 @@ h3:not(.nolink) {
   color: #bdbdbd;
   transition: 0.2s;
 }
-h3:hover, h3.highlight {
+h3:hover {
   color: #527aff;
 }
 h3.back {
@@ -297,10 +291,6 @@ i.projection-control:hover {
   margin: 0;
   margin-top: 0.1em;
   margin-bottom: 0.1em;
-  transition: 0.3s;
-}
-.sidebar .menu-content h2:hover {
-  margin-left: 0.25em;
 }
 .sidebar .menu-content.open {
   left: 6em;
@@ -361,13 +351,8 @@ table tbody tr td:last-of-type {
   right: 6em;
 }
 .quarter-selector a {
-  color: #bdbdbd;
   font-size: 3.5em;
   margin-left: 0.5em;
-  transition: 0.3s;
-}
-.quarter-selector a:hover, .quarter-selector a.highlight {
-  color: #527aff;
 }
 .quarter-selector h1, .quarter-selector h2, .quarter-selector h4, .quarter-selector h5 {
   display: inline-block;
@@ -404,9 +389,6 @@ table tbody tr td:last-of-type {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-}
-.course-info-pane .type-selector h3 {
-  display: inline-block;
 }
 
 .final-grades {
@@ -469,17 +451,11 @@ table tbody tr td:last-of-type {
   flex-direction: row;
   justify-content: space-between;
 }
-.assignment .assignment-main .assignment-info .assignment-category h5 {
-  display: block;
-}
 .assignment .assignment-main .assignment-info .assignment-category .assignment-category-name {
   cursor: pointer;
 }
 .assignment .assignment-main .assignment-info .assignment-category .assignment-fraction h5 {
   display: inline;
-}
-.assignment .assignment-main .assignment-info .assignment-category .assignment-fraction.highlight h5 {
-  color: #527aff;
 }
 .assignment .assignment-comments {
   padding-left: calc(6.5em + 12px);
@@ -541,9 +517,6 @@ table tbody tr td:last-of-type {
   flex-direction: row;
   justify-content: space-between;
 }
-.category .category-details h5 {
-  display: block;
-}
 
 .editable-input {
   border: none;
@@ -555,13 +528,15 @@ table tbody tr td:last-of-type {
   text-align: right;
 }
 .editable-input.enabled {
-  width: 2em;
+  width: 4em;
   border-bottom: 3px solid #527aff;
 }
 .editable-input.small {
   display: inline;
-  width: 1em;
   font-size: 1em;
+}
+.editable-input.small.enabled {
+  width: 1em;
 }
 .editable-input.gray {
   color: #888;
@@ -574,7 +549,7 @@ table tbody tr td:last-of-type {
   padding: 1em;
   padding-top: 0.5em;
   padding-bottom: 0.5em;
-  margin: 0;
+  margin: 0.5em 0 0 0;
 }
 .dropdown-list li {
   cursor: pointer;

@@ -1,3 +1,4 @@
+// fonts
 @font-face {
 	font-family: Sofia-Pro;
 	src: url(assets/sofia_pro_bold-webfont.woff2);
@@ -16,6 +17,23 @@
 	font-weight: 500;
 }
 
+// disables text highlighting
+@mixin noselect() {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+// antialiasing
+* {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+// constants
 $highlight: #527aff;
 $unselected: #bdbdbd;
 $placeholder: #828282;
@@ -24,14 +42,13 @@ $chatbubble: #e0e0e0;
 $grayDark: #888;
 $grayLight: #c4c4c4;
 $error: #f05056;
-
 $a: #12eb9d;
-
-* {
-	// supposedly antialiases stuff
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
+$shadowIdle: 1px 2px 8px #00000060;
+$shadowHover: 1px 3px 12px #00000060;
+$shadowClicked: 1px 2px 8px #00000060;
+$buttonMargin: 0.5em;
+$buttonHeight: 1.7em;
+$buttonPadding: 2em;
 
 html {
 	// page dimensions
@@ -78,27 +95,8 @@ body {
 	}
 }
 
-@mixin noselect() {
-	// disable text highlighting in button
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-}
-
-$shadowIdle: 1px 2px 8px #00000060;
-$shadowHover: 1px 3px 12px #00000060;
-$shadowClicked: 1px 2px 8px #00000060;
-
-// button component
-$buttonMargin: 0.5em;
-$buttonHeight: 1.7em;
-$buttonPadding: 2em;
-
 .highlight {
-	color: $highlight;
+	color: $highlight !important;
 }
 
 .button {
@@ -111,15 +109,8 @@ $buttonPadding: 2em;
 
 	font-size: $buttonHeight;
 	height: $buttonHeight;
-
-	margin-top: $buttonMargin;
-	margin-left: $buttonMargin;
-	margin-right: $buttonMargin;
-	margin-bottom: $buttonMargin;
-
-	padding-left: $buttonPadding;
-	padding-right: $buttonPadding;
-
+	margin: $buttonMargin;
+	padding: 0 $buttonPadding 0 $buttonPadding;
 	border-radius: $buttonHeight / 2;
 	border: none;
 
@@ -154,7 +145,6 @@ $buttonPadding: 2em;
 			display: block;
 			width: 0.75em;
 			height: 0.75em;
-			// margin: 1px;
 			border-radius: 50%;
 			border: 3px solid #fff;
 			border-color: #fff #fff #fff transparent;
@@ -178,11 +168,9 @@ $buttonPadding: 2em;
 	bottom: 2em;
 
 	img {
-		&.logo {
-			height: 1em;
-			position: relative;
-			left: -50%;
-		}
+		height: 1em;
+		position: relative;
+		left: -50%;
 	}
 }
 
@@ -253,13 +241,14 @@ $buttonPadding: 2em;
 
 a {
 	cursor: pointer;
-	color: black;
+	color: $unselected;
 	text-decoration: none;
 	font-weight: bold;
 
-	&.highlight {
+	&:hover {
 		color: $highlight;
 	}
+	transition: 0.3s;
 }
 
 h1 {
@@ -271,12 +260,6 @@ h1 {
 h2 {
 	@extend h1;
 	font-size: 3em;
-	// font-weight: bold;
-	// margin: 0;
-
-	&.highlight {
-		color: $highlight;
-	}
 }
 
 h3 {
@@ -287,8 +270,7 @@ h3 {
 		transition: 0.2s;
 	}
 
-	&:hover,
-	&.highlight {
+	&:hover {
 		color: $highlight;
 	}
 
@@ -368,11 +350,6 @@ i {
 			margin: 0;
 			margin-top: 0.1em;
 			margin-bottom: 0.1em;
-
-			transition: 0.3s;
-			&:hover {
-				margin-left: 0.25em;
-			}
 		}
 
 		left: -16em;
@@ -440,15 +417,8 @@ table {
 	right: 6em;
 
 	a {
-		color: $unselected;
 		font-size: 3.5em;
 		margin-left: 0.5em;
-
-		&:hover,
-		&.highlight {
-			color: $highlight;
-		}
-		transition: 0.3s;
 	}
 
 	h1 {
@@ -482,10 +452,6 @@ table {
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
-
-		h3 {
-			display: inline-block;
-		}
 	}
 	vertical-align: top;
 	position: relative;
@@ -563,10 +529,6 @@ table {
 				flex-direction: row;
 				justify-content: space-between;
 
-				h5 {
-					display: block;
-				}
-
 				.assignment-category-name {
 					cursor: pointer;
 				}
@@ -574,12 +536,6 @@ table {
 				.assignment-fraction {
 					h5 {
 						display: inline;
-					}
-
-					&.highlight {
-						h5 {
-							color: $highlight;
-						}
 					}
 				}
 			}
@@ -655,10 +611,6 @@ table {
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
-
-		h5 {
-			display: block;
-		}
 	}
 }
 
@@ -673,13 +625,16 @@ table {
 	text-align: right;
 
 	&.enabled {
-		width: 2em;
+		width: 4em;
+
 		border-bottom: 3px solid $highlight;
 	}
 
 	&.small {
+		&.enabled {
+			width: 1em;
+		}
 		display: inline;
-		width: 1em;
 		font-size: 1em;
 	}
 
@@ -695,7 +650,7 @@ table {
 	padding: 1em;
 	padding-top: 0.5em;
 	padding-bottom: 0.5em;
-	margin: 0;
+	margin: 0.5em 0 0 0;
 
 	li {
 		cursor: pointer;

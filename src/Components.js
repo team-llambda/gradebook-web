@@ -11,7 +11,7 @@ export class Logo extends Component {
 	render() {
 		return (
 			<div className="logowrapper">
-				<img alt="logo" className="logo" src="../assets/logo.svg" />
+				<img alt="logo" src="../assets/logo.svg" />
 			</div>
 		)
 	}
