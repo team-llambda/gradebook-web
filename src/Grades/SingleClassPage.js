@@ -188,7 +188,8 @@ export default class SingleClassPage extends Component {
 		assignmentsCopy.reverse()
 		assignmentsCopy.push({
 			available: 0,
-			category: this.state.categories[0].name,
+			category:
+				this.state.categories.length > 0 ? this.state.categories[0].name : '',
 			comments: '',
 			date: moment().format('MM/DD/YYYY'),
 			name: 'Projected Assignment',
@@ -209,8 +210,8 @@ export default class SingleClassPage extends Component {
 			var points = 0
 			var total = 0
 			assignments.forEach(a => {
-				points += a.score
-				total += a.available
+				points += effProp(a, 'score')
+				total += effProp(a, 'available')
 			})
 			// if (total === 0) return 0
 			return ((points / total) * 100).toFixed(2)
@@ -434,8 +435,8 @@ class FinalGrades extends Component {
 			var points = 0
 			var total = 0
 			assignments.forEach(a => {
-				points += a.score
-				total += a.available
+				points += effProp(a, 'score')
+				total += effProp(a, 'available')
 			})
 			return ((points / total) * 100).toFixed(2)
 		}
