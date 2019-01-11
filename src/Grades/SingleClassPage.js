@@ -204,6 +204,9 @@ export default class SingleClassPage extends Component {
 	}
 
 	getRunningGrade = assignments => {
+		assignments = assignments
+			.slice()
+			.filter(a => a.comments !== '(Not For Grading)')
 		let categories = this.state.categories.slice()
 
 		if (categories.length === 0) {
@@ -430,6 +433,10 @@ class CourseInfoPane extends Component {
 }
 class FinalGrades extends Component {
 	getGrades = (assignments, categories) => {
+		assignments = assignments
+			.slice()
+			.filter(a => a.comments !== '(Not For Grading)')
+
 		// if there are no categories, grade is simple
 		if (categories.length === 0) {
 			var points = 0
@@ -483,6 +490,10 @@ class FinalGrades extends Component {
 	}
 
 	getProjectedGrades = (assignments, categories) => {
+		assignments = assignments
+			.slice()
+			.filter(a => a.comments !== '(Not For Grading)')
+
 		// check if there are projections at all
 		let hasProjection = false
 		for (let a of assignments) {
@@ -499,13 +510,8 @@ class FinalGrades extends Component {
 			var points = 0
 			var total = 0
 			assignments.forEach(a => {
-				if (a.altered) {
-					points += a.altered.score
-					total += a.altered.available
-				} else {
-					points += a.score
-					total += a.available
-				}
+				points += effProp(a, 'score')
+				total += effProp(a, 'available')
 			})
 			return ((points / total) * 100).toFixed(2)
 		}
@@ -717,7 +723,8 @@ class Assignment extends Component {
 								className={
 									this.props.altered
 										? 'highlight'
-										: percentage === 'N/A'
+										: percentage === 'N/A' ||
+										  this.props.comments === '(Not For Grading)'
 										? 'gray'
 										: ''
 								}
