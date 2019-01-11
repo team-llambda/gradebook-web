@@ -206,7 +206,7 @@ export default class SingleClassPage extends Component {
 	getRunningGrade = assignments => {
 		assignments = assignments
 			.slice()
-			.filter(a => a.comments !== '(Not For Grading)')
+			.filter(a => a.comments.includes('Not For Grading'))
 		let categories = this.state.categories.slice()
 
 		if (categories.length === 0) {
@@ -435,7 +435,7 @@ class FinalGrades extends Component {
 	getGrades = (assignments, categories) => {
 		assignments = assignments
 			.slice()
-			.filter(a => a.comments !== '(Not For Grading)')
+			.filter(a => a.comments.includes('Not For Grading'))
 
 		// if there are no categories, grade is simple
 		if (categories.length === 0) {
@@ -492,7 +492,7 @@ class FinalGrades extends Component {
 	getProjectedGrades = (assignments, categories) => {
 		assignments = assignments
 			.slice()
-			.filter(a => a.comments !== '(Not For Grading)')
+			.filter(a => a.comments.includes('Not For Grading'))
 
 		// check if there are projections at all
 		let hasProjection = false
@@ -724,7 +724,7 @@ class Assignment extends Component {
 									this.props.altered
 										? 'highlight'
 										: percentage === 'N/A' ||
-										  this.props.comments === '(Not For Grading)'
+										  this.props.comments.includes('Not For Grading')
 										? 'gray'
 										: ''
 								}
