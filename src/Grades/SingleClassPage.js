@@ -624,6 +624,7 @@ class AssignmentsPane extends Component {
 								delete={this.props.deleteAssignment}
 								reset={this.props.resetAssignment}
 								comments={assignment.comments}
+								last={index === shownAssignments.length - 1}
 							/>
 						)
 					})}
@@ -681,7 +682,7 @@ class Assignment extends Component {
 		let percentage = this.getPercentage()
 		let category = this.getCategory()
 		return (
-			<div className="assignment">
+			<div className={'assignment' + (this.props.last ? ' last' : '')}>
 				<div className="assignment-main">
 					<h5 className="assignment-date">{this.props.date}</h5>
 					<svg

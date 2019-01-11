@@ -407,6 +407,9 @@ table tbody tr td:last-of-type {
 .assignment {
   margin-top: 0.5em;
 }
+.assignment.last {
+  margin-bottom: 1em;
+}
 .assignment .assignment-main {
   display: flex;
   flex-direction: row;

@@ -478,6 +478,10 @@ table {
 
 .assignment {
 	margin-top: 0.5em;
+
+	&.last {
+		margin-bottom: 1em;
+	}
 	.assignment-main {
 		display: flex;
 		flex-direction: row;
