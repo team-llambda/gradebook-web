@@ -204,6 +204,18 @@ export default class SingleClassPage extends Component {
 
 	getRunningGrade = assignments => {
 		let categories = this.state.categories.slice()
+
+		if (categories.length === 0) {
+			var points = 0
+			var total = 0
+			assignments.forEach(a => {
+				points += a.score
+				total += a.available
+			})
+			// if (total === 0) return 0
+			return ((points / total) * 100).toFixed(2)
+		}
+
 		var grade = 0
 
 		categories.forEach(category => {
