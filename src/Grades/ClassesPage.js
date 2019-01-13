@@ -2,6 +2,26 @@ import React, { Component } from 'react'
 import { Menu, Logo, Table, QuarterSelector } from '../Components'
 import gb from '@team-llambda/gradebook-api'
 
+const shortenName = name => {
+	let parts = name
+		.replace('\r', '')
+		.replace('\n', '')
+		.split(' ')
+
+	parts = parts.slice(0, parts.length - 1)
+
+	let res = ''
+
+	for (let i = 0; i < parts.length; i++) {
+		if (i === parts.length - 1) {
+			res += parts[i]
+		} else {
+			res += parts[i].charAt(0) + '. '
+		}
+	}
+
+	return res
+}
 export default class ClassesPage extends Component {
 	constructor(props) {
 		super(props)
@@ -42,7 +62,7 @@ export default class ClassesPage extends Component {
 				<div className="content">
 					<h1>Classes</h1>
 					<Table
-						widths={[4, 12, 12, 4, 4]}
+						widths={[4, 18, 6, 4, 4]}
 						headers={['Period', 'Class', 'Teacher', 'Room', 'Grade']}
 						filter={''}
 						onItemClick={this.handleClassClick}
@@ -52,7 +72,7 @@ export default class ClassesPage extends Component {
 								fields: [
 									classData.period,
 									classData.class,
-									classData.teacher,
+									shortenName(classData.teacher),
 									classData.room,
 									classData.grade
 								]
