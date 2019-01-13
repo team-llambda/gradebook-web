@@ -53,7 +53,7 @@ export default class LoginPage extends Component {
 					onClick={this.login}
 					ref={this.loginButton}
 				/>
-				<Logo />
+				{/* <Logo /> */}
 				<NotificationContainer />
 			</div>
 		)

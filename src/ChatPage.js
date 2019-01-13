@@ -8,7 +8,7 @@ export default class ChatPage extends Component {
 				<Menu currentItemIndex={1} />
 				<div className="content">
 					<h1>Chat</h1>
-					<Logo />
+					{/* <Logo /> */}
 				</div>
 			</div>
 		)

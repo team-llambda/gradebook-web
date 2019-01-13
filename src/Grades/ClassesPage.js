@@ -81,7 +81,7 @@ export default class ClassesPage extends Component {
 					/>
 				</div>
 				<QuarterSelector />
-				<Logo />
+				{/* <Logo /> */}
 			</div>
 		)
 	}

@@ -370,7 +370,7 @@ export default class SingleClassPage extends Component {
 					</div>
 				</div>
 				<QuarterSelector />
-				<Logo />
+				{/* <Logo /> */}
 			</div>
 		)
 	}

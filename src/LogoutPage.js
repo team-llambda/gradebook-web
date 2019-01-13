@@ -12,7 +12,7 @@ export default class LogoutPage extends Component {
 		return (
 			<div className="fullsize allcenter">
 				<h1>logging you out...</h1>
-				<Logo />
+				{/* <Logo /> */}
 			</div>
 		)
 	}

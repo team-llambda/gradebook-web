@@ -47,7 +47,7 @@ export default class SettingsPage extends Component {
 						/>
 					</div>
 				</div>
-				<Logo />
+				{/* <Logo /> */}
 				<NotificationContainer />
 			</div>
 		)
