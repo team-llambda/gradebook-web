@@ -308,6 +308,7 @@ table {
   text-align: left;
   width: 100%;
   margin-top: 1em;
+  height: auto;
 }
 table thead {
   -webkit-touch-callout: none;
@@ -331,6 +332,9 @@ table thead tr th:hover {
 }
 table thead tr th:last-of-type {
   text-align: right;
+}
+table tbody {
+  overflow-y: scroll;
 }
 table tbody tr {
   height: 2em;

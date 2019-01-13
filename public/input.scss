@@ -365,6 +365,7 @@ i {
 	display: inline-block;
 	width: calc(100% - 12em);
 	height: calc(100% - 4em);
+	// overflow-y: scroll;
 	padding-top: 4em;
 	padding-right: 6em;
 }
@@ -373,6 +374,7 @@ table {
 	text-align: left;
 	width: 100%;
 	margin-top: 1em;
+	height: auto;
 	thead {
 		@include noselect();
 		tr {
@@ -394,6 +396,7 @@ table {
 		}
 	}
 	tbody {
+		overflow-y: scroll;
 		tr {
 			height: 2em;
 			font-size: 1.7em;

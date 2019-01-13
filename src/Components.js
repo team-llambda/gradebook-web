@@ -294,12 +294,14 @@ export class Table extends Component {
 		})
 
 		return (
-			<table>
-				<thead>
-					<tr>{headers}</tr>
-				</thead>
-				<tbody>{rows}</tbody>
-			</table>
+			<div style={{ overflowY: 'scroll', maxHeight: 'calc(100% - 8em)' }}>
+				<table>
+					<thead>
+						<tr>{headers}</tr>
+					</thead>
+					<tbody>{rows}</tbody>
+				</table>
+			</div>
 		)
 	}
 }
