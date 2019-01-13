@@ -842,8 +842,9 @@ class CategoriesPane extends Component {
 		return (
 			<div
 				style={{
-					height: 'calc(100% - 12em)',
-					overflow: 'hidden',
+					height: 'calc(100% - 16em)',
+					paddingTop: '1em',
+					overflowY: 'scroll',
 					position: 'relative'
 				}}>
 				<div style={{ height: '16em' }}>
@@ -881,12 +882,10 @@ class CategoriesPane extends Component {
 				<div
 					style={{
 						position: 'absolute',
-						overflow: 'auto',
 						top: '16em',
 						height: 'calc(100% - 17em)',
 						width: '100%',
-						marginTop: '1em',
-						paddingRight: '1em'
+						marginTop: '1em'
 					}}>
 					{categories}
 				</div>
