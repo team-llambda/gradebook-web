@@ -365,7 +365,6 @@ export default class SingleClassPage extends Component {
 									}
 								}
 							}}
-							height={80}
 						/>
 					</div>
 				</div>
