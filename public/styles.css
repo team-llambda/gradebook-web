@@ -364,10 +364,9 @@ table tbody tr td:last-of-type {
 
 .grades-chart {
   display: inline-block;
-  width: calc(100% - 36em);
-  height: calc(100% - 10em);
-  padding-left: 4em;
-  padding-top: 3em;
+  width: calc(100% - 26em);
+  height: calc(100% - 7em);
+  padding-left: 2em;
 }
 
 .course-info-pane {
@@ -375,16 +374,18 @@ table tbody tr td:last-of-type {
   position: relative;
   display: inline-block;
   height: calc(100% - 7em);
-  width: 32em;
+  width: 24em;
 }
 .course-info-pane .assignments-pane {
-  height: calc(100% - 8em);
+  margin-top: 0.5em;
+  height: calc(100% - 7em);
   overflow: hidden;
 }
 .course-info-pane .assignments-pane .assignments-content {
-  height: calc(100% - 4em);
+  height: calc(100% - 2em);
   width: calc(100%);
   padding-right: 15px;
+  margin-top: 0.5em;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -407,9 +408,6 @@ table tbody tr td:last-of-type {
   margin-top: -0.5em;
 }
 
-.assignment {
-  margin-top: 0.5em;
-}
 .assignment.last {
   margin-bottom: 1em;
 }
@@ -427,7 +425,6 @@ table tbody tr td:last-of-type {
 .assignment .assignment-main .assignment-info {
   display: inline-block;
   flex-grow: 2;
-  max-width: 23.8125em;
 }
 .assignment .assignment-main .assignment-info .assignment-name-grade {
   display: flex;
@@ -528,7 +525,7 @@ table tbody tr td:last-of-type {
   border: none;
   outline: none;
   font-family: "Sofia-Pro";
-  font-size: 1.5em;
+  font-size: 1em;
   font-weight: 500;
   display: block;
   text-align: right;
@@ -539,7 +536,7 @@ table tbody tr td:last-of-type {
 }
 .editable-input.small {
   display: inline;
-  font-size: 1em;
+  font-size: 0.8em;
 }
 .editable-input.small.enabled {
   width: 1em;

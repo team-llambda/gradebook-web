@@ -324,13 +324,13 @@ export default class SingleClassPage extends Component {
 									yAxes: [
 										{
 											ticks: {
-												fontSize: 18,
+												fontSize: 12,
 												beginAtZero: true,
 												suggestedMax: 100
 											}
 										}
 									],
-									xAxes: [{ ticks: { fontSize: 18 } }]
+									xAxes: [{ ticks: { fontSize: 12 } }]
 								},
 								tooltips: {
 									callbacks: {
@@ -607,7 +607,7 @@ class AssignmentsPane extends Component {
 					}}>
 					<Textbox
 						inputStyle={{ width: 'calc(100% - 3em - 6px)' }}
-						style={{ marginBottom: '1em', flexGrow: '2', marginRight: '1em' }}
+						style={{ flexGrow: '2', marginRight: '1em', marginTop: 0 }}
 						hint="filter"
 						onTextChange={this.handleFilterChange}
 					/>
@@ -707,8 +707,8 @@ class Assignment extends Component {
 					<svg
 						height="12"
 						width="12"
-						style={{ paddingTop: '0.6em', marginRight: '1em' }}>
-						<circle cx="6" cy="6" r="6" fill="#12EB9D" />
+						style={{ paddingTop: '0.45em', marginRight: '0.5em' }}>
+						<circle cx="6" cy="6" r="4" fill="#12EB9D" />
 					</svg>
 					<div className="assignment-info">
 						<div className="assignment-name-grade">

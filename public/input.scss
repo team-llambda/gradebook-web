@@ -437,21 +437,22 @@ table {
 
 .grades-chart {
 	display: inline-block;
-	width: calc(100% - 36em);
-	height: calc(100% - 10em);
-	padding-left: 4em;
-	padding-top: 3em;
+	width: calc(100% - 26em);
+	height: calc(100% - 7em);
+	padding-left: 2em;
 }
 
 .course-info-pane {
 	.assignments-pane {
-		height: calc(100% - 8em);
+		margin-top: 0.5em;
+		height: calc(100% - 7em);
 		overflow: hidden;
 
 		.assignments-content {
-			height: calc(100% - 4em);
+			height: calc(100% - 2em);
 			width: calc(100%);
 			padding-right: 15px;
+			margin-top: 0.5em;
 			overflow-y: auto;
 			overflow-x: hidden;
 		}
@@ -466,7 +467,7 @@ table {
 	position: relative;
 	display: inline-block;
 	height: calc(100% - 7em);
-	width: 32em;
+	width: 24em;
 	// padding-top: 1em;
 }
 
@@ -486,7 +487,7 @@ table {
 }
 
 .assignment {
-	margin-top: 0.5em;
+	// margin-top: 0.5em;
 
 	&.last {
 		margin-bottom: 1em;
@@ -506,7 +507,7 @@ table {
 		.assignment-info {
 			display: inline-block;
 			flex-grow: 2;
-			max-width: 23.8125em;
+			// max-width: 23.8125em;
 
 			.assignment-name-grade {
 				display: flex;
@@ -518,7 +519,6 @@ table {
 					cursor: pointer;
 					display: block;
 					white-space: nowrap;
-					// height: 1.5em;
 					&::-webkit-scrollbar {
 						display: none;
 					}
@@ -631,7 +631,7 @@ table {
 	border: none;
 	outline: none;
 	font-family: 'Sofia-Pro';
-	font-size: 1.5em;
+	font-size: $h4;
 	font-weight: 500;
 	display: block;
 
@@ -648,7 +648,7 @@ table {
 			width: 1em;
 		}
 		display: inline;
-		font-size: 1em;
+		font-size: $h5;
 	}
 
 	&.gray {
