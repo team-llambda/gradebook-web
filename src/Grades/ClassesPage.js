@@ -62,8 +62,8 @@ export default class ClassesPage extends Component {
 				<div className="content">
 					<h1>Classes</h1>
 					<Table
-						widths={[4, 18, 6, 4, 4]}
-						headers={['Period', 'Class', 'Teacher', 'Room', 'Grade']}
+						widths={[2, 20, 6, 4, 4]}
+						headers={['P.', 'Class', 'Teacher', 'Room', 'Grade']}
 						filter={''}
 						onItemClick={this.handleClassClick}
 						data={this.state.classes.slice().map(classData => {

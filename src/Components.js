@@ -105,7 +105,7 @@ export class Textbox extends Component {
 		let width = ReactDOM.findDOMNode(this.refs.label).getBoundingClientRect()
 			.width
 		if (this.state.text.length === 0)
-			this.blocker.current.style.width = 'calc(' + width / 1.25 + 'px + 1em)'
+			this.blocker.current.style.width = 'calc(' + width + 'px + 1em)'
 	}
 
 	handleBlur = () => {
@@ -125,7 +125,7 @@ export class Textbox extends Component {
 
 	render() {
 		let style = { ...this.props.style }
-		style.marginTop = '1em'
+		// style.marginTop = '0.5em'
 		return (
 			<div style={style} className="textbox">
 				<input
@@ -294,7 +294,7 @@ export class Table extends Component {
 		})
 
 		return (
-			<div style={{ overflowY: 'scroll', maxHeight: 'calc(100% - 8em)' }}>
+			<div style={{ overflowY: 'auto', maxHeight: 'calc(100% - 8em)' }}>
 				<table>
 					<thead>
 						<tr>{headers}</tr>

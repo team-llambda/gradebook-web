@@ -844,7 +844,7 @@ class CategoriesPane extends Component {
 				style={{
 					height: 'calc(100% - 16em)',
 					paddingTop: '1em',
-					overflowY: 'scroll',
+					overflowY: 'auto',
 					position: 'relative'
 				}}>
 				<div style={{ height: '16em' }}>

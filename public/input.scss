@@ -34,6 +34,11 @@
 }
 
 // constants
+$h1: 2.5em;
+$h2: 2em;
+$h3: 1.5em;
+$h4: 1em;
+$h5: 0.8em;
 $highlight: #527aff;
 $unselected: #bdbdbd;
 $placeholder: #828282;
@@ -47,7 +52,7 @@ $shadowIdle: 1px 2px 8px #00000060;
 $shadowHover: 1px 3px 12px #00000060;
 $shadowClicked: 1px 2px 8px #00000060;
 $buttonMargin: 0.5em;
-$buttonHeight: 1.7em;
+$buttonHeight: $h3;
 $buttonPadding: 2em;
 
 html {
@@ -126,8 +131,8 @@ body {
 
 	.loading-spinner {
 		display: inline-block;
-		width: 1em;
-		height: 1em;
+		width: $buttonHeight / 2;
+		height: $buttonHeight / 2;
 		position: absolute;
 		top: 50%;
 		transform: translateY(-50%);
@@ -143,8 +148,8 @@ body {
 		&:after {
 			content: ' ';
 			display: block;
-			width: 0.75em;
-			height: 0.75em;
+			width: $buttonHeight / 3;
+			height: $buttonHeight / 3;
 			border-radius: 50%;
 			border: 3px solid #fff;
 			border-color: #fff #fff #fff transparent;
@@ -175,12 +180,13 @@ body {
 }
 
 .logo {
-	height: 4em;
-	margin-bottom: 1em;
+	width: 16em;
+	// margin-bottom: 1em;
 }
 
 .textbox {
 	position: relative;
+	margin-top: 1em;
 
 	input {
 		border: 3px solid $unselected;
@@ -191,7 +197,7 @@ body {
 		box-shadow: none;
 
 		outline: none;
-		font-size: 1.25em;
+		font-size: $h4;
 		width: 16em;
 		padding: 0;
 		padding-left: 1.5em;
@@ -210,7 +216,7 @@ body {
 			top: -0.75em;
 			height: 1em;
 			left: 2.5em;
-			font-size: 1em;
+			font-size: $h4;
 			z-index: 1;
 		}
 	}
@@ -229,11 +235,11 @@ body {
 
 	.floating-label {
 		color: $placeholder;
-		font-size: 1.25em;
+		font-size: $h4;
 		position: absolute;
 		pointer-events: none;
 		left: 1.5em;
-		top: 0.4em;
+		top: 0.5em;
 		transition: 0.3s;
 		z-index: 1;
 	}
@@ -252,14 +258,14 @@ a {
 }
 
 h1 {
-	font-size: 4em;
+	font-size: $h1;
 	font-weight: bold;
 	margin: 0;
 }
 
 h2 {
 	@extend h1;
-	font-size: 3em;
+	font-size: $h2;
 }
 
 h3 {
@@ -276,22 +282,22 @@ h3 {
 
 	&.back {
 		display: table;
-		font-size: 1.5em;
+		font-size: 1em;
 	}
 
-	font-size: 2em;
+	font-size: $h3;
 	margin: 0;
 }
 
 h4 {
 	@extend h1;
 	font-weight: 500;
-	font-size: 1.5em;
+	font-size: $h4;
 }
 
 h5 {
 	@extend h4;
-	font-size: 1em;
+	font-size: $h5;
 	color: $subtext;
 }
 
@@ -331,7 +337,7 @@ i {
 	transition: 0.5s;
 
 	&.open {
-		width: 40em;
+		width: 24em;
 	}
 
 	// the menu icon
@@ -340,7 +346,7 @@ i {
 		cursor: pointer;
 		position: absolute;
 		right: 1em;
-		top: 3em;
+		top: $h1;
 	}
 
 	.menu-content {
@@ -378,9 +384,9 @@ table {
 	thead {
 		@include noselect();
 		tr {
-			height: 2em;
+			height: 1.5em;
 			th {
-				font-size: 2em;
+				font-size: 1.5em;
 				cursor: pointer;
 				position: relative;
 
@@ -396,10 +402,10 @@ table {
 		}
 	}
 	tbody {
-		overflow-y: scroll;
+		overflow-y: auto;
 		tr {
-			height: 2em;
-			font-size: 1.7em;
+			height: 1.5em;
+			font-size: 1.3em;
 			transition: 0.2s;
 			cursor: pointer;
 
@@ -420,7 +426,7 @@ table {
 	right: 6em;
 
 	a {
-		font-size: 3.5em;
+		font-size: $h1;
 		margin-left: 0.5em;
 	}
 
@@ -432,21 +438,21 @@ table {
 .grades-chart {
 	display: inline-block;
 	width: calc(100% - 36em);
-	height: calc(100% - 14em);
+	height: calc(100% - 10em);
 	padding-left: 4em;
 	padding-top: 3em;
 }
 
 .course-info-pane {
 	.assignments-pane {
-		height: calc(100% - 16em);
+		height: calc(100% - 8em);
 		overflow: hidden;
 
 		.assignments-content {
 			height: calc(100% - 4em);
 			width: calc(100%);
 			padding-right: 15px;
-			overflow-y: scroll;
+			overflow-y: auto;
 			overflow-x: hidden;
 		}
 	}
@@ -459,14 +465,14 @@ table {
 	vertical-align: top;
 	position: relative;
 	display: inline-block;
-	height: calc(100% - 8em);
+	height: calc(100% - 7em);
 	width: 32em;
-	padding-top: 1em;
+	// padding-top: 1em;
 }
 
 .final-grades {
 	position: absolute;
-	bottom: 6em;
+	bottom: 0;
 	right: 0;
 	text-align: right;
 
