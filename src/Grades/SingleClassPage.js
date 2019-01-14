@@ -840,13 +840,7 @@ class CategoriesPane extends Component {
 		}
 
 		return (
-			<div
-				style={{
-					height: 'calc(100% - 16em)',
-					paddingTop: '1em',
-					overflowY: 'auto',
-					position: 'relative'
-				}}>
+			<div className="categories-pane">
 				<div style={{ height: '16em' }}>
 					<Radar
 						options={{

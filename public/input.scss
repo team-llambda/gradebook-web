@@ -443,6 +443,13 @@ table {
 }
 
 .course-info-pane {
+	.categories-pane {
+		height: calc(100% - 7em);
+		margin-top: 0.5em;
+		overflow-y: auto;
+		position: relative;
+	}
+
 	.assignments-pane {
 		margin-top: 0.5em;
 		height: calc(100% - 7em);

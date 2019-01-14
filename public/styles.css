@@ -376,6 +376,12 @@ table tbody tr td:last-of-type {
   height: calc(100% - 7em);
   width: 24em;
 }
+.course-info-pane .categories-pane {
+  height: calc(100% - 7em);
+  margin-top: 0.5em;
+  overflow-y: auto;
+  position: relative;
+}
 .course-info-pane .assignments-pane {
   margin-top: 0.5em;
   height: calc(100% - 7em);
