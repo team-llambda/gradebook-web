@@ -3,6 +3,7 @@
 	"version": "1.0.0",
 	"dependencies": {
 		"@team-llambda/gradebook-api": "^1.1.0",
+		"@team-llambda/edupoint-pxpwebservices-synergy": "^0.2.1",
 		"chart.js": "^2.7.3",
 		"moment": "^2.23.0",
 		"react": "^16.4.2",

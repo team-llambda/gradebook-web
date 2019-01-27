@@ -27,7 +27,8 @@ export default class ClassesPage extends Component {
 		super(props)
 
 		this.state = {
-			classes: []
+			classes: [],
+			services: props.location.state.services
 		}
 	}
 

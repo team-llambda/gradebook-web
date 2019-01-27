@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Button, Logo, Textbox } from './Components'
-import gb from '@team-llambda/gradebook-api'
+import EDUPoint from '@team-llambda/edupoint-pxpwebservices-synergy'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
 
 export default class LoginPage extends Component {
@@ -17,19 +17,21 @@ export default class LoginPage extends Component {
 		let username = this.usernameTextbox.current.getText()
 		let password = this.passwordTextbox.current.getText()
 
-		let res = await gb.login(username, password)
+		let services = new EDUPoint.PXPWebServices(
+			username,
+			password,
+			'https://wa-bsd405-psv.edupoint.com/'
+		)
 
-		switch (res.status) {
-			case 200:
-				window.location.href = '/classes'
-				break
-			case 401:
+		services
+			.getChildList()
+			.then(child => {
+				this.props.history.push('/classes', { services })
+			})
+			.catch(err => {
 				NotificationManager.error('Username or password incorrect')
-				break
-			default:
-				NotificationManager.error('Something went wrong :(')
-		}
-		this.loginButton.current.setLoading(false)
+				this.loginButton.current.setLoading(false)
+			})
 	}
 
 	render() {
