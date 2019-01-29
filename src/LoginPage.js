@@ -26,9 +26,14 @@ export default class LoginPage extends Component {
 		services
 			.getChildList()
 			.then(child => {
-				this.props.history.push('/classes', { services })
+				this.props.history.push('/classes', {
+					username,
+					password,
+					baseURL: 'https://wa-bsd405-psv.edupoint.com/'
+				})
 			})
 			.catch(err => {
+				console.log(err)
 				NotificationManager.error('Username or password incorrect')
 				this.loginButton.current.setLoading(false)
 			})

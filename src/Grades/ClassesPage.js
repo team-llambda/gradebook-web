@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Menu, Logo, Table, QuarterSelector } from '../Components'
+import EDUPoint from '@team-llambda/edupoint-pxpwebservices-synergy'
 import gb from '@team-llambda/gradebook-api'
 
 const shortenName = name => {
@@ -27,25 +28,29 @@ export default class ClassesPage extends Component {
 		super(props)
 
 		this.state = {
-			classes: [],
-			services: props.location.state.services
+			classes: []
 		}
 	}
 
 	async componentDidMount() {
+		let services = new EDUPoint.PXPWebServices(
+			this.props.location.state.username,
+			this.props.location.state.password,
+			this.props.location.state.baseURL
+		)
+
 		// fetch from backend
-		let classes = (await (await gb.getClasses()).json()).data
+		let classes = await services.getGradebook()
 
-		// convert data to native format
-		classes.forEach(c => {
-			c.class = c.class_name
-			delete c.class_name
-
-			// get rid of the % sign
-			c.grade = Number(c.grade.replace('%', '')).toFixed(2)
-
-			// start from the number
-			c.room = c.room.substring(6)
+		classes = classes.courses.map(c => {
+			console.log(c)
+			return {
+				class: c.title,
+				grade: c.marks[0].calculatedScoreString,
+				room: c.room,
+				teacher: c.staff,
+				period: c.period
+			}
 		})
 
 		this.setState({ classes: classes })
