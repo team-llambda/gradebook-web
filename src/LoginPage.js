@@ -23,6 +23,11 @@ export default class LoginPage extends Component {
 			'https://wa-bsd405-psv.edupoint.com/'
 		)
 
+		window.localStorage.setItem(
+			'EDUPointServices',
+			JSON.stringify({ username, password })
+		)
+
 		services
 			.getChildList()
 			.then(child => {

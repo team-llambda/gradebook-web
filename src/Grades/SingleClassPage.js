@@ -44,28 +44,42 @@ export default class SingleClassPage extends Component {
 	async componentDidMount() {
 		// fetches the period from the redirect
 		let { period } = this.props.match.params
+		let { quarter } = this.props.location.state
 
-		let serviceParams = this.props.location.state.serviceParams
+		let creds = JSON.parse(window.localStorage.getItem('EDUPointServices'))
+
+		if (!creds) window.location.href = '/'
+
 		let services = new EDUPoint.PXPWebServices(
-			serviceParams.username,
-			serviceParams.password,
-			serviceParams.baseURL
+			creds.username,
+			creds.password,
+			'https://wa-bsd405-psv.edupoint.com/'
 		)
 
-		let gradebook = await services.getGradebook()
-		let course = gradebook.courses[period - 1]
-		console.log(course)
-
-		let data = await (await gb.getClass(period)).json()
+		let gradebook = await services.getGradebook(quarter)
+		let course = gradebook.courses[period - 1].marks[0] // always use first marks (not sure what the others are)
 
 		// sanitize assignment data
-		let assignments = data.assignments.map((a, i) => {
+		let assignments = course.assignments.map((a, i) => {
 			a._id = i
-			a.score = isNaN(a.pointsEarned) ? 0 : a.pointsEarned
-			a.available = isNaN(a.pointsTotal) ? 0 : a.pointsTotal
+			a.score = isNaN(a.actualScore) ? 0 : a.actualScore
+			a.available = isNaN(a.assignedScore) ? 0 : a.assignedScore
+			a.category = a.type
+			a.name = a.measure
+			a.comments = a.notes
 
-			delete a.pointsEarned
-			delete a.pointsTotal
+			delete a.measure
+			delete a.type
+			delete a.actualScore
+			delete a.assignedScore
+			delete a.notes
+
+			// format the date
+			let str = a.date.toString()
+			let front = str.split(':')[0]
+			let parts = front.split(' ')
+
+			a.date = parts[1] + ' ' + parts[2]
 
 			return a
 		})
@@ -73,21 +87,21 @@ export default class SingleClassPage extends Component {
 		// sanitize category data
 		let categories = []
 
-		if (Object.keys(data.categories).length > 0) {
-			for (let c in data.categories) {
+		if (course.gradeCalculation.length > 0) {
+			for (let c of course.gradeCalculation) {
 				// dont include the TOTAL category
-				if (c === 'TOTAL') continue
+				if (c.type === 'TOTAL') continue
 
 				let category = {
-					name: c,
-					weight: data.categories[c].percentage / 100,
+					name: c.type,
+					weight: c.weight,
 					score: 0,
 					available: 0
 				}
 
 				// get the status for the category
 				assignments
-					.filter(a => a.category === c)
+					.filter(a => a.category === c.type)
 					.forEach(a => {
 						category.score += a.score
 						category.available += a.available
@@ -100,7 +114,75 @@ export default class SingleClassPage extends Component {
 		this.setState({
 			period: period,
 			assignments: assignments,
-			categories: categories
+			categories: categories,
+			quarter,
+			services
+		})
+	}
+
+	handleQuarterChange = async quarter => {
+		let services = this.state.services
+
+		let gradebook = await services.getGradebook(quarter)
+
+		let course = gradebook.courses[this.state.period - 1].marks[0] // always use first marks (not sure what the others are)
+
+		// sanitize assignment data
+		let assignments = course.assignments.map((a, i) => {
+			a._id = i
+			a.score = isNaN(a.actualScore) ? 0 : a.actualScore
+			a.available = isNaN(a.assignedScore) ? 0 : a.assignedScore
+			a.category = a.type
+			a.name = a.measure
+			a.comments = a.notes
+
+			delete a.measure
+			delete a.type
+			delete a.actualScore
+			delete a.assignedScore
+			delete a.notes
+
+			// format the date
+			let str = a.date.toString()
+			let front = str.split(':')[0]
+			let parts = front.split(' ')
+
+			a.date = parts[1] + ' ' + parts[2]
+
+			return a
+		})
+
+		// sanitize category data
+		let categories = []
+
+		if (course.gradeCalculation.length > 0) {
+			for (let c of course.gradeCalculation) {
+				// dont include the TOTAL category
+				if (c.type === 'TOTAL') continue
+
+				let category = {
+					name: c.type,
+					weight: c.weight,
+					score: 0,
+					available: 0
+				}
+
+				// get the status for the category
+				assignments
+					.filter(a => a.category === c.type)
+					.forEach(a => {
+						category.score += a.score
+						category.available += a.available
+					})
+
+				categories.push(category)
+			}
+		}
+
+		this.setState({
+			assignments: assignments,
+			categories: categories,
+			quarter
 		})
 	}
 
@@ -380,7 +462,10 @@ export default class SingleClassPage extends Component {
 						/>
 					</div>
 				</div>
-				<QuarterSelector />
+				<QuarterSelector
+					quarter={this.state.quarter}
+					handleQuarterChange={this.handleQuarterChange}
+				/>
 				{/* <Logo /> */}
 			</div>
 		)
@@ -711,6 +796,7 @@ class Assignment extends Component {
 	render() {
 		let percentage = this.getPercentage()
 		let category = this.getCategory()
+		// console.log(this.props.date)
 		return (
 			<div className={'assignment' + (this.props.last ? ' last' : '')}>
 				<div className="assignment-main">

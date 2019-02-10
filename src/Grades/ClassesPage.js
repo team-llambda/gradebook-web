@@ -32,11 +32,14 @@ export default class ClassesPage extends Component {
 	}
 
 	async componentDidMount() {
-		let serviceParams = this.props.location.state.serviceParams
+		let creds = JSON.parse(window.localStorage.getItem('EDUPointServices'))
+
+		if (!creds) window.location.href = '/'
+
 		let services = new EDUPoint.PXPWebServices(
-			serviceParams.username,
-			serviceParams.password,
-			serviceParams.baseURL
+			creds.username,
+			creds.password,
+			'https://wa-bsd405-psv.edupoint.com/'
 		)
 
 		// fetch from backend
@@ -68,7 +71,7 @@ export default class ClassesPage extends Component {
 		// go to class detail page of selected period
 		// window.location.href = '/classes/' + period
 		this.props.history.push(`/classes/${period}`, {
-			serviceParams: this.props.location.state.serviceParams
+			quarter: this.state.quarter
 		})
 	}
 
