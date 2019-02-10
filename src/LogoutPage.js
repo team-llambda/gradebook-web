@@ -4,7 +4,7 @@ import gb from '@team-llambda/gradebook-api'
 
 export default class LogoutPage extends Component {
 	async componentDidMount() {
-		await gb.logout()
+		window.localStorage.removeItem('EDUPointServices')
 		window.location.href = '/'
 	}
 

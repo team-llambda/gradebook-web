@@ -42,13 +42,12 @@ export default class SingleClassPage extends Component {
 	}
 
 	async componentDidMount() {
-		// fetches the period from the redirect
-		let { period } = this.props.match.params
-		let { quarter } = this.props.location.state
-
 		let creds = JSON.parse(window.localStorage.getItem('EDUPointServices'))
 
 		if (!creds) window.location.href = '/'
+
+		// fetches the period & quarter from the redirect
+		let { period } = this.props.match.params
 
 		let services = new EDUPoint.PXPWebServices(
 			creds.username,
@@ -56,7 +55,17 @@ export default class SingleClassPage extends Component {
 			'https://wa-bsd405-psv.edupoint.com/'
 		)
 
-		let gradebook = await services.getGradebook(quarter)
+		let gradebook = await services.getGradebook()
+
+		let currentPeriod = 0
+		for (; currentPeriod < gradebook.reportingPeriods.length; currentPeriod++) {
+			let rP = gradebook.reportingPeriods[currentPeriod]
+			let now = new Date()
+			if (rP.startDate <= now && now <= rP.endDate) {
+				break
+			}
+		}
+
 		let course = gradebook.courses[period - 1].marks[0] // always use first marks (not sure what the others are)
 
 		// sanitize assignment data
@@ -120,7 +129,7 @@ export default class SingleClassPage extends Component {
 			period: period,
 			assignments: assignments,
 			categories: categories,
-			quarter,
+			quarter: currentPeriod,
 			services
 		})
 	}
