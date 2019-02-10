@@ -8,6 +8,7 @@ import {
 	Dropdown
 } from '../Components'
 import { Radar, Line } from 'react-chartjs-2'
+import EDUPoint from '@team-llambda/edupoint-pxpwebservices-synergy'
 import gb from '@team-llambda/gradebook-api'
 import moment from 'moment'
 
@@ -43,6 +44,17 @@ export default class SingleClassPage extends Component {
 	async componentDidMount() {
 		// fetches the period from the redirect
 		let { period } = this.props.match.params
+
+		let serviceParams = this.props.location.state.serviceParams
+		let services = new EDUPoint.PXPWebServices(
+			serviceParams.username,
+			serviceParams.password,
+			serviceParams.baseURL
+		)
+
+		let gradebook = await services.getGradebook()
+		let course = gradebook.courses[period - 1]
+		console.log(course)
 
 		let data = await (await gb.getClass(period)).json()
 

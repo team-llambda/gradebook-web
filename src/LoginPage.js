@@ -27,9 +27,11 @@ export default class LoginPage extends Component {
 			.getChildList()
 			.then(child => {
 				this.props.history.push('/classes', {
-					username,
-					password,
-					baseURL: 'https://wa-bsd405-psv.edupoint.com/'
+					serviceParams: {
+						username,
+						password,
+						baseURL: 'https://wa-bsd405-psv.edupoint.com/'
+					}
 				})
 			})
 			.catch(err => {

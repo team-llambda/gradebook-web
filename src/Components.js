@@ -311,12 +311,12 @@ export class QuarterSelector extends Component {
 		super(props)
 
 		this.state = {
-			quarter: this.props.quarter || 1
+			quarter: this.props.quarter
 		}
 	}
 
 	componentWillReceiveProps(newProps) {
-		this.setState({ quarter: this.props.quarter || 1 })
+		this.setState({ quarter: newProps.quarter })
 	}
 
 	handleQuarterChange = quarter => {
@@ -324,7 +324,7 @@ export class QuarterSelector extends Component {
 
 		this.setState({ quarter: quarter })
 
-		// this.props.handleQuarterChange()
+		this.props.handleQuarterChange(quarter)
 	}
 
 	render() {
@@ -334,10 +334,18 @@ export class QuarterSelector extends Component {
 				{/* eslint-disable-next-line */}
 				<a
 					onClick={() => {
+						this.handleQuarterChange(0)
+					}}
+					className={this.state.quarter === 0 ? 'highlight' : ''}>
+					1
+				</a>
+				{/* eslint-disable-next-line */}
+				<a
+					onClick={() => {
 						this.handleQuarterChange(1)
 					}}
 					className={this.state.quarter === 1 ? 'highlight' : ''}>
-					1
+					2
 				</a>
 				{/* eslint-disable-next-line */}
 				<a
@@ -345,7 +353,7 @@ export class QuarterSelector extends Component {
 						this.handleQuarterChange(2)
 					}}
 					className={this.state.quarter === 2 ? 'highlight' : ''}>
-					2
+					3
 				</a>
 				{/* eslint-disable-next-line */}
 				<a
@@ -353,14 +361,6 @@ export class QuarterSelector extends Component {
 						this.handleQuarterChange(3)
 					}}
 					className={this.state.quarter === 3 ? 'highlight' : ''}>
-					3
-				</a>
-				{/* eslint-disable-next-line */}
-				<a
-					onClick={() => {
-						this.handleQuarterChange(4)
-					}}
-					className={this.state.quarter === 4 ? 'highlight' : ''}>
 					4
 				</a>
 			</div>
