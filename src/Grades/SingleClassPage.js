@@ -62,8 +62,13 @@ export default class SingleClassPage extends Component {
 		// sanitize assignment data
 		let assignments = course.assignments.map((a, i) => {
 			a._id = i
-			a.score = isNaN(a.actualScore) ? 0 : a.actualScore
-			a.available = isNaN(a.assignedScore) ? 0 : a.assignedScore
+			if (a.actualScore === undefined || a.actualScore === null) {
+				a.score = 0
+				a.available = 0
+			} else {
+				a.score = a.actualScore
+				a.available = a.assignedScore
+			}
 			a.category = a.type
 			a.name = a.measure
 			a.comments = a.notes
@@ -130,8 +135,14 @@ export default class SingleClassPage extends Component {
 		// sanitize assignment data
 		let assignments = course.assignments.map((a, i) => {
 			a._id = i
-			a.score = isNaN(a.actualScore) ? 0 : a.actualScore
-			a.available = isNaN(a.assignedScore) ? 0 : a.assignedScore
+			if (a.actualScore === undefined || a.actualScore === null) {
+				a.score = 0
+				a.available = 0
+			} else {
+				a.score = a.actualScore
+				a.available = a.assignedScore
+			}
+
 			a.category = a.type
 			a.name = a.measure
 			a.comments = a.notes
